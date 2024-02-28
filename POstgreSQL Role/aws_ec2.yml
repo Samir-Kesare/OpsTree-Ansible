@@ -1,0 +1,11 @@
+---
+plugin: aws_ec2
+regions:
+  - ap-northeast-1
+filters:
+    instance-state-code: 16
+      #tag:os: centos 
+keyed_groups:
+  - key: tags
+    #- key: tags.os
+    prefix: tag
