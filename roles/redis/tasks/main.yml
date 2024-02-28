@@ -1,0 +1,11 @@
+---
+# tasks file for redis
+
+- name: Ensuring prerequisites are met for redis installation
+  include_tasks: prerequisites.yml
+
+- name: Ensuring redis server is installed on the system
+  include_tasks: install.yml
+
+- name: Ensuring redis configuration is up to date
+  include_tasks: configure.yml
