@@ -1,0 +1,5 @@
+---
+# vars file for redis
+redis_password: "p@ssw0rd"
+upgrade_redis: false
+redis_runtime_directory: redis
