@@ -1,0 +1,12 @@
+---
+version: 16
+base_url: deb http://apt.postgresql.org/pub/repos/apt
+version_release: "{{ ansible_distribution_release }}"
+postgresql_repo_url: "{{ base_url }}/ {{ version_release }}-pgdg main"
+postgresql_repo_key_url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+debian_package:
+  - libpq-dev                         #client libraries and client binaries
+  - postgresql-client-{{ version }}   #client libraries and client binaries
+  - postgresql-{{ version }}          #core database server
+  - postgresql-contrib-{{ version }}  
+  - postgresql-server-dev-{{ version }} #libraries and headers for C language backend development

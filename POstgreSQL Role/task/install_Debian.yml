@@ -1,0 +1,39 @@
+---
+- name: Install Gpg
+  apt:
+    name: gnupg
+    state: present
+
+- name: Add Postgresql repository key
+  apt_key:
+    url: "{{ postgresql_repo_key_url }}"
+    state: present
+
+- name: Add Postgresql repository.
+  apt_repository:
+    repo: "{{ postgresql_repo_url }}"
+    state: present
+
+- name: Install PostgreSQL on Ubuntu
+  apt:
+    name: "{{ item }}"
+    update_cache: true
+    state: present
+  loop:
+    - '{{ debian_package }}'
+
+- name: Start postgresql
+  service:
+    name: postgresql
+    state: started
+    enabled: true
+
+- name: Congfigure Postgresql
+  template:
+    src: ubuntu_postgresql.j2
+    dest: /etc/postgresql/{{ version }}/main/postgresql.conf
+
+- name: Restart postgresql
+  service:
+    name: postgresql
+    state: restarted
