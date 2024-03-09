@@ -7,6 +7,15 @@
   become: yes
   when: ansible_os_family == "Debian"
 
+- name: Ensure build tools are installed on the system- Make (Debian)
+  apt:
+    name: "make"
+    state: present
+    update_cache: yes
+  become: yes
+  when: ansible_os_family == "Debian"
+
+
 - name: Ensure build tools are installed on the system (RedHat)
   yum:
     name: "make"
