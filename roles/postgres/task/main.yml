@@ -1,0 +1,10 @@
+---
+# Inclueds File 
+- name: Include OS-Specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- include_tasks: install_Redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: install_Debian.yml
+  when: ansible_os_family == 'Debian'
