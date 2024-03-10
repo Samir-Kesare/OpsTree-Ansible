@@ -1,10 +1,11 @@
 ---
 - name: Ensure build tools are installed on the system (Debian)
   apt:
-    name: nginx
+    name: 'build-essential'
     state: present
     #update_cache: yes
   become: yes
+  check_mode: no
   when: ansible_os_family == "Debian"
 
 - name: Ensure build tools are installed on the system (RedHat)
