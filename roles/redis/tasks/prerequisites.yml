@@ -1,7 +1,7 @@
 ---
 - name: Ensure build tools are installed on the system (Debian)
   apt:
-    name: "make"
+    name: make
     state: present
     #update_cache: yes
   become: yes
