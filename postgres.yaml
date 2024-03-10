@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: tag_Type_postgres
   become: yes
   gather_facts: yes
   roles:
