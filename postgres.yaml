@@ -1,1 +1,6 @@
-
+---
+- hosts: postgres
+  become: yes
+  gather_facts: yes
+  roles:
+    - postgres
