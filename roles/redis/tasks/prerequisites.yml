@@ -1,19 +1,10 @@
 ---
 - name: Ensure build tools are installed on the system (Debian)
   apt:
-    name: "build-essential"
+    name: "make"
     state: present
     update_cache: yes
   become: yes
-  when: ansible_os_family == "Debian"
-
-- name: Ensure build tools are installed on the system- Make (Debian)
-  command: 'sudo apt install make'
-  #  name: make
-  #  state: present
-  #  update_cache: yes
-  #become: yes
-  #become_method: sudo
   when: ansible_os_family == "Debian"
 
 - name: Ensure build tools are installed on the system (RedHat)
