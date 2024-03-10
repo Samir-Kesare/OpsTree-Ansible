@@ -4,5 +4,6 @@ regions:
   - ap-northeast-1
 
 groups: 
-  redis: "'postgres' in tags.Type"
-
+  redis: "'redis' in tags.Type"
+  postgres: "'postgres' in tags.Type"
+  scylla: "'scylla' in tags.Type"
