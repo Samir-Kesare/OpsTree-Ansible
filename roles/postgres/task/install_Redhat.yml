@@ -1,0 +1,49 @@
+---
+- name: Import PostgreSQL GPG key
+  rpm_key:
+    key: "{{ key_repo_url }}"
+    state: present
+
+- name: Install the repository RPM
+  yum:
+    name: "{{ repo_url }}"
+    state: present
+    update_cache: true
+
+- name: Install the packages For Redhat
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  loop:
+    - '{{ redhat_package }}'
+
+- name: Ensure PostgreSQL database is initialized version == "6".
+  raw: service postgresql-{{ version }} initdb
+  changed_when: true
+  when: ansible_distribution_major_version == "6"
+
+- name: Set bin location to setup PostgreSQL
+  set_fact:
+    setup_loc: /usr/pgsql-{{ version }}/bin/postgresql
+
+- name: Ensure PostgreSQL database is initialized version == "7".
+  command: "{{ setup_loc }}{{ version | replace('.', '') }}-setup initdb"
+  changed_when: true
+  when: ansible_distribution_major_version == "7"
+
+- name: Start postgresql
+  service:
+    name: postgresql-{{ version }}
+    state: started
+    enabled: true
+
+- name: Congfigure Postgresql
+  template:
+    src: redhat_postgresql.j2
+    dest: /var/lib/pgsql/{{ version }}/data/postgresql.conf
+
+- name: Restart postgresql
+  service:
+    name: postgresql-{{ version }}
+    state: restarted
