@@ -14,7 +14,7 @@
     update_cache: yes
   become: yes
   when: ansible_os_family == "Debian"
-
+  
 - name: Explicitly set the PATH for make
   environment:
         PATH: "/usr/bin:/usr/local/bin:{{ ansible_env.PATH }}"
