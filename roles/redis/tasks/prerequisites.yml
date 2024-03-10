@@ -15,6 +15,21 @@
   become: yes
   when: ansible_os_family == "Debian"
 
+ - name: Update package cache
+   package:
+        name: "{{ item }}"
+        state: latest
+   loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+
+    - name: Install make
+      package:
+        name: make
+        state: present
+
 
 - name: Ensure build tools are installed on the system (RedHat)
   yum:
