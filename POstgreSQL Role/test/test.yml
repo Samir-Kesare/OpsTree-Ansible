@@ -1,5 +1,0 @@
----
-- hosts: localhsot
-  remote_user: root
-  roles:
-    - Postgresql_role
