@@ -1,0 +1,13 @@
+---
+key_repo_url: https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG-{{ version }}
+base_url: https://download.postgresql.org/pub/repos/yum/reporpms
+version_conf: EL-{{ ansible_distribution_major_version }}-x86_64
+package_name: pgdg-redhat-repo-latest.noarch.rpm
+repo_url: "{{ base_url }}/{{ version_conf }}/{{ package_name }}"
+redhat_package:
+  - postgresql{{ version | replace('.', '') }}-contrib
+    # - postgresql-client
+  # - postgresql-devel
+  - postgresql{{ version | replace('.', '') }}
+  - postgresql{{ version | replace('.', '') }}-server
+  - postgresql{{ version | replace('.', '') }}-libs
