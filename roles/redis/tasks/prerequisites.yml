@@ -13,12 +13,6 @@
     state: present
     update_cache: yes
   become: yes
-  when: ansible_os_family == "Debian"
-  
-- name: Explicitly set the PATH for make
-  environment:
-      PATH: "/usr/bin:/usr/local/bin:{{ ansible_env.PATH }}"
-  become: yes
   become_method: sudo
   when: ansible_os_family == "Debian"
 
