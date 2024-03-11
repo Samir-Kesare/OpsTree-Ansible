@@ -13,8 +13,14 @@
     - "{{ keyring_path }}"
     - "{{ cassandra_directory }}"
 
-- name: Install Java
-  apt:
-    name: openjdk-17-jre-headless
+# - name: Install Java
+#   apt:
+#     name: openjdk-17-jre-headless
+#     state: present
+#   check_mode: no
+- name: Install Java 17 using get_java module
+  community.general.get_java:
+    version: "17"
+    dest: "/opt/java"
+    java_home: "/opt/java"
     state: present
-  check_mode: no
