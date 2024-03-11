@@ -31,9 +31,3 @@
 - name: Debug Scylla setup output
   debug:
     var: scylla_setup_output
-
-- name: Start and enable scylla service
-  systemd:
-    name: scylla-server
-    state: started
-    enabled: yes
