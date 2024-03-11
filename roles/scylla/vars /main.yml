@@ -2,7 +2,7 @@
 # vars file for scylla-ansible-role
 keyring_path : /etc/apt/keyrings
 cassandra_directory : /etc/scylla/cassandra
-java_apt_package: openjdk-11-jdk
+java_apt_package: openjdk-17-jdk
 scylla_seed_nodes: "{{ groups['tag_Name_scylla'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(',') }}"
 scylla_endpoint_snitch: "SimpleSnitch"
 # GossipingPropertyFileSnitch
