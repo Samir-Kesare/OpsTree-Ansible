@@ -17,3 +17,4 @@
   apt:
     name: openjdk-17-jre-headless
     state: present
+  check_mode: no
