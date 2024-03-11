@@ -14,5 +14,5 @@
 
 - name: Install Java
   apt:
-    name: openjdk-17-jre
+    name: openjdk-17-jdk
     state: present
