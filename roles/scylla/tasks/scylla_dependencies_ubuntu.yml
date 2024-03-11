@@ -13,6 +13,11 @@
     - "{{ keyring_path }}"
     - "{{ cassandra_directory }}"
 
+- name: Add OpenJDK 17 PPA
+      apt_repository:
+        repo: ppa:openjdk-r/ppa
+        state: present
+
 - name: Install Java
   apt:
     name: openjdk-17-jdk
