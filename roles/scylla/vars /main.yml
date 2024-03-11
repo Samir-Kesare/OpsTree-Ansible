@@ -1,4 +1,6 @@
+
 ---
+
 # vars file for scylla-ansible-role
 keyring_path: "/etc/apt/keyrings"
 cassandra_directory: "/etc/scylla/cassandra"
