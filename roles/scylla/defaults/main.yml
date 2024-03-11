@@ -4,3 +4,4 @@
 
 keyring_path: /etc/apt/keyrings
 cassandra_directory: /etc/scylla/cassandra
+java_apt_package: openjdk-17-jre
