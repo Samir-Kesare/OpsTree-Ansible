@@ -15,5 +15,5 @@
 
 - name: Install Java
   apt:
-    name: openjdk-17-jre-headless
+    name: openjdk-11-jre-headless
     state: present
