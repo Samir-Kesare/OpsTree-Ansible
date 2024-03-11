@@ -13,5 +13,5 @@
     - "{{ cassandra_directory }}"
 
 - name: Install Java
-      apt:
-        name: "{{ java_apt_package }}"
+  apt:
+    name: "{{ java_apt_package }}"
