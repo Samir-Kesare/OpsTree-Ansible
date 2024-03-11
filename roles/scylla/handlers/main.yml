@@ -5,3 +5,4 @@
   systemd:
     name: scylla-server
     state: restarted
+  ignore_errors: yes
