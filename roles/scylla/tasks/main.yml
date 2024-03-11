@@ -1,0 +1,11 @@
+# tasks file for scylla-ansible-role
+
+---
+- name: Install Dependencies
+  import_tasks: scylla_dependencies_ubuntu.yml
+
+- name: Install on Debian
+  import_tasks: install_scylla_ubuntu.yml
+
+- name: Configure Scylladb
+  import_tasks: change_config_ubuntu.yml

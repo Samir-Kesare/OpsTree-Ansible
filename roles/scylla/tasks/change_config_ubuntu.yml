@@ -1,0 +1,23 @@
+---
+
+# Replace scylla yaml file into server
+
+- name: Copy scylla configuration template into ubuntu
+  template:
+    src: scylla.yaml.j2
+    dest: /etc/scylla/scylla.yaml
+  notify: Restart scylla
+
+- meta: flush_handlers
+
+- name: Pause for 30 seconds
+  pause:
+      seconds: 30
+
+- name: See Nodetool Status
+  command: "nodetool status"
+  register: status
+
+- name: Debug Nodetool status
+  debug:
+    var: status

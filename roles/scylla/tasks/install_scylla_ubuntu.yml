@@ -1,0 +1,39 @@
+---
+# install scylla on ubuntu
+
+
+- name: Import ScyllaDB GPG Key
+  become: true
+  raw: "{{ scylla_repo_key_url }}"
+
+- name: Add ScyllaDB Repository
+  get_url:
+    url: "{{ scylla_repo_url }}"
+    dest: "{{ scylla_repo_dest }}"
+
+- name: Update Apt Cache
+  apt:
+    update_cache: yes
+
+- name: Install Scylla
+  apt:
+    name: scylla
+    state: present
+  failed_when: false
+
+- name: Run Scylla
+  command: scylla_setup
+  args:
+    stdin: "YES\nYES\nYES\nYES\nYES\nYES\nYES\nYES\nyes\nYES\nyes\nYES\nyes\nYES\nyes\nYES\nYES\nYES\nYES\nYES\nYES\nYES\nyes"
+  register: scylla_setup_output
+  failed_when: false
+
+- name: Debug Scylla setup output
+  debug:
+    var: scylla_setup_output
+
+- name: Start and enable scylla service
+  systemd:
+    name: scylla-server
+    state: started
+    enabled: yes
