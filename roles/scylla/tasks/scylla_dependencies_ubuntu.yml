@@ -13,23 +13,7 @@
     - "{{ keyring_path }}"
     - "{{ cassandra_directory }}"
 
-# - name: Add OpenJDK 17 PPA
-#   apt_repository:
-#       repo: ppa:openjdk-r/ppa
-#       state: present
-
-# - name: Update Apt Cache
-#   apt:
-#     update_cache: yes 
-
-# - name: Install Java
-#   apt:
-#     name: openjdk-17-jre-headless
-#     state: present
-
-- name: Install Java 17 using get_java module
-  community.general.get_java:
-    version: "17"
-    dest: "/opt/java"
-    java_home: "/opt/java"
+- name: Install Java
+  apt:
+    name: "{{ java_apt_package }}"
     state: present
