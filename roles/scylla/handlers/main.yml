@@ -1,0 +1,7 @@
+
+# handlers file for cassandra-tool
+
+- name: Restart scylla
+  systemd:
+    name: scylla-server
+    state: restarted
