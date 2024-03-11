@@ -18,9 +18,9 @@
       repo: ppa:openjdk-r/ppa
       state: present
 
- - name: Update Apt Cache
-   apt:
-     update_cache: yes
+- name: Update Apt Cache
+  apt:
+    update_cache: yes 
 
 - name: Install Java
   apt:
