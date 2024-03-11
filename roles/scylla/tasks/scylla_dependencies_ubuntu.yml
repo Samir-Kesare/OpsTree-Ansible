@@ -28,8 +28,8 @@
 #     state: present
 
 - name: Install Java 17 using get_java module
-      community.general.get_java:
-        version: "17"
-        dest: "/opt/java"
-        java_home: "/opt/java"
-        state: present
+  community.general.get_java:
+    version: "17"
+    dest: "/opt/java"
+    java_home: "/opt/java"
+    state: present
