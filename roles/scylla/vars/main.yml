@@ -5,7 +5,7 @@
 keyring_path: "/etc/apt/keyrings"
 cassandra_directory: "/etc/scylla/cassandra"
 java_apt_package: "openjdk-17-jre"
-scylla_seed_nodes: "{{ groups['tag_Name_scylla'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(',') }}"
+scylla_seed_nodes: "{{ groups['scylla'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(',') }}"
 scylla_endpoint_snitch: "SimpleSnitch"
 # GossipingPropertyFileSnitch
 scylla_repo_key_url: "gpg --homedir /tmp --no-default-keyring --keyring /etc/apt/keyrings/scylladb.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys d0a112e067426ab2"
