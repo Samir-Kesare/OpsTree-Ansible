@@ -3,7 +3,7 @@
 - name: Update Apt Cache
   apt:
     update_cache: yes
-   check_mode: no
+  check_mode: no
 
 - name: Create directory for cassandra and keyrings
   file:
