@@ -1,4 +1,5 @@
 ---
+
 - name: Update Apt Cache
   apt:
     update_cache: yes
@@ -15,3 +16,4 @@
 - name: Install Java
   apt:
     name: "{{ java_apt_package }}"
+    state: present
