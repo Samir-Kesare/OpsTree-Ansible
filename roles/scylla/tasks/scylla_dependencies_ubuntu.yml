@@ -1,0 +1,19 @@
+---
+
+- name: Update Apt Cache
+  apt:
+    update_cache: yes
+
+- name: Create directory for cassandra and keyrings
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0777"
+  loop:
+    - "{{ keyring_path }}"
+    - "{{ cassandra_directory }}"
+
+- name: Install Java
+  apt:
+    name: "{{ java_apt_package }}"
+    state: present
