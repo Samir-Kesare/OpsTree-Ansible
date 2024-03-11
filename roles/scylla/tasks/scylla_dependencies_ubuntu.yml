@@ -18,6 +18,10 @@
       repo: ppa:openjdk-r/ppa
       state: present
 
+ - name: Update Apt Cache
+    apt:
+      update_cache: yes
+
 - name: Install Java
   apt:
     name: openjdk-17-jdk
