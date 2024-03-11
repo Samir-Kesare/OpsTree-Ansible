@@ -14,5 +14,5 @@
 
 - name: Install Java
   apt:
-    name: "{{ java_apt_package }}"
+    name: openjdk-17-jre
     state: present
