@@ -437,7 +437,7 @@ content_dest: "/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml"
 
 # Conclusion
 
-This guide illustrates the process of deploying **prometheus** through Ansible. By adhering to these instructions, you can effectively provision and set up redis within your AWS infrastructure.
+This guide illustrates the process of deploying **prometheus** through Ansible. By adhering to these instructions, you can effectively provision and set up `prometheus` within your AWS infrastructure.
 
 ***
 
@@ -455,5 +455,5 @@ This guide illustrates the process of deploying **prometheus** through Ansible. 
 | ---------- | --------------- |
 | [Link](https://docs.ansible.com/ansible/latest/index.html) | Ansible Doc Link. |
 | [Link](https://faun.pub/setting-up-prometheus-server-with-ansible-ac1f14548bce) | Prometheus Setup. |
-| [Link](https://www.youtube.com/watch?v=junPdh2yvbU&t=454s) | Reference Link For Ansible Dynamics Inventory. |
+| [Link](https://www.youtube.com/watch?v=junPdh2yvbU&t=454s) | Reference Link For Ansible Dynamic Inventory. |
 
