@@ -1,1 +1,6 @@
 
+---
+- hosts: localhost
+  remote_user: ubuntu
+  roles:
+    - ansible-role-elasticsearch
