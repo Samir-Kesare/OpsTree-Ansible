@@ -1,1 +1,25 @@
 
+# tasks file for ansible-role-elasticsearch
+---
+- name: Add Elasticsearch GPG Key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+  notify: restart elasticsearch
+
+- name: Add Elasticsearch APT Repository
+  apt_repository:
+    repo: "deb https://artifacts.elastic.co/packages/{{ elasticsearch_version }}/apt stable main"
+    state: present
+  notify: restart elasticsearch
+
+- name: Update apt and install Elasticsearch
+  apt:
+    name: elasticsearch
+    state: latest
+  notify: restart elasticsearch
+
+- name: Copy Elasticsearch configuration template
+  template:
+    src: elasticsearch.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+  notify: restart elasticsearch
