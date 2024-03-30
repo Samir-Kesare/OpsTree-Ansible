@@ -71,8 +71,6 @@ private_key_file =/home/ubuntu/elasticSearch.pem
 [inventory]
 enable_plugins = aws_ec2
 
-
-
 ```
 </details>
 
@@ -227,7 +225,7 @@ dependencies: []
 
 ### tasks file (main.yml)
 
-This playbook automates the setup process, ensuring a smooth installation and configuration of Prometheus on the target system.
+This playbook automates the setup process, ensuring a smooth installation and configuration of Elasticsearch on the target system.
 
 <details>
 <summary> Click here to see main.yml file</summary>
@@ -266,7 +264,7 @@ This playbook automates the setup process, ensuring a smooth installation and co
 
 ### templates file (elasticsearch.j2)
 
-This configuration file is for setting up and managing the Prometheus server, defines the behavior of the Prometheus service, including how it should be started, restarted.
+This configuration file is for setting up and managing the Elasticsearch server, defines the behavior of the Elasticsearch service, including how it should be started, restarted.
 
 <details>
 <summary> Click here to see prometheus_config.j2 file</summary>
@@ -322,7 +320,11 @@ This Ansible playbook named "Install Elasticsearch" targets the cloud server mac
 <br>
   
 ```shell
-
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - ansible-role-elasticsearch
 
 ```
 </details>
@@ -371,6 +373,6 @@ In conclusion, this Ansible role simplifies the deployment and management of Ela
 | **Source** | **Description** |
 | ---------- | --------------- |
 | [Link](https://docs.ansible.com/ansible/latest/index.html) | Ansible Doc Link. |
-| [Link](https://faun.pub/setting-up-prometheus-server-with-ansible-ac1f14548bce) | Elasticserach Setup. |
+| [Link](https://www.elastic.co/guide/en/elasticsearch/reference/current/targz.html) | Elasticserach Setup. |
 | [Link](https://www.youtube.com/watch?v=junPdh2yvbU&t=454s) | Reference Link For Ansible Dynamic Inventory. |
 
