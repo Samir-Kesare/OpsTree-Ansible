@@ -1,1 +1,10 @@
 
+# handlers file for ansible-role-elasticsearch
+---
+- name: restart elasticsearch
+  systemd:
+    name: elasticsearch
+    state: restarted
+    enabled: yes
+
+
