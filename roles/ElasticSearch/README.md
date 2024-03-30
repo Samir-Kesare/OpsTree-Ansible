@@ -131,7 +131,7 @@ The defaults/main.yml file helps maintain consistency and simplifies role config
   
 ```shell
 ---
-# vars file for ansible-role-elasticsearch
+# defaults file for ansible-role-elasticsearch
 elasticsearch_version: "7.x"
 ```
 </details>
@@ -168,7 +168,58 @@ This is a metadata file (meta/main.yml) for an Ansible role, providing essential
 <br>
   
 ```shell
+galaxy_info:
+  author: Shikha
+  description: Snaatak-P7
+  company: Mygurukulam- Powered by Opstree
 
+  # If the issue tracker for your role is not on github, uncomment the
+  # next line and provide a value
+  # issue_tracker_url: http://example.com/issue/tracker
+
+  # Choose a valid license ID from https://spdx.org - some suggested licenses:
+  # - BSD-3-Clause (default)
+  # - MIT
+  # - GPL-2.0-or-later
+  # - GPL-3.0-only
+  # - Apache-2.0
+  # - CC-BY-4.0
+  license: license (GPL-2.0-or-later, MIT, etc)
+
+  min_ansible_version: 2.1
+
+  # If this a Container Enabled role, provide the minimum Ansible Container version.
+  # min_ansible_container_version:
+
+  #
+  # Provide a list of supported platforms, and for each platform a list of versions.
+# If you don't wish to enumerate all versions for a particular platform, use 'all'.
+  # To view available platforms and versions (or releases), visit:
+  # https://galaxy.ansible.com/api/v1/platforms/
+  #
+  # platforms:
+  # - name: Fedora
+  #   versions:
+  #   - all
+  #   - 25
+  # - name: SomePlatform
+  #   versions:
+  #   - all
+  #   - 1.0
+  #   - 7
+  #   - 99.99
+
+  galaxy_tags: []
+# List tags for your role here, one per line. A tag is a keyword that describes
+    # and categorizes the role. Users find roles by searching for tags. Be sure to
+    # remove the '[]' above, if you add tags to this list.
+    #
+    # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
+    #       Maximum 20 tags per role.
+
+dependencies: []
+  # List your role dependencies here, one per line. Be sure to remove the '[]' above,
+  # if you add dependencies to this list.
 ```
 </details>
 
@@ -183,84 +234,37 @@ This playbook automates the setup process, ensuring a smooth installation and co
 <br>
   
 ```shell
-- name: Ensure the required packages are installed
-  become: yes
-  package:
-    name:
-      - wget
-      - tar
-  ignore_errors: yes
 
-- name: Add the 'prometheus' user
-  become: yes
-  user:
-    name: "{{user}}"
-    shell: /bin/bash
-    create_home: yes
+# tasks file for ansible-role-elasticsearch
+---
+- name: Add Elasticsearch GPG Key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+  notify: restart elasticsearch
+
+- name: Add Elasticsearch APT Repository
+  apt_repository:
+    repo: "deb https://artifacts.elastic.co/packages/{{ elasticsearch_version }}/apt stable main"
     state: present
+  notify: restart elasticsearch
 
-- name: Create a directory for Prometheus installation
-  become: yes
-  file:
-    path: /home/prometheus
-    owner: "{{user}}"
-    group: "{{group}}"
-    state: directory
+- name: Update apt and install Elasticsearch
+  apt:
+    name: elasticsearch
+    state: latest
+  notify: restart elasticsearch
 
-- name: Download Prometheus archive
-  become: yes
-  get_url:
-    url: "{{url}}"
-    dest: "{{dir}}"
-
-- name: Extract Prometheus archive
-  become: yes
-  ansible.builtin.unarchive:
-    src: "{{dir}}"
-    dest: /home/prometheus
-    remote_src: yes
-    creates: "{{create_dir}}"
-
-- name: create an empty file for prometheus.service
-  ansible.builtin.file:
-    path: "{{path}}"
-    state: touch
-    owner: "{{user}}"
-    group: "{{group}}"
-    mode: 0644
-
-- name: Replace the content of "{{content_dest}}"
-  become: yes  
+- name: Copy Elasticsearch configuration template
   template:
-    src: prometheus_config.j2
-    dest: "{{content_dest}}"
-    owner: "{{user}}"
-    group: "{{group}}"
-    mode: 0644
-
-- name: Replace the content of "{{path}}"
-  template:
-    src: prometheus_service.j2
-    dest: "{{path}}"
-    owner: root
-    group: root
-    mode: 0644
-  become: true
-  notify: systemd_reload
-- meta: flush_handlers
-
-- name: Reload systemd to apply changes
-  service:
-    name: "{{user}}.service"
-    state: restarted
-  become: true
-
+    src: elasticsearch.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+  notify: restart elasticsearch
 ```
 </details>
 
 ***
 
-### templates file (prometheus_config.j2)
+### templates file (elasticsearch.j2)
 
 This configuration file is for setting up and managing the Prometheus server, defines the behavior of the Prometheus service, including how it should be started, restarted.
 
@@ -269,83 +273,56 @@ This configuration file is for setting up and managing the Prometheus server, de
 <br>
   
 ```shell
-# my global config
-global:
-  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
-  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
-  # scrape_timeout is set to the global default (10s).
-
-# Alertmanager configuration
-alerting:
-  alertmanagers:
-    - static_configs:
-        - targets:
-          # - alertmanager:9093
-
-# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
-rule_files:
-  # - "first_rules.yml"
-  # - "second_rules.yml"
-
-# A scrape configuration containing exactly one endpoint to scrape:
-# Here it's Prometheus itself.
-scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: "prometheus"
-
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-
-    static_configs:
-      - targets: ["54.236.39.26:9090"]
-
-```
-</details>
-
-***
-
-### templates file (prometheus_service.j2)
-
-<details>
-<summary> Click here to see prometheus_service.j2 file</summary>
-<br>
-  
-```shell
-[Unit]
-Description=Prometheus Server
-Documentation=https://prometheus.io/docs/introduction/overview/
-After=network-online.target
-
-[Service]
-user=root
-#User=prometheus
-#Group=prometheus
-Restart=on-failure 
-ExecStart={{ exec_command }}
-
-[Install]
-WantedBy=multi-user.target
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Elasticsearch</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello Elasticsearch!</h1>
+        <p>Welcome to our Elasticsearch dashboard.</p>
+    </div>
+</body>
+</html>
 
 ```
 </details>
-
 ***
 
 ### tests file (test.yml)
 
-This Ansible playbook named "Install prometheus" targets the localhost machine and utilizes the "Prometheus_role" role to install Prometheus.
+This Ansible playbook named "Install Elasticsearch" targets the cloud server machine and utilizes the "Elasticsearch_role" role to install Elasticsearch
 
 <details>
 <summary> Click here to see test.yml file</summary>
 <br>
   
 ```shell
----
-- name: Install prometheus
-  hosts: localhost
-  become: yes
-  roles:
-    - Prometheus_role
+
 
 ```
 </details>
@@ -354,24 +331,16 @@ This Ansible playbook named "Install prometheus" targets the localhost machine a
 
 ### vars file (main.yml)
 
-This configuration defines a user and group named "prometheus" and specifies an executable command to run Prometheus. It also includes details such as the version, download URL, directory paths, and service file path. Additionally, it creates a systemd service for Prometheus and specifies the destination for the Prometheus configuration file. 
+This configuration defines a Elasticsearch version.
+
 
 <details>
 <summary> Click here to see main.yml file</summary>
 <br>
   
 ```shell
-
-user: "prometheus"
-group: "prometheus"
-exec_command: "/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus --config.file=/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml"
-version: "2.47.1"
-url: "https://github.com/prometheus/prometheus/releases/download/v2.47.1/prometheus-2.47.1.linux-amd64.tar.gz"
-dir: "/home/prometheus/prometheus-2.47.1.linux-amd64.tar.gz"
-create_dir: "/home/prometheus/prometheus-2.47.1.linux-amd64"
-path: "/etc/systemd/system/prometheus.service"
-content_dest: "/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml"
-
+# vars file for ansible-role-elasticsearch
+elasticsearch_version: "7.x"
 ```
 </details>
 
@@ -379,29 +348,21 @@ content_dest: "/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml"
 
 # Output
 
-### Prometheus Role Execution
+### Elasticsearch Role Execution
+![Screenshot from 2024-03-30 15-38-34](https://github.com/CodeOps-Hub/Ansible/assets/156056746/4a4ab6d2-f59b-4fe1-b92b-e0c4e49c1e86)
 
-<img width="900" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/833e5131-1a51-430c-b2f3-2fd997915493">
-
-***
-
-### Prometheus Server 
-
-<img width="900" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/788ccce1-049b-47ba-8d04-b573066cfd06">
 
 ***
 
 # Conclusion
-
-This guide illustrates the process of deploying **prometheus** through Ansible. By adhering to these instructions, you can effectively provision and set up `prometheus` within your AWS infrastructure.
-
+In conclusion, this Ansible role simplifies the deployment and management of Elasticsearch clusters. It automates the installation and configuration process, reducing manual effort and ensuring consistency across environments.
 ***
 
 # Contact Information
 
 | **Name** | **Email Address** |
 | -------- | ----------------- |
-| **Shreya Jaiswal** | shreya.jaiswal.snaatak@mygurukulam.co |
+| **Shikha Tripathi** | shikha.tripathi.snaatak@mygurukulam.co |
 
 ***
 
@@ -410,6 +371,6 @@ This guide illustrates the process of deploying **prometheus** through Ansible. 
 | **Source** | **Description** |
 | ---------- | --------------- |
 | [Link](https://docs.ansible.com/ansible/latest/index.html) | Ansible Doc Link. |
-| [Link](https://faun.pub/setting-up-prometheus-server-with-ansible-ac1f14548bce) | Prometheus Setup. |
+| [Link](https://faun.pub/setting-up-prometheus-server-with-ansible-ac1f14548bce) | Elasticserach Setup. |
 | [Link](https://www.youtube.com/watch?v=junPdh2yvbU&t=454s) | Reference Link For Ansible Dynamic Inventory. |
 
