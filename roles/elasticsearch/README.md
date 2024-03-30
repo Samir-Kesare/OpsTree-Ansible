@@ -309,6 +309,7 @@ This configuration file is for setting up and managing the Elasticsearch server,
 
 ```
 </details>
+
 ***
 
 ### tests file (test.yml)
