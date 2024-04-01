@@ -23,7 +23,7 @@
 
 # Introduction
 
-This role is designed to automate the installation and configuration of Npde Exporter on target ubuntu server(Postgres). This role aims to simplify the process of setting up Postgres Node Exporter server.
+This role is designed to automate the installation and configuration of Node Exporter on target ubuntu server(Postgres). This role aims to simplify the process of setting up Postgres Node Exporter server.
 
 ***
 
