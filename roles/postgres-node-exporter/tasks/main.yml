@@ -1,1 +1,29 @@
+---
+- name: Download Node Exporter binary
+  get_url:
+    url: "{{url}}"
+    dest: "{{dest}}"
 
+- name: Ensure "{{node_exporter_install_dir}}" directory exists
+  file:
+    path: "{{node_exporter_install_dir}}"
+    state: directory
+
+- name: Extract Node Exporter archive
+  ansible.builtin.unarchive:
+    src: "{{dest}}"
+    dest: "{{ node_exporter_install_dir }}"
+    remote_src: yes
+
+- name: Install Node Exporter service
+  ansible.builtin.template:
+    src: "{{src}}"
+    dest: "{{src_dest}}"
+  notify: Restart Node Exporter
+
+- name: Start Node Exporter service
+  ansible.builtin.service:
+    name: postgres_node_exporter
+    state: started
+     
+  
