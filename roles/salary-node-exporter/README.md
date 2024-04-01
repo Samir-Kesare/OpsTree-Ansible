@@ -67,7 +67,7 @@ This role is designed to automate the installation and configuration of Node Exp
 inventory		=	/home/harshit/aws_ec2.yml # path of inventory file
 private_key_file	=	/home/harshit/Downloads/central.pem  # path of pem key 
 remote_user		= 	ubuntu
-host_key_checking	=	True
+host_key_checking	=	False
 [inventory]
 enable_plugins 		= 	aws_ec2
 ```
