@@ -341,7 +341,11 @@ scrape_configs:
     # scheme defaults to 'http'.
 
     static_configs:
-      - targets: ["54.236.39.26:9090"]
+      - targets: ["localhost:9090"]
+
+  - job_name: "ec2"
+    ec2_sd_configs:
+      - region: "us-east-1"    
 
 ```
 </details>
