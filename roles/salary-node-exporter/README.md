@@ -325,21 +325,9 @@ node_exporter_group: "node_exporter"
 
 ### Salary-Node-Exporter Server 
 
-<img width="900" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/7a735002-e3cc-44d6-ae57-eabade14d420">
-
-***
-<img width="900" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/442a0d16-b252-4f9d-98e3-391d969a8eab">
-
-***
-
-### Monitoring Salary-Node-Exporter server in Prometheus 
-
-<img width="900" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/50b8dd35-4c05-494f-965f-fa6b2e3c2c6e">
-
 ***
 
 ### Log Metrics of Salary-Node-Exporter Server
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/55d27dd5-6984-4754-ba37-7385d6e385bf)
 
 ***
 
