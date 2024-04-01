@@ -350,6 +350,6 @@ This guide illustrates the process of deploying **Salary-node-exporter** through
 | Description                                   | References  |
 | --------------------------------------------  | -------------------------------------------------|
 |  Ansible Doc | [Reference link](https://docs.ansible.com/ansible/latest/index.html) |
-| Node Exporter Setup | [Reference link](https://https://stackoverflow.com/questions/72449595/ansible-role-for-node-exporter-installation) |
-| Reference Link For Ansible Dynamic Inventory | [Reference link](https://www.youtube.com/watch?v=junPdh2yvbU&t=454s) |
+| Node Exporter Setup | [Reference link](https://codewizardly.com/prometheus-on-aws-ec2-part2/) |
+| Reference Link For Ansible Dynamic Inventory | [Reference link](https://devopscube.com/setup-ansible-aws-dynamic-inventory/) |
 | Node Exporter Releases| [Reference link](https://github.com/prometheus/node_exporter/releases) |
