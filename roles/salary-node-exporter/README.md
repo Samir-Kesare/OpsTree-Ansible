@@ -116,7 +116,7 @@ keyed_groups:
 
 ## Salary-Node-Exporter Role
 
-### Pre-requisites file (prerequisites.yml)
+### pre-requisites file (prerequisites.yml)
 This Ansible playbook consists of tasks aimed to meet pre-requisites of the Node Exporter service.
 <details>
 <summary> Click here to see prerequisites.yml file</summary>
@@ -139,7 +139,7 @@ This Ansible playbook consists of tasks aimed to meet pre-requisites of the Node
 </details>
 
 ***
-### Ubuntu file (ubuntu.yml)
+### ubuntu file (ubuntu.yml)
 This Ansible playbook consists of tasks aimed at downloading, extracting, installing, and starting the Node Exporter service.
 <details>
 <summary> Click here to see ubuntu.yml file</summary>
