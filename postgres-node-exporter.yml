@@ -1,0 +1,6 @@
+---
+- hosts: aws_ec2
+  become: yes
+  gather_facts: yes
+  roles:
+    - Node_Exporter_role
