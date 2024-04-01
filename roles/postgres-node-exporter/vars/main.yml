@@ -1,1 +1,11 @@
-
+---
+node_exporter_version: "1.7.0"
+node_exporter_install_dir: "/opt/node_exporter"
+node_exporter_listen_address: "0.0.0.0:9100"
+node_exporter_telemetry_path: "/metrics"
+postgres_host: "localhost"
+postgres_port: "5432"
+url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+dest: "/tmp/node_exporter.tar.gz"
+src: "postgres_node_exporter.service.j2"
+src_dest: "/etc/systemd/system/postgres_node_exporter.service"
