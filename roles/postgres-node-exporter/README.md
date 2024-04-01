@@ -344,7 +344,7 @@ src_dest: "/etc/systemd/system/postgres_node_exporter.service"
 
 ***
 
-### Logs in Prometheus Server
+### Monitoring Postgres-Node-Exporter server in Prometheus 
 
 <img width="900" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/50b8dd35-4c05-494f-965f-fa6b2e3c2c6e">
 
