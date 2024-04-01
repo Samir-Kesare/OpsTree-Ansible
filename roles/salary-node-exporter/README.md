@@ -318,16 +318,18 @@ node_exporter_group: "node_exporter"
 
 # Output
 
-### Node Exporter Role Execution
-
+### Role Execution
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/b4cea04e-de9f-44e0-a00e-76ba22604524)
 
 ***
 
 ### Salary-Node-Exporter Server 
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/15754c11-1a16-4615-b5c6-50dad330a968)
 
 ***
 
 ### Log Metrics of Salary-Node-Exporter Server
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/c365d2f2-b37e-4d63-a3d0-9ae406ab23ac)
 
 ***
 
