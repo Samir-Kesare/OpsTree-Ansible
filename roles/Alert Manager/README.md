@@ -60,15 +60,13 @@ define alert rules, handle alerts, and route notifications to various channels.
   
 ```shell
 [defaults]
-roles_path=grafana
-retry_files_enabled=no
-inventory=aws_ec2.yml
-host_key_checking = False
-remote_user = ubuntu
-private_key_file = new.pem
+# some basic default values...
+inventory               =       ./aws_ec2.yaml
+private_key_file        =       ./samir.pem
+remote_user             =       ubuntu
+host_key_checking       =       False
 [inventory]
-enable_plugins = aws_ec2
-
+enable_plugins          =       aws_ec2
 ```
 </details>
 
@@ -84,12 +82,12 @@ enable_plugins = aws_ec2
 ---
 plugin: aws_ec2
 regions:
-  - ap-southeast-1
-hostnames:
-  - ip-address
+  - ap-northeast-1
 filters:
-  tag:Name:
-    - grafana-server
+    instance-state-code: 16
+keyed_groups:
+  - key: tags
+    prefix: tag
 
 ```
 </details>
@@ -108,14 +106,14 @@ filters:
   become: yes
   gather_facts: yes
   roles:
-    - grafana
+    - alert_manager_role
 
 ```
 </details>
 
 ***
 
-## Grafana Role
+##  alert_manager_role
 
 ### defaults
 
@@ -127,14 +125,94 @@ The defaults/main.yml file helps maintain consistency and simplifies role config
   
 ```shell
 ---
-# defaults file for roles/grafana
-grafana_admin_password: "abc1234"
+alert_manager_port: 9093
+alert_manager_config_file: /etc/alertmanager/alertmanager.yml
+alert_manager_binary_url: "https://github.com/prometheus/alertmanager/releases/download/v{{ alert_manager_version }}/alertmanager-{{ alert_manager_version }}.linux-amd64.tar.gz"
+alert_manager_version: "0.23.0"
+
 
 ```
 </details>
 
 ***
+### handlers
 
+
+<details>
+<summary> main.yml </summary>
+<br>
+  
+```shell
+- name: Restart Alert Manager
+  systemd:
+    name: alertmanager
+    state: restarted
+
+
+```
+</details>
+
+***
+### templates/alertmanager.yml.j2
+
+
+<details>
+<summary> main.yml </summary>
+<br>
+  
+```shell
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: 'null'
+
+receivers:
+- name: 'null'
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']
+
+    - source_match:
+        severity: 'warning'
+      target_match:
+        severity: 'critical'
+      equal: ['alertname', 'dev', 'instance']
+
+
+```
+</details>
+
+***
+### templates/alertmanager.service.j2
+
+
+<details>
+<summary> main.yml </summary>
+<br>
+  
+```shell
+[Unit]
+Description=Alert Manager
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/alertmanager --config.file={{ alert_manager_config_file }}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+```
+</details>
+
+***
 ### tasks
 
 This playbook automates the setup process, ensuring a smooth installation and configuration of Prometheus on the target system.
@@ -145,45 +223,48 @@ This playbook automates the setup process, ensuring a smooth installation and co
   
 ```shell
 ---
-# tasks file for roles/grafana
-- name: install gpg
-  apt:
-    name: gnupg,software-properties-common
+- name: Install required dependencies
+  package:
+    name: "{{ item }}"
     state: present
-    update_cache: yes
-    cache_valid_time: 3600
-- name: add gpg hey
-  apt_key:
-    url: "https://packages.grafana.com/gpg.key"
-    validate_certs: no
-- name: add repository
-  apt_repository:
-    repo: "deb https://packages.grafana.com/oss/deb stable main"             
-    state: present
-    validate_certs: no
-- name: install grafana
-  apt:
-    name: grafana
-    state: latest
-    update_cache: yes
-    cache_valid_time: 3600
-- name: start service grafana-server
+  with_items:
+    - wget
+    - tar
+
+- name: Download Alert Manager binary
+  get_url:
+    url: "{{ alert_manager_binary_url }}"
+    dest: "/tmp/alertmanager-{{ alert_manager_version }}.tar.gz"
+
+- name: Extract Alert Manager binary
+  become: true
+  unarchive:
+    src: "/tmp/alertmanager-{{ alert_manager_version }}.tar.gz"
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Create directory for Alert Manager configuration
+  file:
+    path: "{{ alert_manager_config_file | dirname }}"
+    state: directory
+
+- name: Generate Alert Manager configuration file
+  template:
+    src: alertmanager.yml.j2
+    dest: "{{ alert_manager_config_file }}"
+  notify: Restart Alert Manager
+
+- name: Install systemd service
+  template:
+    src: alertmanager.service.j2
+    dest: /etc/systemd/system/alertmanager.service
+  notify: Restart Alert Manager
+
+- name: Start Alert Manager service
   systemd:
-    name: grafana-server
+    name: alertmanager
     state: started
     enabled: yes
-- name: wait for service up
-  uri:
-    url: "http://127.0.0.1:3000"
-    status_code: 200
-  register: __result
-  until: __result.status == 200
-  retries: 120
-  delay: 1
-- name: change admin password for grafana gui
-  shell : "grafana-cli admin reset-admin-password {{ grafana_admin_password }}"
-  register: __command_admin
-  changed_when: __command_admin.rc !=0
 
 ```
 </details>
@@ -195,19 +276,18 @@ This playbook automates the setup process, ensuring a smooth installation and co
 
 # Output
 
-### Grafana Role Execution
-![Screenshot 2024-04-01 at 1 22 06 AM](https://github.com/CodeOps-Hub/Ansible/assets/156056364/b6b77bf5-6940-40d0-b447-ef776e7e6634)
+### alert_manager_role Execution
 
 ***
 
-### Grafana Dashboard 
+### alert_manager_role varification
 ![Screenshot 2024-04-01 at 1 23 14 AM](https://github.com/CodeOps-Hub/Ansible/assets/156056364/36f6f1c6-dacf-49cc-9b9b-b4de656ebcf1)
 
 ***
 
 # Conclusion
 
-This guide demonstrates how to deploy Grafana using Ansible. By following these instructions, you can efficiently provision and configure Grafana within your AWS infrastructure.
+In conclusion, the Alert Manager role serves as a vital component in a monitoring and alerting infrastructure, enabling organizations to effectively manage and respond to alerts generated by Prometheus and other monitoring systems. By providing a robust alerting system with features such as rule definition, lifecycle management, and notification integration, the Alert Manager role empowers teams to proactively monitor their systems, detect anomalies, and take timely action to mitigate potential issues.
 
 ***
 
@@ -215,7 +295,7 @@ This guide demonstrates how to deploy Grafana using Ansible. By following these 
 
 | **Name** | **Email Address** |
 | -------- | ----------------- |
-| **Shantanu** | shantanu.chauhan.snaatak@mygurukulam.co |
+| **Samir** | samir.kesare.snaatak@mygurukulam.co |
 
 ***
 
