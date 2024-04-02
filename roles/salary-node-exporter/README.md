@@ -332,6 +332,11 @@ node_exporter_group: "node_exporter"
 
 ***
 
+### Prometheus UI
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/38aaa2e9-1b47-49d3-b68a-0e6fd9b5c022)
+
+***
+
 # Conclusion
 
 This guide illustrates the process of deploying **Salary-node-exporter** through Ansible. By adhering to these instructions, you can effectively provision and set up `node exporter in Salary server` within your AWS infrastructure.
