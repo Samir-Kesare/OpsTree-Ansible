@@ -1,5 +1,5 @@
 # Ansible Role for Salary-Node-Exporter
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/30b51328-6b66-4948-b2b1-81d405b24e1a)
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/7307e336-40f7-483b-b4b5-03736aa58ee1)
 
 ***
 |   Author        |  Created on   |  Version   | Last updated by  | Last edited on |
