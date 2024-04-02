@@ -27,7 +27,7 @@ This role is designed to automate the installation and configuration of Node Exp
 
 # Flow Diagram
 
-<img width="900" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/347e6f11-4081-4242-8647-be2966452687">
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/b1800d8c-94aa-4db1-beeb-bacbfd3ddd22)
 
 ***
 
