@@ -1,0 +1,11 @@
+[Unit]
+Description=NodeExporter
+
+[Service]
+User=node_exporter
+Group=node_exporter
+ExecStart={{ node_exporter_install_dir }}/node_exporter --web.listen-address={{ node_exporter_listen_address }} --web.telemetry-path={{ node_exporter_telemetry_path }} --collector.postgres --collector.postgres-address={{ node_exporter_host }}:{{ node_exporter_port }}
+
+
+[Install]
+WantedBy=multi-user.target
