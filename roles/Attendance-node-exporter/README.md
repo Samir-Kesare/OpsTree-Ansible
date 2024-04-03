@@ -21,12 +21,11 @@ This role is designed to automate the installation and configuration of Node Exp
 |----------------------|----------------------------------------------------------------------------------------------------------------------|
 | Ansible              | Ansible must be installed on the control machine from which you plan to run the playbook.                            |
 | AWS CLI              | AWS CLI for providing AWS credentials to fetch resources.                                                            |
-| Python               | Ensure that Python is installed on your system. Ansible relies on Python for its execution, and dynamic inventory    |
-|                      | scripts are typically written in Python.                                                                             |
+| Python               | Ensure that Python is installed on your system. Ansible relies on Python for its execution, and dynamic inventory scripts are typically written in Python.    |
 | PIP (Python Package Installer) | Install pip if it's not already installed. pip is a package manager for Python that allows you to install and manage Python packages. |
 | Boto3                | If your dynamic inventory script relies on AWS APIs to fetch inventory data, you'll need to install boto3 using pip. |
-| Salary Server        | Must have installed Salary with a security group having necessary ports allowed on it (22, 9090 for Prometheus,    |
-|                      | 9100 for Node Exporter, 5432 for Salary).                                                                           |
+| Salary Server        | Must have installed Salary with a security group having necessary ports allowed on it (22, 9090 for Prometheus, 9100 for Node Exporter, 5432 for Salary).     |
+
 ***
 
 ## Directory Structure
