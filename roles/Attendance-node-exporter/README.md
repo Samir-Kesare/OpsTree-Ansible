@@ -209,7 +209,7 @@ This Ansible playbook includes all the required tasks files.
 
 ### templates file (node_exporter_service.j2)
 
-This configuration sets up a systemd service for Prometheus Node Exporter tailored for Salary App monitoring. It ensures that the service starts after the network is available. The service runs as the user and group "node_exporter" and launches Node Exporter with Salary-specific collectors enabled, listening on the specified address and port. Finally, it specifies that the service should be enabled and started during the multi-user boot sequence.
+This configuration sets up a systemd service for Prometheus Node Exporter tailored for Attendance App monitoring. It ensures that the service starts after the network is available. The service runs as the user and group "node_exporter" and launches Node Exporter with Attendance-specific collectors enabled, listening on the specified address and port. Finally, it specifies that the service should be enabled and started during the multi-user boot sequence.
 
 <details>
 <summary> Click here to see node_exporter_service.j2 file</summary>
