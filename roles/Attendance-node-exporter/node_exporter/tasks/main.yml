@@ -3,6 +3,8 @@
 # tasks file for node_exporter
 - name: Update packages
   become: yes
+  apt:
+    update_cache: yes
   
 - name: Ensure the required packages are installed
   become: yes
