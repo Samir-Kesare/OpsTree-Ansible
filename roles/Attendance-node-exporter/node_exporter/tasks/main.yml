@@ -1,6 +1,9 @@
 
 ---
 # tasks file for node_exporter
+- name: Update packages
+  become: yes
+  
 - name: Ensure the required packages are installed
   become: yes
   package:
@@ -38,6 +41,7 @@
     dest: /home/node_exp
     remote_src: yes
     creates: /home/node_exp/node_exporter-{{ version }}.linux-amd64
+
 - name: create an empty file for node_exp.services
   become: yes
   ansible.builtin.file:
