@@ -2,7 +2,7 @@
 
 |   Author        |  Created on   |  Version   | Last updated by  | Last edited on |
 | --------------- | --------------| -----------|----------------- | -------------- |
-| Khushi Malhotra |  13 March 2024  |  Version 1 | Khushi Malhotra  | 13 March 2024    |
+| Khushi Malhotra |  02 April 2024  |  Version 1 | Khushi Malhotra  | 03 April 2024    |
 
 
 ![image](https://github.com/CodeOps-Hub/Ansible/assets/156056460/f6848ff7-85e2-4d6c-a04b-855ae561198c)
