@@ -1,6 +1,6 @@
 ---
-- hosts: tag_Type_postgres
+- hosts: postgres
   become: yes
   gather_facts: yes
   roles:
-    - postgres
+    - Prometheus_Role
