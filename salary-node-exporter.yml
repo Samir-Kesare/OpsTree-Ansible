@@ -1,0 +1,6 @@
+---
+- hosts: salaryAPI
+  become: true
+  gather_facts: yes
+  roles:
+    - salary-node-exporter
