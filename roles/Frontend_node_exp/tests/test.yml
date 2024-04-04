@@ -1,6 +1,0 @@
----
-- hosts: localhost
-  become: true
-  gather_facts: yes
-  roles:
-    - Frontend_node_exp
