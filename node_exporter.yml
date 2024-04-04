@@ -1,7 +1,0 @@
----
-- hosts: aws_ec2
-  become: yes
-  gather_facts: yes
-  roles:
-   - node_exporter
-   - node_exp
