@@ -1,0 +1,6 @@
+---
+- hosts: tag_Name_demo_salary_node_exp
+  become: true
+  gather_facts: yes
+  roles:
+    - salary-node-exporter
