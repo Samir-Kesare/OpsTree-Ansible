@@ -1,0 +1,9 @@
+---
+# tasks/main.yml
+- name: Include tasks for Prequisites
+  ansible.builtin.include_tasks: prerequisites.yml
+  when: ansible_facts['distribution'] == 'Ubuntu'
+
+- name: Include tasks for Ubuntu
+  ansible.builtin.include_tasks: ubuntu.yml
+  when: ansible_facts['distribution'] == 'Ubuntu'
