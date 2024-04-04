@@ -9,4 +9,6 @@ groups:
   scylla: "'scylla' in tags.Type"
 
 filters:
-    instance-state-code: 16  
+    instance-state-code: 16 
+    tag:Name:
+      - frontend-node-exporter
