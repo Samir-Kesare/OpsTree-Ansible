@@ -1,3 +1,9 @@
+# ---
+# - hosts: all
+#   become: yes
+#   gather_facts: yes
+#   roles:
+#     - prometheus
 ---
 - hosts: all
   become: yes
