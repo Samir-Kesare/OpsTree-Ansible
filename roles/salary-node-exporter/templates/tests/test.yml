@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  become: true
+  gather_facts: yes
+  roles:
+    - node_exp
