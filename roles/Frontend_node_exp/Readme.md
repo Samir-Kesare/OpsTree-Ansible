@@ -1,10 +1,10 @@
-# Ansible Role for Salary-Node-Exporter
+# Ansible Role for Frontend-Node-Exporter
 ![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/7307e336-40f7-483b-b4b5-03736aa58ee1)
 
 ***
 |   Author        |  Created on   |  Version   | Last updated by  | Last edited on |
 | --------------- | --------------| -----------|----------------- | -------------- |
-| **[Harshit Singh](https://github.com/Panu-S-Harshit-Ninja-07)**    | 02 April 2024 |  Version 1 | Harshit Singh     | 02 April 2024  |
+| Vikram Bisht    | 03 April 2024 |  Version 1 | Vikram Bisht     | 04 April 2024  |
 ***
 
 # Table of contents
@@ -21,13 +21,13 @@
 
 # Introduction
 
-This role is designed to automate the installation and configuration of Node Exporter on target ubuntu server(Salary). This role aims to simplify the process of setting up Salary Node Exporter server.
+This role is designed to automate the installation and configuration of Node Exporter on target ubuntu server(Frontend). This role aims to simplify the process of setting up Frontend Node Exporter server.
 
 ***
 
 # Flow Diagram
 
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/b1800d8c-94aa-4db1-beeb-bacbfd3ddd22)
+![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/dd18dde0-efb8-4c47-a43f-f5b511ab5b60)
 
 ***
 
@@ -40,12 +40,12 @@ This role is designed to automate the installation and configuration of Node Exp
 | **Python**        | Ensure that Python is installed on your system. Ansible relies on Python for its execution, and dynamic inventory scripts are typically written in Python. |
 | **PIP (Python Package Installer)** | Install pip if it's not already installed. pip is a package manager for Python that allows you to install and manage Python packages. |
 | **Boto3**   |  If your dynamic inventory script relies on AWS APIs to fetch inventory data, you'll need to install `boto3` using `pip`. |
-| **Salary Server** | Must have installed `Salary` with `security group` having necessary ports allowed on it (22, 9090 for prometheus, 9100 for node exporter, 8080 for Salary). |
+| **Frontend Server** | Must have installed `Frontend` with `security group` having necessary ports allowed on it (22, 9090 for prometheus, 9100 for node exporter, 8080 for Frontend). |
 
 ***
 
 # Directory Structure
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/abb03ca9-3625-4a29-86d3-70468d7f4de5)
+![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/e9f6b478-6890-442b-bd49-8d627f3b3f79)
 
 ***
 
@@ -63,12 +63,14 @@ This role is designed to automate the installation and configuration of Node Exp
   
 ```shell
 [defaults]
-inventory		=	/home/harshit/aws_ec2.yml # path of inventory file
-private_key_file	=	/home/harshit/Downloads/central.pem  # path of pem key 
-remote_user		= 	ubuntu
-host_key_checking	=	False
+
+inventory            = aws_ec2.yml
+host_key_checking    = False
+private_key_file     = snaatak.pem
+remote_user          = ubuntu
+
 [inventory]
-enable_plugins 		= 	aws_ec2
+enable_plugins       = aws_ec2
 ```
 </details>
 
@@ -85,11 +87,11 @@ enable_plugins 		= 	aws_ec2
 plugin: aws_ec2
 regions:
   - us-east-1
+
 filters:
-  instance-state-code: 16
-keyed_groups:
-  - key: tags
-    prefix: tag
+    instance-state-code: 16  
+    tag:Name:
+      - frontend-node-exporter
 ```
 </details>
 
@@ -103,17 +105,17 @@ keyed_groups:
   
 ```shell
 ---
-- hosts: tag_Name_demo_salary_node_exp #name of host
-  become: true
+- hosts: all
+  become: yes
   gather_facts: yes
   roles:
-    - salary-node-exporter
+    - node_exp
 ```
 </details>
 
 ***
 
-## Salary-Node-Exporter Role
+## Frontend-Node-Exporter Role
 
 ### pre-requisites file (prerequisites.yml)
 This Ansible playbook consists of tasks aimed to meet pre-requisites of the Node Exporter service.
@@ -245,7 +247,7 @@ This Ansible playbook includes all the required tasks files.
 
 ### templates file (node_exporter_service.j2)
 
-This configuration sets up a systemd service for Prometheus Node Exporter tailored for Salary App monitoring. It ensures that the service starts after the network is available. The service runs as the user and group "node_exporter" and launches Node Exporter with Salary-specific collectors enabled, listening on the specified address and port. Finally, it specifies that the service should be enabled and started during the multi-user boot sequence.
+This configuration sets up a systemd service for Prometheus Node Exporter tailored for Frontend App monitoring. It ensures that the service starts after the network is available. The service runs as the user and group "node_exporter" and launches Node Exporter with Frontend-specific collectors enabled, listening on the specified address and port. Finally, it specifies that the service should be enabled and started during the multi-user boot sequence.
 
 <details>
 <summary> Click here to see node_exporter_service.j2 file</summary>
@@ -272,7 +274,7 @@ WantedBy=multi-user.target
 
 ### tests file (test.yml)
 
-This Ansible playbook named "test.yml" targets the localhost machine and utilizes the "Node_Exporter_role" role to install Node Exporter in Salary Server.
+This Ansible playbook named "test.yml" targets the localhost machine and utilizes the "Node_Exporter_role" role to install Node Exporter in Frontend Server.
 
 <details>
 <summary> Click here to see test.yml file</summary>
@@ -284,7 +286,7 @@ This Ansible playbook named "test.yml" targets the localhost machine and utilize
   become: true
   gather_facts: yes
   roles:
-    - salary-node-exporter
+    - node_exp
 
 ```
 </details>
@@ -293,7 +295,7 @@ This Ansible playbook named "test.yml" targets the localhost machine and utilize
 
 ### vars file (main.yml)
 
-This YAML configuration sets parameters for the Node Exporter and Salary monitoring. It specifies the Node Exporter version, installation directory, listening address, telemetry path, and URL for downloading the Node Exporter binary.
+This YAML configuration sets parameters for the Node Exporter and Frontend monitoring. It specifies the Node Exporter version, installation directory, listening address, telemetry path, and URL for downloading the Node Exporter binary.
 
 <details>
 <summary> Click here to see main.yml file</summary>
@@ -318,35 +320,35 @@ node_exporter_group: "node_exporter"
 # Output
 
 ### Role Execution
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/b4cea04e-de9f-44e0-a00e-76ba22604524)
+![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/3920fc31-6a26-4300-91a3-fa924744c0b7)
 
 ***
 
-### Salary-Node-Exporter Server 
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/15754c11-1a16-4615-b5c6-50dad330a968)
+### Frontend-Node-Exporter Server 
+![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/b514d144-f35f-4f2c-b60d-5345edb8ecd0)
 
 ***
 
-### Log Metrics of Salary-Node-Exporter Server
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/c365d2f2-b37e-4d63-a3d0-9ae406ab23ac)
+### Log Metrics of Frontend-Node-Exporter Server
+![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/11d37b42-6f06-4c0a-bc29-d423a83f2320)
 
 ***
 
 ### Prometheus UI
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/38aaa2e9-1b47-49d3-b68a-0e6fd9b5c022)
+![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/73a77f27-01df-4a64-9973-f27e797923d2)
 
 ***
 
 # Conclusion
 
-This guide illustrates the process of deploying **Salary-node-exporter** through Ansible. By adhering to these instructions, you can effectively provision and set up `node exporter in Salary server` within your AWS infrastructure.
+This guide illustrates the process of deploying **Frontend-node-exporter** through Ansible. By adhering to these instructions, you can effectively provision and set up `node exporter in Frontend server` within your AWS infrastructure.
 
 ***
 ## Contact Information
 
 |     Name         | Email  |
 | -----------------| ------------------------------------ |
-| Harshit Singh    | harshit.singh.snaatak@mygurukulam.co |
+| Vikram Bisht     | Vikram.Bisht@opstree.com             |
 ***
 
 ## References
