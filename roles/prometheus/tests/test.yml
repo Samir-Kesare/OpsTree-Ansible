@@ -3,4 +3,4 @@
   hosts: localhost
   become: yes
   roles:
-    - Prometheus_role
+    - prometheus
