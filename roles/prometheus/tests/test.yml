@@ -1,0 +1,6 @@
+---
+- name: Install prometheus
+  hosts: localhost
+  become: yes
+  roles:
+    - Prometheus_role

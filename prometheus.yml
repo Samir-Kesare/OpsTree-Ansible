@@ -1,6 +1,7 @@
 ---
-- hosts: postgres
+- hosts: prometheus
   become: yes
   gather_facts: yes
   roles:
-    - postgres
+    - Prometheus_role
+    
