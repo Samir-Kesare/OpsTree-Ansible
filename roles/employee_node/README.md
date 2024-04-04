@@ -1,4 +1,3 @@
-![Screenshot from 2024-04-05 01-08-52](https://github.com/CodeOps-Hub/Ansible/assets/156056413/488c28eb-f032-4877-9b92-5d8416133d22)
 # Ansible Role for Emplyoee-Node-Exporter
 
 <p align="center">
@@ -339,25 +338,25 @@ node_exporter_group: "node_exporter"
 
 ### Role Execution
 
-<img width="760"  src="https://github.com/CodeOps-Hub/Ansible/assets/156056413/f9cc553f-1d6f-4267-84dd-6ad24f2772d9"> 
+<img width="830"  src="https://github.com/CodeOps-Hub/Ansible/assets/156056413/f9cc553f-1d6f-4267-84dd-6ad24f2772d9"> 
 
 ***
 
 ### Emplyoee-Node-Exporter Server 
 
-<img width="760"  src="https://github.com/CodeOps-Hub/Ansible/assets/156056413/4243db54-d1d2-4d4a-80f8-b8cf30f67630"> 
+<img width="830"  src="https://github.com/CodeOps-Hub/Ansible/assets/156056413/4243db54-d1d2-4d4a-80f8-b8cf30f67630"> 
 
 ***
 
 ### Log Metrics of Emplyoee-Node-Exporter Server
 
-<img width="760"  src="https://github.com/CodeOps-Hub/Ansible/assets/156056413/c4047d22-f8df-4bbf-8737-e94410b6ba86"> 
+<img width="830"  src="https://github.com/CodeOps-Hub/Ansible/assets/156056413/c4047d22-f8df-4bbf-8737-e94410b6ba86"> 
 
 ***
 
 ### Prometheus UI
 
-<img width="760"  src=""> 
+<img width="830"  src=""> 
 
 ***
 
