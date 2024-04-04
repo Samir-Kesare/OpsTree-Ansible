@@ -9,4 +9,4 @@
   become: yes
   gather_facts: yes
   roles:
-    - alert_rule
+    - alert-ule
