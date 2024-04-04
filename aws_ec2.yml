@@ -5,5 +5,7 @@ regions:
 hostnames:
   - ip-address
 filters:
+  instance-state-code: 16 
   tag:Name:
     - node_exporter
+    - frontend-node-exporter
