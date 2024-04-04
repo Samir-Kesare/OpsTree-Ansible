@@ -1,5 +1,5 @@
 # Ansible Role for Frontend-Node-Exporter
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/7307e336-40f7-483b-b4b5-03736aa58ee1)
+![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/5a93e4ac-ddb5-44f7-b2cd-9bbb4558b2ce)
 
 ***
 |   Author        |  Created on   |  Version   | Last updated by  | Last edited on |
@@ -40,7 +40,7 @@ This role is designed to automate the installation and configuration of Node Exp
 | **Python**        | Ensure that Python is installed on your system. Ansible relies on Python for its execution, and dynamic inventory scripts are typically written in Python. |
 | **PIP (Python Package Installer)** | Install pip if it's not already installed. pip is a package manager for Python that allows you to install and manage Python packages. |
 | **Boto3**   |  If your dynamic inventory script relies on AWS APIs to fetch inventory data, you'll need to install `boto3` using `pip`. |
-| **Frontend Server** | Must have installed `Frontend` with `security group` having necessary ports allowed on it (22, 9090 for prometheus, 9100 for node exporter, 8080 for Frontend). |
+| **Frontend Server** | Must have installed `Frontend` with `security group` having necessary ports allowed on it (22, 9090 for prometheus, 9100 for node exporter, 3000 for Frontend). |
 
 ***
 
