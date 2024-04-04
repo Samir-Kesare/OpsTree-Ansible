@@ -1,6 +1,5 @@
 ---
 # vars file for prometheus
-version: "2.47.1"
 
 user: "prometheus"
 group: "prometheus"
