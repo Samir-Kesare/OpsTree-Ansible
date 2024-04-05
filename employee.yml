@@ -1,5 +1,5 @@
 ---
-- hosts: employee_node
+- hosts: employee
   become: yes
   gather_facts: yes
   roles:
