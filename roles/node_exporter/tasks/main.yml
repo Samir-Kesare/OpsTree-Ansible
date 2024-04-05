@@ -1,0 +1,35 @@
+---
+- name: Download Node Exporter binary
+  become: yes
+  get_url:
+    url: "{{ url }}"
+    dest: "{{ dest }}"
+    mode: 0744
+
+
+- name: Ensure "{{node_exporter_install_dir}}" directory exists
+  file:
+    path: "{{node_exporter_install_dir}}"
+    state: directory
+    mode: 0744
+
+- name: Extract Node Exporter archive
+  ansible.builtin.unarchive:
+    src: "{{dest}}"
+    dest: "{{ node_exporter_install_dir }}"
+    remote_src: yes
+    mode: 0744
+
+- name: Install Node Exporter service
+  ansible.builtin.template:
+    src: "{{src}}"
+    dest: "{{src_dest}}"
+    mode: 0644
+  notify: Restart Node Exporter
+
+- name: Start Node Exporter service
+  become: yes
+  ansible.builtin.service:
+    name: node_exporter
+    state: started
+    enabled: yes    
