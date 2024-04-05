@@ -356,7 +356,7 @@ node_exporter_group: "node_exporter"
 
 ### Prometheus UI
 
-<img width="830"  src=""> 
+<img width="830"  src="https://github.com/CodeOps-Hub/Ansible/assets/156056413/c2a32de6-cd20-4cce-8cfc-cfae7c831c2b"> 
 
 ***
 
