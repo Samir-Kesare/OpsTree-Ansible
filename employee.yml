@@ -1,5 +1,5 @@
 ---
-- hosts: tag_Type_employee-node
+- hosts: employee-node
   become: yes
   gather_facts: yes
   roles:
