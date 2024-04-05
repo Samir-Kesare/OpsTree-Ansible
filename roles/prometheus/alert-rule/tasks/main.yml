@@ -80,10 +80,6 @@
   notify: systemd_reload
 
 - name: Reload systemd to apply changes
-  systemd:
-    daemon_reload: yes
-
-- name: Reload systemd to apply changes
   service:
     name: "{{user}}.service"
     state: started
