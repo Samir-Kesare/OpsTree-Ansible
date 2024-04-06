@@ -1,0 +1,14 @@
+---
+- name: Copy alert rules file to Prometheus server
+  copy:
+    src: salary_alert.rules.yml
+    dest: "{{ salary_alert_rules_path }}"
+  notify: Reload Prometheus
+
+- name: Ensure Prometheus alerts rules are included in Prometheus config
+  lineinfile:
+    path: "{{ path }}"
+    line: '- salary_alert.rules.yml'
+    insertafter: 'rule_files'
+    state: present
+  notify: Reload Prometheus
