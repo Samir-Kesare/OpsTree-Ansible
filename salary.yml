@@ -1,0 +1,7 @@
+---
+- hosts: prometheus
+  become: yes
+  gather_facts: yes
+  roles:
+    - salary-alert-rule-role
+    
