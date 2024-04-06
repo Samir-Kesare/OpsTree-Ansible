@@ -7,8 +7,10 @@ groups:
   redis: "'redis' in tags.Type"
   postgres: "'postgres' in tags.Type"
   scylla: "'scylla' in tags.Type"
+  prometheus: "'prometheus' in tags.Type"
   frontend: "'frontend-node-exporter' in tags.Type"
   employee: "'employee' in tags.Type"
+
 
 filters:
     instance-state-code: 16
