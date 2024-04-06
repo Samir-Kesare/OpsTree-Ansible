@@ -3,5 +3,5 @@
   become: yes
   gather_facts: yes
   roles:
-    - salary-alert-rule
+    - salary_alert_rule
     
