@@ -6,4 +6,4 @@ hostnames:
   - ip-address
 include_filters:
  - tag:Name:
-     - 'Attendance_API'
+     - 'Redis_DB'
