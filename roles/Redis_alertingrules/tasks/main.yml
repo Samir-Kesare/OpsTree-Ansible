@@ -1,0 +1,85 @@
+---
+# tasks file for alertingrules
+# tasks file for prometheus
+- name: Ensure the required packages are installed
+  become: yes
+  package:
+    name:
+      - wget
+      - tar
+  ignore_errors: yes
+
+- name: Add the 'prometheus' user
+  become: yes
+  user:
+    name: "{{user}}"
+    shell: /bin/bash
+    create_home: yes
+    state: present
+
+- name: Create a directory for Prometheus installation
+  become: yes
+  file:
+    path: /home/prometheus
+    owner: "{{user}}"
+    group: "{{group}}"
+    state: directory
+
+- name: Download Prometheus archive
+  become: yes
+  get_url:
+    url: "{{url}}"
+    dest: "{{dir}}"
+
+- name: Extract Prometheus archive
+  become: yes
+  ansible.builtin.unarchive:
+    src: "{{dir}}"
+    dest: /home/prometheus
+    remote_src: yes
+    creates: "{{create_dir}}"
+
+- name: create an empty file for prometheus.service
+  ansible.builtin.file:
+    path: "{{path}}"
+    state: touch
+    owner: "{{user}}"
+    group: "{{group}}"
+    mode: 0644
+- name: Replace the content of "{{content_dest}}"
+  become: yes
+  template:
+    src: prometheus_config.j2
+    dest: "{{content_dest}}"
+    owner: "{{user}}"
+    group: "{{group}}"
+    mode: 0644
+  become: true
+  notify: systemd_reload
+
+
+- name: Replace the content of "{{path}}"
+  template:
+    src: prometheus_service.j2
+    dest: "{{path}}"
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  notify: systemd_reload
+
+- name: Replace the content of "{{ prometheus_rules_dest }}"
+  template:
+    src: first_rules.j2
+    dest: "{{ prometheus_rules_dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  notify: systemd_reload
+
+- name: Reload systemd to apply changes
+  service:
+    name: "{{user}}.service"
+    state: started
+  become: true
