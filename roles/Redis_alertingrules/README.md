@@ -369,7 +369,7 @@ redis_replication_delay_seconds: 30 # Example value for replication delay in sec
 ***
 # Conclusion
 
-This guide illustrates the process of deploying **Alerting Rules** through Ansible. By adhering to these instructions, you can effectively provision and set up `node exporter in Attendance server` within your AWS infrastructure.
+This guide illustrates the process of deploying **Alerting Rules** through Ansible. By adhering to these instructions, you can effectively provision and set up `Alerting Rules` within your AWS infrastructure.
 
 ## Contact Information
 | Name            | Email Address                        |
