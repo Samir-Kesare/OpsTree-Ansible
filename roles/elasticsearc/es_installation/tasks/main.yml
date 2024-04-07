@@ -1,0 +1,29 @@
+---
+# tasks file for elasticsearch_installation.yml
+- name: Create destination directory if it doesn't exist
+  file:
+    path: /opt
+    state: directory
+    mode: 0755
+
+- name: Download Elasticsearch deb package
+  get_url:
+    url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.13.1-amd64.deb"
+    dest: "/opt/elasticsearch-8.13.1-amd64.deb"
+    mode: 0744
+
+- name: Unzip Elasticsearch deb package
+  command: "dpkg-deb -x /opt/elasticsearch-8.13.1-amd64.deb /opt/elasticsearch"
+
+- name: Modify Elasticsearch configuration file
+  template:
+    src: elasticsearch.yml.j2  # Path to your Elasticsearch configuration template
+    dest: /opt/elasticsearch/etc/elasticsearch/elasticsearch.yml
+    owner: "root"
+    group: "root"
+    mode: 0644
+  notify: restart elasticsearch
+
+- name: Install Elasticsearch
+  apt:
+    deb: "/opt/elasticsearch-8.13.1-amd64.deb"
