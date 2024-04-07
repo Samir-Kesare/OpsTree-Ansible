@@ -4,4 +4,4 @@
   become: yes
 
   roles:
-    - alertingrules
+    - Redis_alertingrules
