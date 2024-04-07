@@ -61,7 +61,7 @@
 #     mode: 0644
 #   become: true
 - name: Replace the content of /etc/systemd/system/node_exp.service
-  remote_src:
+  template:
     src: node_exp.service.j2
     dest: /etc/systemd/system/node_exp.service
     owner: root
