@@ -63,7 +63,7 @@
 - name: Replace the content of /etc/systemd/system/node_exp.service
   template:
     src: node_exporter.service.j2
-    dest: /etc/systemd/system/node_exporter.service
+    dest: /etc/systemd/system/node_exp.service
     owner: root
     group: root
     mode: 0644
