@@ -1,0 +1,31 @@
+{% raw %}
+groups:
+  - name: redis.alert.rules
+    rules:
+      - alert: RedisHighMemoryUsage
+        expr: (redis_memory_used_bytes / redis_memory_max_bytes) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Redis high memory usage (instance {{ .Labels.instance }})"
+          description: "Memory usage is above 80%\n  VALUE = {{ $value }}\n  LABELS: {{ .Labels }}"
+
+      - alert: RedisHighConnections
+        expr: redis_connected_clients > 1000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High number of connections to Redis (instance {{ .Labels.instance }})"
+          description: "Number of connected clients is greater than 1000\n  VALUE = {{ $value }}\n  LABELS: {{ .Labels }}"
+
+      - alert: RedisReplicationLag
+        expr: redis_replication_delay_seconds > 60
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Redis replication lag (instance {{ .Labels.instance }})"
+          description: "Replication lag is greater than 60 seconds\n  VALUE = {{ $value }}\n  LABELS: {{ .Labels }}"
+{% endraw %}
