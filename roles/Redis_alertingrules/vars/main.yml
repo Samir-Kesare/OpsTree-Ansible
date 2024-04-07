@@ -1,0 +1,12 @@
+---
+# vars file for alertingrules
+user: "prometheus"
+group: "prometheus"
+exec_command: "/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus --config.file=/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml"
+version: "2.47.1"
+url: "https://github.com/prometheus/prometheus/releases/download/v2.47.1/prometheus-2.47.1.linux-amd64.tar.gz"
+dir: "/home/prometheus/prometheus-2.47.1.linux-amd64.tar.gz"
+create_dir: "/home/prometheus/prometheus-2.47.1.linux-amd64"
+path: "/etc/systemd/system/prometheus.service"
+content_dest: "/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml"
+prometheus_rules_dest: "/home/prometheus/prometheus-2.47.1.linux-amd64/first_rules.j2"
