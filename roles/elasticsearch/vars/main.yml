@@ -1,4 +1,0 @@
-
----
-# vars file for ansible-role-elasticsearch
-elasticsearch_version: "7.x"
