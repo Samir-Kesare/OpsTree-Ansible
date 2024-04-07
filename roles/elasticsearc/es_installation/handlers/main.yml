@@ -1,0 +1,7 @@
+---
+# handlers file for elasticsearch_installation.yml
+- name: restart elasticsearch
+  systemd:
+    name: elasticsearch
+    state: restarted
+    daemon_reload: yes
