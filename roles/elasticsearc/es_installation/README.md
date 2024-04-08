@@ -96,15 +96,12 @@ filters:
 1. `plugin: aws_ec2`: Specifies the use of the aws_ec2 plugin as the dynamic inventory source. This plugin is designed to fetch information about EC2 instances in AWS.
 2. `regions: - us-east-1`: Indicates the AWS region(s) from which the dynamic inventory should fetch information.
 3. `elasticsearch: "'elasticsearch' in tags.Type"`: Creates an Ansible group named elasticsearch. This group includes EC2 instances where the tag named Type has a value of 'elasticsearch'. You can tag all your Elasticsearch instances accordingly.
-
+***
 **Step 3: Create Ansible Role**
 * Create a new Ansible role which should follow this directory structure:
+  
 ![Screenshot from 2024-04-07 22-51-41](https://github.com/CodeOps-Hub/Ansible/assets/156056746/87561421-e1f9-4c5f-901c-9fa3504dcb1f)
-
-
-
-
-
+***
 
 **Step 4: Elasticsearch_playbook.yml**
 * This file is defining a set of tasks to be executed on hosts belonging to the ubuntu group.
