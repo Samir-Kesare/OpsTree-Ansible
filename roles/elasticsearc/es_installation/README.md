@@ -1,5 +1,5 @@
 
-# Ansible Role to setup Kibana
+# Ansible Role to setup Elasticsearch
 
 ![image](https://github.com/CodeOps-Hub/Ansible/assets/156056746/bd5d87db-0ab5-46ae-ae06-bb6931b2a3af)
 
