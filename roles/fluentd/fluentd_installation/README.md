@@ -50,7 +50,7 @@ Ansible is an open-source automation tool that simplifies and accelerates IT inf
 2. **SSH Access to Target Servers:**
    - Ensure that you have SSH access to the target servers where Fluentd will be installed.
 
-3. **Elasticsearch**
+3. **Fluentd**
    - Ensure that the correct version of Fluentd is installed on running on the server.
    
 ***
