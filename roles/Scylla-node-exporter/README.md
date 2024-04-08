@@ -22,11 +22,13 @@
 
 # Introduction
 
-This role is designed to automate the installation and configuration of Node Exporter on target ubuntu server(Scylla). This role aims to simplify the process of setting up Scylla Node Exporter server.
+This role streamlines the automated setup and configuration of Node Exporter on a target Ubuntu server (Scylla), aiming to simplify the process of establishing a Scylla Node Exporter server.
 
 ***
 
 # Flow Diagram
+
+<img width="1330" alt="Screenshot 2024-04-09 at 1 38 57 AM" src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/b2b1d45d-9944-4b80-9676-9fb7220361c4">
 
 
 ***
@@ -52,7 +54,7 @@ This role is designed to automate the installation and configuration of Node Exp
 
 > [!NOTE]
 >Ensure that for dynamic inventory you have the necessary AWS credentials configured in AWS CLI or an IAM role on the node.
-> Also Refer this [*Prometheus Documentation*](https://github.com/CodeOps-Hub/Ansible/blob/shreya/prometheus-role/roles/prometheus/README.md) for `Prometheus` guide, as for configuring node exporter, it is necessary to have the functionality of fetching the servers for which you need to see logs in `Prometheus UI`, for this, I've configured `prometheus_config.j2` file in `templates/prometheus_config.j2` in which there is a section of service discovery for EC2 Instances, it will automatically fetch the servers of provided region and you can easily monitor the logs of `node-exporter's server`, as the `prometheus server` has an `IAM Role` attached on it with `AmazonEC2ReadOnlyAccess` policy. 
+>Ensure that your Prometheus configuration is set up to scrape metrics from Node Exporter.
 
 ## Dynamic Inventory Setup
 
@@ -326,7 +328,8 @@ node_exporter_group: "node_exporter"
 
 # Conclusion
 
-This guide illustrates the process of deploying **Frontend-node-exporter** through Ansible. By adhering to these instructions, you can effectively provision and set up `node exporter in Frontend server` within your AWS infrastructure.
+
+This guide provides a step-by-step walkthrough for deploying Scylla-node-exporter using Ansible. By following these instructions, you can seamlessly provision and configure Node Exporter on your Frontend server within the AWS infrastructure.
 
 ***
 ## Contact Information
