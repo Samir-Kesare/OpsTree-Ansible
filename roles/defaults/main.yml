@@ -1,0 +1,3 @@
+---
+path: /home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml
+Frontend_alert_rules_path: /home/prometheus/prometheus-2.47.1.linux-amd64/frontend_alert.rules.yml
