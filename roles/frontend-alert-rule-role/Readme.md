@@ -1,7 +1,7 @@
 
 # Alert Rules Ansible Role For Frontend Application 
 
-<img width="500" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/a391e3c9-1bad-4079-bbd8-dd5ce918abdc">
+![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/c6258e1b-2a2c-4603-8021-caeeb3bfa032)
 
 
 ***
@@ -31,7 +31,7 @@ This role is designed to automate the configuration of `Alert Rules` for `fronte
 
 # Flow Diagram
 
-<img width="900" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/e636806a-9cfb-439e-80a4-a43a56197929">
+![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/c5e76f16-2a50-4d68-be70-1aaeca068ca8)
 
 ***
 
