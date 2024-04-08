@@ -23,7 +23,6 @@
 
 ***
 ## Introduction
-Introduction:
 Fluentd is a popular open-source data collector that enables easy log collection, processing, and forwarding. This comprehensive guide provides detailed instructions on setting up Fluentd to ingest logs into Elasticsearch using Ansible, an automation tool.
 
 ***
