@@ -35,10 +35,10 @@ Fluentd is a popular open-source data collector that enables easy log collection
 ***
 ## Pre-requisites
 
-Before using this Ansible role to set up Kibana, ensure that the following prerequisites are met:
+Before using this Ansible role to set up Fluentd, ensure that the following prerequisites are met:
 
 1. **Ansible:**
-   - Ansible must be installed on the control machine from which you plan to run the playbook. If Ansible is not installed, you can install it using this [link]https://github.com/CodeOps-Hub/Ansible/tree/shikha/fluentd/redis/roles/fluentd/fluentd_installation) . Version used for POC : ansible 2.10.8
+   - Ansible must be installed on the control machine from which you plan to run the playbook. If Ansible is not installed, you can install it using this [link](https://github.com/CodeOps-Hub/Ansible/tree/shikha/fluentd/redis/roles/fluentd/fluentd_installation) . Version used for POC : ansible 2.10.8
 
 
 ### Ansible 
@@ -48,14 +48,14 @@ Ansible is an open-source automation tool that simplifies and accelerates IT inf
 
 
 2. **SSH Access to Target Servers:**
-   - Ensure that you have SSH access to the target servers where Elasticsearch will be installed.
+   - Ensure that you have SSH access to the target servers where Fluentd will be installed.
 
 3. **Elasticsearch**
-   - Ensure that the correct version of Elasticsearch is installed on running on the server.
+   - Ensure that the correct version of Fluentd is installed on running on the server.
    
 ***
 # Steps 
-* Before going further check  [*Ansible Role For Elasticsearch Installation*](https://github.com/CodeOps-Hub/Ansible/tree/shikha/fluentd/redis/roles/fluentd/fluentd_installation)
+* Before going further check  [*Ansible Role For Fluentd Installation*](https://github.com/CodeOps-Hub/Ansible/tree/shikha/fluentd/redis/roles/fluentd/fluentd_installation)
 * For more information on [Ansible Roles](https://github.com/avengers-p7/Documentation/blob/main/Application_CI/Design/DevOps%20Practices/Ansible/Ansible%20Role.md)
 
 **Step 1: Dynamic Inventory Setup** 
