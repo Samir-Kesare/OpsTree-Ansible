@@ -1,0 +1,8 @@
+---
+# handlers file for fluentd
+- name: restart td-agent service
+  become: yes
+  systemd:
+    name: td-agent
+    state: restarted
+    daemon_reload: yes
