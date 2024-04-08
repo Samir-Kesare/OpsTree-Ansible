@@ -55,7 +55,7 @@ Ansible is an open-source automation tool that simplifies and accelerates IT inf
    
 ***
 # Steps 
-* Before going further check  [*Ansible Role For Elasticsearch Installation*](https://github.com/CodeOps-Hub/ansible/tree/main/roles/kibana)
+* Before going further check  [*Ansible Role For Elasticsearch Installation*](https://github.com/CodeOps-Hub/Ansible/tree/Shikha/ElasticSearch-Ansible-Role/Dynamic-Inventory/roles/elasticsearc/es_installation)
 * For more information on [Ansible Roles](https://github.com/avengers-p7/Documentation/blob/main/Application_CI/Design/DevOps%20Practices/Ansible/Ansible%20Role.md)
 
 **Step 1: Dynamic Inventory Setup** 
