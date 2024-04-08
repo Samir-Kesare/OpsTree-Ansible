@@ -1,0 +1,14 @@
+[Unit]
+Description=Prometheus Server
+Documentation=https://prometheus.io/docs/introduction/overview/
+After=network-online.target
+
+[Service]
+user=root
+#User=prometheus
+#Group=prometheus
+Restart=on-failure 
+ExecStart={{ exec_command }}
+
+[Install]
+WantedBy=multi-user.target

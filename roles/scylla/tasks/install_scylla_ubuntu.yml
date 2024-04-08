@@ -4,7 +4,8 @@
 
 - name: Import ScyllaDB GPG Key
   become: true
-  raw: "{{ scylla_repo_key_url }}"
+  apt_key:
+    url: "{{ scylla_repo_key_url }}"
 
 - name: Add ScyllaDB Repository
   get_url:
