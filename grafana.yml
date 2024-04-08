@@ -1,7 +1,0 @@
----
-- hosts: grafana
-  become: yes
-  gather_facts: yes
-  roles:
-    - grafana
-    
