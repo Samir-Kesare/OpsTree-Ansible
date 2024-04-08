@@ -1,0 +1,5 @@
+---
+- hosts: prometheus
+  remote_user: root
+  roles:
+    - frontend-alert-rule
