@@ -1,6 +1,0 @@
----
-- hosts: aws_ec2
-  remote_user: ubuntu
-  become: true
-  roles:
-    - fluentd
