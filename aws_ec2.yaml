@@ -12,6 +12,5 @@ groups:
   frontend: "'frontend-node-exporter' in tags.Type"
   employee: "'employee' in tags.Type"
 
-
 filters:
     instance-state-code: 16
