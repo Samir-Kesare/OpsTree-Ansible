@@ -44,11 +44,10 @@
     group: "{{group}}"
     mode: 0644
 
-
 - name: Replace the content of "{{content_dest}}"
   become: yes  
   template:
-    src: prometheus_config.j2
+    src: prometheus.config.j2
     dest: "{{content_dest}}"
     owner: "{{user}}"
     group: "{{group}}"
@@ -56,17 +55,19 @@
 
 - name: Replace the content of "{{path}}"
   template:
-    src: prometheus_service.j2
+    src: prometheus.service.j2
     dest: "{{path}}"
     owner: root
     group: root
     mode: 0644
   become: true
-  notify: systemd_reload
-- meta: flush_handlers
 
-- name: Reload systemd to apply changes
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Reload Prometheus
   service:
-    name: "{{user}}.service"
+    name: prometheus.service
     state: restarted
   become: true
