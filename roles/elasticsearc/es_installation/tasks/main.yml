@@ -8,22 +8,22 @@
 
 - name: Download Elasticsearch deb package
   get_url:
-    url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.13.1-amd64.deb"
-    dest: "/opt/elasticsearch-8.13.1-amd64.deb"
+    url: "{{ elasticsearch_deb_package_url }}"
+    dest: "{{ elasticsearch_deb_package_dest }}"
     mode: 0744
 
 - name: Unzip Elasticsearch deb package
-  command: "dpkg-deb -x /opt/elasticsearch-8.13.1-amd64.deb /opt/elasticsearch"
+  command: "dpkg-deb -x {{ elasticsearch_deb_package_dest }} {{ elasticsearch_installation_directory }}"
 
 - name: Modify Elasticsearch configuration file
   template:
-    src: elasticsearch.yml.j2  # Path to your Elasticsearch configuration template
-    dest: /opt/elasticsearch/etc/elasticsearch/elasticsearch.yml
-    owner: "root"
-    group: "root"
-    mode: 0644
+    src: "{{ elasticsearch_configuration_template_src }}"  
+    dest: "{{ elasticsearch_configuration_dest }}"
+    owner: "{{ elasticsearch_configuration_owner }}"
+    group: "{{ elasticsearch_configuration_group }}"
+    mode: "{{ elasticsearch_configuration_mode }}"
   notify: restart elasticsearch
 
 - name: Install Elasticsearch
   apt:
-    deb: "/opt/elasticsearch-8.13.1-amd64.deb"
+    deb: "{{ elasticsearch_deb_package_dest }}"
