@@ -1,67 +1,41 @@
 ---
 # tasks file for fluentd
+
 - name: Install Fluentd
   become: yes
   apt:
-    name: apt-transport-https
+    name: "{{ item.name }}"
     state: present
+  loop: "{{ fluentd_dependencies }}"
 
 - name: Add Treasure Data repository key
   become: yes
-  shell: curl -L https://toolbelt.treasuredata.com/sh/install-ubuntu-bionic-td-agent3.sh | sh
+  shell: "{{ fluentd_repository_key_url }} | sh"
 
 - name: Install td-agent
   become: yes
   apt:
-    name: td-agent
+    name: "{{ fluentd_package_name }}"
     state: present
 
-- name: Install libcurl4-gnutls-dev
-  become: yes
-  apt:
-    name: libcurl4-gnutls-dev
-    state: present
-
-- name: Install build-essential
-  become: yes
-  apt:
-    name: build-essential
-    state: present
-
-- name: Install Ruby
-  become: yes
-  apt:
-    name: ruby
-    state: present
-
-- name: Install Rubygems
-  become: yes
-  apt:
-    name: rubygems
-    state: present
-
-- name: Install Ruby development headers
-  become: yes
-  apt:
-    name: ruby-dev
-    state: present
 - name: Install fluent-plugin-elasticsearch
   become: yes
   gem:
-    name: fluent-plugin-elasticsearch
+    name: "{{ item.name }}"
+  loop: "{{ fluentd_plugins }}"
 
 - name: Copy Fluentd configuration file
   become: yes
   template:
-    src: td-agent.conf.j2
-    dest: /etc/td-agent/td-agent.conf
-    owner: td-agent
-    group: td-agent
-    mode: '0640'
+    src: "{{ fluentd_conf_template_src }}"
+    dest: "{{ fluentd_conf_dest }}"
+    owner: "{{ fluentd_conf_owner }}"
+    group: "{{ fluentd_conf_group }}"
+    mode: "{{ fluentd_conf_mode }}"
   notify: restart td-agent service
 
-- name: Ensure /var/log/td-agent directory exists
+- name: Ensure log directory exists
   become: yes
   file:
-    path: /var/log/td-agent
+    path: "{{ fluentd_log_directory }}"
     state: directory
