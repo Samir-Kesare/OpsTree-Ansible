@@ -1,0 +1,11 @@
+---
+# handlers file for prometheus
+#- name: Reload systemd
+ # command: systemctl daemon-reload
+ # listen: systemd_reload
+
+
+- name: systemd_reload
+  systemd:
+    name: "{{ user }}.service"
+    daemon_reload: yes
