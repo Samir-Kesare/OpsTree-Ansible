@@ -47,7 +47,8 @@ define alert rules, handle alerts, and route notifications to various channels.
 
 # Directory Structure
 
-![Screenshot 2024-04-01 at 1 11 15 AM](https://github.com/CodeOps-Hub/Ansible/assets/156056364/170b5332-9aca-4950-aa1a-7e19ae53727e)
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056570/823ef41f-f2d3-4eb3-a9d5-442485a54bc1)
+
 ***
 
 # Dynamic Inventory Setup
