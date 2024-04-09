@@ -286,6 +286,8 @@ This playbook automates the setup process, ensuring a smooth installation and co
 
 ### alert_manager_role varification
 
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056570/add3abb8-e8b0-4933-8be2-34f761e2dcb8)
+
 
 ***
 
