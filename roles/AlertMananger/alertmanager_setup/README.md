@@ -277,14 +277,14 @@ This playbook automates the setup process, ensuring a smooth installation and co
 
 # Output
 
-### alert_manager_role Execution
+### alertmanager_setup Execution
 
 ![image](https://github.com/CodeOps-Hub/Ansible/assets/156056570/28aa75e8-9013-4553-b224-80d716323f7f)
 
 
 ***
 
-### alert_manager_role varification
+### alertmanager_setup varification
 
 ![image](https://github.com/CodeOps-Hub/Ansible/assets/156056570/add3abb8-e8b0-4933-8be2-34f761e2dcb8)
 
