@@ -3,4 +3,4 @@
   remote_user: ubuntu
   become: true
   roles:
-    - elasticsearch_installation
+    - jenkins
