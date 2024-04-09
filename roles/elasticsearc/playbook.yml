@@ -3,4 +3,4 @@
   remote_user: ubuntu
   become: true
   roles:
-    - jenkins
+    - es_installation
