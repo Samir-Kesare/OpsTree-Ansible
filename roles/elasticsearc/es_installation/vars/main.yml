@@ -1,1 +1,14 @@
 
+---
+# vars file for elasticsearch_installation.yml
+elasticsearch_version: "8.13.1"
+elasticsearch_architecture: "amd64"
+elasticsearch_deb_package_name: "elasticsearch-{{ elasticsearch_version }}-{{ elasticsearch_architecture }}.deb"
+elasticsearch_deb_package_url: "https://artifacts.elastic.co/downloads/elasticsearch/{{ elasticsearch_deb_package_name }}"
+elasticsearch_deb_package_dest: "/opt/{{ elasticsearch_deb_package_name }}"
+elasticsearch_installation_directory: "/opt/elasticsearch"
+elasticsearch_configuration_template_src: "elasticsearch.yml.j2"
+elasticsearch_configuration_dest: "{{ elasticsearch_installation_directory }}/etc/elasticsearch/elasticsearch.yml"
+elasticsearch_configuration_owner: "root"
+elasticsearch_configuration_group: "root"
+elasticsearch_configuration_mode: "0644"
