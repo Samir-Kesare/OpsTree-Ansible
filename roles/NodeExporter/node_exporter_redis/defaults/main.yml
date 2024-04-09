@@ -1,0 +1,15 @@
+---
+# defaults file for node_exporter_redis
+
+# Node Exporter Version
+node_exporter_version: "1.2.2"
+
+# Port for Node Exporter
+node_exporter_port: 9100
+
+# Redis Exporter Version
+redis_exporter_version: "1.22.0"
+
+# Port for Redis Exporter
+redis_exporter_port: 9121
+

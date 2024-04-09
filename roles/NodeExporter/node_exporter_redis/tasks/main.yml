@@ -1,0 +1,61 @@
+---
+- name: Install required packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - wget
+    - tar
+    
+
+- name: Download and install Node Exporter
+  get_url:
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+    dest: /tmp/node_exporter.tar.gz
+
+- name: Extract Node Exporter archive
+  ansible.builtin.unarchive:
+    src: /tmp/node_exporter.tar.gz
+    dest: /usr/local/bin/
+    remote_src: yes
+
+- name: Create systemd service file
+  template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+  notify: Restart Node Exporter Service
+
+- name: Allow Node Exporter port through firewall
+  ansible.builtin.ufw:
+    rule: allow
+    port: "{{ node_exporter_port }}"
+    proto: tcp
+
+- name: Download Redis Exporter
+  get_url:
+    url: "https://github.com/oliver006/redis_exporter/releases/download/v{{ redis_exporter_version }}/redis_exporter-v{{ redis_exporter_version }}.linux-amd64.tar.gz"
+    dest: /tmp/redis_exporter.tar.gz
+
+- name: Extract Redis Exporter archive
+  ansible.builtin.unarchive:
+    src: /tmp/redis_exporter.tar.gz
+    dest: /usr/local/bin/
+    remote_src: yes
+
+- name: Create Redis Exporter systemd service file
+  template:
+    src: redis_exporter.service.j2
+    dest: /etc/systemd/system/redis_exporter.service
+  notify: Restart Redis Exporter Service
+
+
+- name: Allow Redis Exporter port through firewall
+  ansible.builtin.ufw:
+    rule: allow
+    port: "{{ redis_exporter_port }}"
+    proto: tcp
+
+
+
+
+

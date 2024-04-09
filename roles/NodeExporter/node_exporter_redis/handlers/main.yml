@@ -1,0 +1,10 @@
+---
+- name: Restart Node Exporter Service
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: restarted
+
+- name: Restart Redis Exporter Service
+  ansible.builtin.systemd:
+    name: redis_exporter
+    state: restarted
