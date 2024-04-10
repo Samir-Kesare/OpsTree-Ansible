@@ -51,7 +51,6 @@ This role is designed to automate the procees of adding Attendance Grafana Dashb
 
 > [!NOTE]
 >Ensure that for dynamic inventory you have the necessary AWS credentials configured in AWS CLI or an IAM role on the node.
-> Also Refer this [*Prometheus Documentation*](https://github.com/CodeOps-Hub/Ansible/blob/shreya/prometheus-role/roles/prometheus/README.md) for `Prometheus` guide, as for configuring node exporter, it is necessary to have the functionality of fetching the servers for which you need to see logs in `Prometheus UI`, for this, I've configured `prometheus_config.j2` file in `templates/prometheus_config.j2` in which there is a section of service discovery for EC2 Instances, it will automatically fetch the servers of provided region and you can easily monitor the logs of `node-exporter's server`, as the `prometheus server` has an `IAM Role` attached on it with `AmazonEC2ReadOnlyAccess` policy. 
 
 ## Dynamic Inventory Setup
 
@@ -190,12 +189,11 @@ This Ansible playbook includes all the required tasks files.
 
 ***
 
-### templates file (node_exporter_service.j2)
+### templates file (attendanceDashboard.json.j2)
 
-This configuration sets up a systemd service for Prometheus Node Exporter tailored for Salary App monitoring. It ensures that the service starts after the network is available. The service runs as the user and group "node_exporter" and launches Node Exporter with Salary-specific collectors enabled, listening on the specified address and port. Finally, it specifies that the service should be enabled and started during the multi-user boot sequence.
 
 <details>
-<summary> Click here to see node_exporter_service.j2 file</summary>
+<summary> Click here to see attendanceDashboard.json.j2 file</summary>
 <br>
   
 ```shell
@@ -3222,7 +3220,7 @@ This Ansible playbook named "test.yml" targets the localhost machine and utilize
 
 ### vars file (main.yml)
 
-This YAML configuration sets parameters for the Node Exporter and Salary monitoring. It specifies the Node Exporter version, installation directory, listening address, telemetry path, and URL for downloading the Node Exporter binary.
+This YAML configuration sets parameters for the Dashboard and Attendance monitoring. It specifies the Data source UID , Dashboard title , Dashboard UID , and .json file  path .
 
 <details>
 <summary> Click here to see main.yml file</summary>
@@ -3249,14 +3247,17 @@ dashboard_uid: "007"
 # Output
 
 ### Role Execution
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/f4d00e2e-3a2a-4f8f-a349-ddd7d4dbce6b)
 
 ***
 
 ### PGA Server 
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/e11fb29c-07a7-4b43-b6c4-52284e3d8dba)
 
 ***
 
 ### PGA Server Dashboard View
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/ff82291b-c899-4e7b-8955-f6038a1e479a)
 
 ***
 
