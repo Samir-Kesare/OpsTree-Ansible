@@ -3263,7 +3263,7 @@ dashboard_uid: "007"
 
 # Conclusion
 
-This guide illustrates the process of adding **Attendance Grafana Dashboard** through Ansible. By adhering to these instructions, you can effectively visualize and monitor your `Attendance APi Server` within your AWS infrastructure.
+This guide illustrates the process of adding **Attendance Grafana Dashboard** through Ansible. By adhering to these instructions, you can effectively visualize and monitor your `Attendance API Server` within your AWS infrastructure.
 
 ***
 ## Contact Information
