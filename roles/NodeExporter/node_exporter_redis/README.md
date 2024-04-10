@@ -202,7 +202,11 @@ WantedBy=multi-user.target
 
 ***
 ### templates/redis_exporter.service.j2
-
+<details>
+<summary> main.yml </summary>
+<br>
+  
+```shell
 [Unit]
 Description=Prometheus
 Documentation=https://github.com/oliver006/redis_exporter
