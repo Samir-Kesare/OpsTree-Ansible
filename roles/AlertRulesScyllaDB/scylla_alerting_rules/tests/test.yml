@@ -1,0 +1,6 @@
+---
+- hosts: tag_Name_prometheus
+  remote_user: ubuntu
+  become: true
+  roles:
+    - scylla_alerting_rules

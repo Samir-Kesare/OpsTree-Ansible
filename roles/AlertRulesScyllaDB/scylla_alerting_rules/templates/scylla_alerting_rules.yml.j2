@@ -1,0 +1,89 @@
+groups:
+  - name: database_alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU Usage Detected"
+          description: "CPU usage is above 90% for 5 minutes or more. Potential performance issues or resource contention."
+          
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / node_memory_MemTotal_bytes * 100 > 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High Memory Usage Detected"
+          description: "Memory usage is above 90% for 5 minutes or more. Potential memory leaks or inefficient queries."
+          
+      - alert: LowDiskSpace
+        expr: node_filesystem_free_bytes / node_filesystem_size_bytes * 100 < 10
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Low Disk Space Detected"
+          description: "Disk space is below 10% for 5 minutes or more. Disk space management required or potential disk failures."
+          
+      - alert: HighConnectionPooling
+        expr: process_open_fds / process_max_fds * 100 > 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High Connection Pooling Detected"
+          description: "Number of active database connections is above 90% of the maximum for 5 minutes or more. Potential connection leaks or exhaustion."
+          
+      - alert: SlowQueryExecution
+        expr: histogram_quantile(0.95, rate(database_query_duration_seconds_bucket[5m])) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Slow Query Execution Detected"
+          description: "Average execution time of database queries is above 1 second for 5 minutes or more. Potential performance degradation or inefficient queries."
+          
+      - alert: DatabaseReplicationLag
+        expr: database_replication_lag_seconds > 60
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Database Replication Lag Detected"
+          description: "Replication lag is above 60 seconds for 5 minutes or more. Potential replication issues or network latency."
+          
+      - alert: DatabaseBackupStatus
+        expr: database_backup_last_successful_timestamp_seconds < (time() - 86400)
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database Backup Status Issue Detected"
+          description: "Database backup was not performed in the last 24 hours. Data integrity and disaster recovery preparedness may be compromised."
+          
+      - alert: DatabaseServiceAvailability
+        expr: up == 0
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database Service Unavailable"
+          description: "Database service is unreachable or experiencing downtime. High availability and reliability are compromised."
+          
+      - alert: SecurityAccessViolations
+        expr: security_access_violations_total > 0
+        labels:
+          severity: critical
+        annotations:
+          summary: "Security Access Violations Detected"
+          description: "Unauthorized access attempts, privilege escalations, or other security violations detected. Database security may be compromised."
+          
+      - alert: DatabaseDeadlocks
+        expr: database_deadlocks_total > 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Database Deadlocks Detected"
+          description: "Database deadlocks occurred more than 10 times in the last 5 minutes. Potential application or database design issues."
