@@ -30,6 +30,7 @@ Creating an Ansible role for managing alerting rules of Scylla involves automati
 # Flow Diagram
 
 
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056570/eec65990-a27b-4f48-82e8-b9990828548c)
 
 
 
