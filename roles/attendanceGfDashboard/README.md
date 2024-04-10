@@ -3201,7 +3201,7 @@ This configuration sets up a systemd service for Prometheus Node Exporter tailor
 
 ### tests file (test.yml)
 
-This Ansible playbook named "test.yml" targets the localhost machine and utilizes the "Node_Exporter_role" role to install Node Exporter in Salary Server.
+This Ansible playbook named "test.yml" targets the localhost machine and utilizes the "Attendance Grafana Dashboard" role to add dashboard  in PGA Server.
 
 <details>
 <summary> Click here to see test.yml file</summary>
@@ -3210,10 +3210,10 @@ This Ansible playbook named "test.yml" targets the localhost machine and utilize
 ```shell
 ---
 - hosts: localhost
-  become: true
+  become: yes
   gather_facts: yes
   roles:
-    - salary-node-exporter
+    - attendanceGfDashboard
 
 ```
 </details>
@@ -3230,15 +3230,17 @@ This YAML configuration sets parameters for the Node Exporter and Salary monitor
   
 ```shell
 ---
+# vars file for attendanceGfDashboard
+editor_name : "Harshit"
+grafana_api_key: "glsa_oIJNxnxI1QAl6alNgCPtF8SgkEXURjpc_8c78e79d"
+grafana_url: http://18.207.163.171:3000
+json_file_template_src: "attendanceDashboard.json.j2"
+json_file_dest: "/home/ubuntu/attendanceDashboard.json"
 
-node_exporter_version: "1.7.0"
-node_exporter_architecture: "linux-amd64"
-node_exporter_url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ node_exporter_architecture }}.tar.gz"
-node_exporter_service_template_src: "node_exporter_service.j2"
-node_exporter_service_dest: "/etc/systemd/system/node-exporter.service"
-node_exporter_user: "node_exporter"
-node_exporter_group: "node_exporter"
-
+#  template
+prometheus_DS_uid : "fdi6x7lbmqxvkf"
+dashboard_name: "Attendance-API"
+dashboard_uid: "007"
 ```
 </details>
 
@@ -3247,28 +3249,20 @@ node_exporter_group: "node_exporter"
 # Output
 
 ### Role Execution
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/b4cea04e-de9f-44e0-a00e-76ba22604524)
 
 ***
 
-### Salary-Node-Exporter Server 
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/15754c11-1a16-4615-b5c6-50dad330a968)
+### PGA Server 
 
 ***
 
-### Log Metrics of Salary-Node-Exporter Server
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/c365d2f2-b37e-4d63-a3d0-9ae406ab23ac)
-
-***
-
-### Prometheus UI
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/38aaa2e9-1b47-49d3-b68a-0e6fd9b5c022)
+### PGA Server Dashboard View
 
 ***
 
 # Conclusion
 
-This guide illustrates the process of deploying **Salary-node-exporter** through Ansible. By adhering to these instructions, you can effectively provision and set up `node exporter in Salary server` within your AWS infrastructure.
+This guide illustrates the process of adding **Attendance Grafana Dashboard** through Ansible. By adhering to these instructions, you can effectively visualize and monitor your `Attendance APi Server` within your AWS infrastructure.
 
 ***
 ## Contact Information
@@ -3285,4 +3279,5 @@ This guide illustrates the process of deploying **Salary-node-exporter** through
 |  Ansible Doc | [Reference link](https://docs.ansible.com/ansible/latest/index.html) |
 | Node Exporter Setup | [Reference link](https://codewizardly.com/prometheus-on-aws-ec2-part2/) |
 | Reference Link For Ansible Dynamic Inventory | [Reference link](https://devopscube.com/setup-ansible-aws-dynamic-inventory/) |
-| Node Exporter Releases| [Reference link](https://github.com/prometheus/node_exporter/releases) |
+| Ansible Module for Grafana Dashboard| [Reference Link](https://docs.ansible.com/ansible/latest/collections/community/grafana/grafana_dashboard_module.html)|
+| Grafana Provisioning | [Reference Link](https://grafana.com/docs/grafana/latest/administration/provisioning/) |
