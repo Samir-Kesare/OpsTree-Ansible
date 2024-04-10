@@ -1,7 +1,0 @@
----
-alert_manager_port: 9093
-alert_manager_config_file: /etc/alertmanager/alertmanager.yml
-alert_manager_binary_url: "https://github.com/prometheus/alertmanager/releases/download/v{{ alert_manager_version }}/alertmanager-{{ alert_manager_version }}.linux-amd64.tar.gz"
-alert_manager_version: "0.23.0"
-
-
