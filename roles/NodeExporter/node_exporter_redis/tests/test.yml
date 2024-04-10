@@ -1,6 +1,0 @@
----
-- hosts: tag_Name_redis
-  remote_user: ubuntu
-  become: true
-  roles:
-    - node_exporter_redis
