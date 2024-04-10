@@ -1,0 +1,4 @@
+---
+# tasks file for attendanceGfDashboard
+- name: Include tasks for Attendance 
+  ansible.builtin.include_tasks: addDashboard.yml
