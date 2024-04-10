@@ -1,10 +1,10 @@
-# Ansible Role for Salary-Node-Exporter
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/7307e336-40f7-483b-b4b5-03736aa58ee1)
+# Ansible Role for Attendance-Grafana-Dashboard
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/499089ea-786d-4975-b37a-7b851fb16941)
 
 ***
 |   Author        |  Created on   |  Version   | Last updated by  | Last edited on |
 | --------------- | --------------| -----------|----------------- | -------------- |
-| **[Harshit Singh](https://github.com/Panu-S-Harshit-Ninja-07)**    | 02 April 2024 |  Version 1 | Harshit Singh     | 02 April 2024  |
+| **[Harshit Singh](https://github.com/Panu-S-Harshit-Ninja-07)**    | 10 April 2024 |  Version 1 | Harshit Singh     | 10 April 2024  |
 ***
 
 # Table of contents
