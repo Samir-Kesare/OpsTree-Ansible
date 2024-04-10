@@ -358,4 +358,4 @@ In summary, the Ansible Role for setting up Node Exporter with Redis monitoring 
 | ---------- | --------------- |
 | [Link](https://docs.ansible.com/ansible/latest/index.html) | Ansible Doc Link. |
 | [Link](https://www.youtube.com/watch?v=junPdh2yvbU&t=454s) | Reference Link For Ansible Dynamic Inventory. |
-| [Link}(https://www.fosstechnix.com/monitor-redis-with-prometheus-and-grafana/) | Reference Link for Redis-Node-Exporter |
+| [Link](https://www.fosstechnix.com/monitor-redis-with-prometheus-and-grafana/) | Reference Link for Redis-Node-Exporter |
