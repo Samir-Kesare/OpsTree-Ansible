@@ -1,8 +1,0 @@
----
-# defaults file for scylla_alerting_rules
-
-# Path to store Scylla alerting rules
-scylla_alerting_rules_path: "/etc/prometheus/scylla_alerting_rules.yml"
-
-# Path to the Prometheus configuration directory
-prometheus_config_dir: "/etc/prometheus"

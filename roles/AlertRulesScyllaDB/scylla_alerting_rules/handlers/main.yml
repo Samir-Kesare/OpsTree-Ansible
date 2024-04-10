@@ -1,8 +1,0 @@
----
-# handlers file for scylla_alerting_rules
-
-- name: Reload Prometheus
-  service:
-    name: prometheus.service
-    state: restarted
-  become: true
