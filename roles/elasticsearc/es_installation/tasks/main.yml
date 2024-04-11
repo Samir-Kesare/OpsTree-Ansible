@@ -1,0 +1,29 @@
+---
+# tasks file for elasticsearch_installation.yml
+- name: Create destination directory if it doesn't exist
+  file:
+    path: /opt
+    state: directory
+    mode: 0755
+
+- name: Download Elasticsearch deb package
+  get_url:
+    url: "{{ elasticsearch_deb_package_url }}"
+    dest: "{{ elasticsearch_deb_package_dest }}"
+    mode: 0744
+
+- name: Unzip Elasticsearch deb package
+  command: "dpkg-deb -x {{ elasticsearch_deb_package_dest }} {{ elasticsearch_installation_directory }}"
+
+- name: Modify Elasticsearch configuration file
+  template:
+    src: "{{ elasticsearch_configuration_template_src }}"  
+    dest: "{{ elasticsearch_configuration_dest }}"
+    owner: "{{ elasticsearch_configuration_owner }}"
+    group: "{{ elasticsearch_configuration_group }}"
+    mode: "{{ elasticsearch_configuration_mode }}"
+  notify: restart elasticsearch
+
+- name: Install Elasticsearch
+  apt:
+    deb: "{{ elasticsearch_deb_package_dest }}"
