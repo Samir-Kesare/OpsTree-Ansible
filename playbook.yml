@@ -1,0 +1,6 @@
+---
+- hosts: tag_Type_frontend-node-exporter
+  become: yes
+  gather_facts: yes
+  roles:
+    - Frontend_node_exp

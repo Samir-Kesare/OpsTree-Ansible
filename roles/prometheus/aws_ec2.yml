@@ -1,3 +1,4 @@
+
 ---
 plugin: aws_ec2
 regions:
@@ -6,7 +7,4 @@ hostnames:
   - ip-address
 filters:
   tag:Name:
-
-   
-   
-
+    - jenkins

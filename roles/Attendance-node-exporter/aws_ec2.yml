@@ -4,9 +4,6 @@ regions:
   - us-east-1
 hostnames:
   - ip-address
-filters:
-  tag:Name:
-
-   
-   
-
+include_filters:
+ - tag:Name:
+     - 'demo_Attendance_API'
