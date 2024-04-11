@@ -1,0 +1,13 @@
+---
+# vars file for grafana_postgres_dashboard
+
+editor_name : "Samir"
+grafana_api_key: "glsa_SRE3u5yZXsm8t2CVZ4apLFFaaSTbquUt_99f0ab3a"
+grafana_url: http://35.79.223.207:3000
+json_file_template_src: "postgressDashboard.json.j2"
+json_file_dest: "/home/ubuntu/postgressDashboard.json.j2"
+
+#  template
+prometheus_DS_uid : "fdi6x7lbmqxvkf"
+dashboard_name: "Postgress-API"
+dashboard_uid: "007"

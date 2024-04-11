@@ -1,0 +1,6 @@
+---
+- hosts: tag_Name_grafana
+  remote_user: ubuntu
+  become: true
+  roles:
+    - grafana_postgres_dashboard

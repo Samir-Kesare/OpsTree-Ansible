@@ -1,0 +1,23 @@
+
+---
+# tasks file for attendanceGfDashboard
+
+- name: Import json file template
+  ansible.builtin.template:
+    src: "{{ json_file_template_src }}"
+    dest: "{{ json_file_dest }}"
+
+- name: Import postgress Grafana dashboard 
+  community.grafana.grafana_dashboard:
+    grafana_url: "{{ grafana_url }}"
+    grafana_api_key: "{{ grafana_api_key }}"
+    state: present
+    commit_message: "Updated by {{ editor_name }}"
+    overwrite: true
+    path: "{{ json_file_dest }}"
+
+- name: Remove json file (delete file)
+  ansible.builtin.file:
+    path: "{{ json_file_dest }}"
+    state: absent
+    

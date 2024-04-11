@@ -1,0 +1,238 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "PostgreSQL Dashboard",
+    "panels": [
+      {
+        "id": 1,
+        "type": "graph",
+        "title": "CPU Usage",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "PostgreSQL",
+            "query": "SELECT cpu_usage FROM postgresql_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "percent",
+            "label": "CPU Usage (%)"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 12,
+          "h": 6
+        }
+      },
+      {
+        "id": 2,
+        "type": "graph",
+        "title": "Memory Usage",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "PostgreSQL",
+            "query": "SELECT memory_usage FROM postgresql_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "bytes",
+            "label": "Memory Usage"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 0,
+          "y": 6,
+          "w": 12,
+          "h": 6
+        }
+      },
+      {
+        "id": 3,
+        "type": "graph",
+        "title": "Disk I/O",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "PostgreSQL",
+            "query": "SELECT disk_io FROM postgresql_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "bytes",
+            "label": "Disk I/O"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 0,
+          "y": 12,
+          "w": 12,
+          "h": 6
+        }
+      },
+      {
+        "id": 4,
+        "type": "graph",
+        "title": "Query Execution Time",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "PostgreSQL",
+            "query": "SELECT query_execution_time FROM postgresql_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "ms",
+            "label": "Query Execution Time (ms)"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 12,
+          "y": 0,
+          "w": 12,
+          "h": 6
+        }
+      },
+      {
+        "id": 5,
+        "type": "graph",
+        "title": "Active Database Connections",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "PostgreSQL",
+            "query": "SELECT active_connections FROM postgresql_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Active Connections"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 12,
+          "y": 6,
+          "w": 12,
+          "h": 6
+        }
+      },
+      {
+        "id": 6,
+        "type": "graph",
+        "title": "Database Locks",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "PostgreSQL",
+            "query": "SELECT database_locks FROM postgresql_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Database Locks"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 12,
+          "y": 12,
+          "w": 12,
+          "h": 6
+        }
+      },
+      {
+        "id": 7,
+        "type": "graph",
+        "title": "Database Replication Lag",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "PostgreSQL",
+            "query": "SELECT replication_lag FROM postgresql_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "s",
+            "label": "Replication Lag (seconds)"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 24,
+          "y": 0,
+          "w": 12,
+          "h": 6
+        }
+      },
+      {
+        "id": 8,
+        "type": "graph",
+        "title": "Table Size",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "PostgreSQL",
+            "query": "SELECT table_size FROM postgresql_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "bytes",
+            "label": "Table Size"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 24,
+          "y": 6,
+          "w": 12,
+          "h": 6
+        }
+      }
+     ],
+    "refresh": "10s",
+    "schemaVersion": 22,
+    "timezone": "browser",
+    "version": 1
+  },
+  "folderId": null,
+  "overwrite": false
+}
