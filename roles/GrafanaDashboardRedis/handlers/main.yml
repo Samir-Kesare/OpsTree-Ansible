@@ -1,0 +1,7 @@
+---
+# handlers file for grafana_redis_dashboard
+# handlers/main.yml
+- name: Restart Grafana service
+  service:
+    name: grafana-server
+    state: restarted
