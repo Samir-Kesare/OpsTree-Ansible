@@ -1,29 +1,44 @@
 ---
-# tasks file for elasticsearch_installation.yml
-- name: Create destination directory if it doesn't exist
-  file:
-    path: /opt
-    state: directory
-    mode: 0755
+- name: Install prerequisites
+  apt:
+    name: "{{ prerequisites }}"
+    state: present
 
-- name: Download Elasticsearch deb package
-  get_url:
-    url: "{{ elasticsearch_deb_package_url }}"
-    dest: "{{ elasticsearch_deb_package_dest }}"
-    mode: 0744
+- name: Add Elastic GPG key
+  apt_key:
+    url: "{{ key_url }}"
+    state: present
 
-- name: Unzip Elasticsearch deb package
-  command: "dpkg-deb -x {{ elasticsearch_deb_package_dest }} {{ elasticsearch_installation_directory }}"
-
-- name: Modify Elasticsearch configuration file
-  template:
-    src: "{{ elasticsearch_configuration_template_src }}"  
-    dest: "{{ elasticsearch_configuration_dest }}"
-    owner: "{{ elasticsearch_configuration_owner }}"
-    group: "{{ elasticsearch_configuration_group }}"
-    mode: "{{ elasticsearch_configuration_mode }}"
-  notify: restart elasticsearch
+- name: Add Elastic APT repository for Elasticsearch 
+  apt_repository:
+    repo: "{{ elasticsearch_repository }}"
+    state: present
 
 - name: Install Elasticsearch
   apt:
-    deb: "{{ elasticsearch_deb_package_dest }}"
+    name: elasticsearch={{ elasticsearch_version }}
+    state: present
+
+- name: Reload systemd daemon
+  shell: systemctl daemon-reload
+
+- name: Enable and start Elasticsearch service
+  systemd:
+    name: elasticsearch
+    enabled: yes
+    state: started
+
+- name: Copy Elasticsearch configuration template
+  template:
+    src: elasticsearch.yml.j2
+    dest: "{{ elasticsearch_config_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Elasticsearch
+
+- name: Reload systemd to apply changes
+  service:
+    name: elasticsearch
+    state: started
+  become: true
