@@ -342,6 +342,9 @@ ansible-playbook -i aws_ec2.yml playbook.yml
 
 ## Post-Installation Setup
 * Access Elasticsearch on `https://URL:9200`
+
+  ![Screenshot from 2024-04-13 06-12-08](https://github.com/CodeOps-Hub/Ansible/assets/156056746/a95e06f3-349f-46ec-a8b5-a28d2f10a532)
+
   
 ![Screenshot from 2024-04-07 22-07-36](https://github.com/CodeOps-Hub/Ansible/assets/156056746/152f8b87-6ba5-4d83-849b-305e5dffde63)
 
