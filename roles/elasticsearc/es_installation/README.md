@@ -166,7 +166,24 @@ filters:
 
 ```
 
+***
+  2. variables: This role comes with  values for several variables that have been used in the role. You can find these variables in the `variables/main.yml` file within the role directory.
 
+```yaml
+# vars file for elasticsearch_installation.yml
+
+prerequisites:
+ - apt-transport-https
+ - software-properties-common
+key_url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+elasticsearch_repository: "deb https://artifacts.elastic.co/packages/8.x/apt stable main" 
+elasticsearch_config_path: "/etc/elasticsearch/elasticsearch.yml"
+elasticsearch_version: "8.13.1"
+elasticsearch_host: "0.0.0.0"
+elasticsearch_port: "9200"
+
+```
+***
 **Step 6: Templates for Configuration**
 We need to create jinja2 template :
 * To configure Elasticsearch
