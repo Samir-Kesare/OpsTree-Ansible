@@ -1,0 +1,7 @@
+---
+# handlers file for kibana
+
+- name: Restart Elasticsearch
+  systemd:
+    name: elasticsearch
+    daemon_reload: yes
