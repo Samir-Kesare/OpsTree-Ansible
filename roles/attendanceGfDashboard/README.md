@@ -136,7 +136,7 @@ filters:
 
 ***
 
-## Salary-Node-Exporter Role
+## Attendance-Grafana-Dashboard Role
 
 ### addDashboard file (addDashboard.yml)
 This Ansible playbook consists of tasks aimed at copying json file , adding dashboard in Grafana then deleting that json file.
