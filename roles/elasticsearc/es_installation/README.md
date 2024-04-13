@@ -107,7 +107,7 @@ filters:
 * This file is defining a set of tasks to be executed on hosts belonging to the ubuntu group.
 
 ```yaml
-------
+---
 - hosts: aws_ec2
   remote_user: ubuntu
   become: true
@@ -120,34 +120,50 @@ filters:
 
 ```yaml
 ---
-# tasks file for elasticsearch_installation.yml
-- name: Create destination directory if it doesn't exist
-  file:
-    path: /opt
-    state: directory
-    mode: 0755
+- name: Install prerequisites
+  apt:
+    name: "{{ prerequisites }}"
+    state: present
 
-- name: Download Elasticsearch deb package
-  get_url:
-    url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.13.1-amd64.deb"
-    dest: "/opt/elasticsearch-8.13.1-amd64.deb"
-    mode: 0744
+- name: Add Elastic GPG key
+  apt_key:
+    url: "{{ key_url }}"
+    state: present
 
-- name: Unzip Elasticsearch deb package
-  command: "dpkg-deb -x /opt/elasticsearch-8.13.1-amd64.deb /opt/elasticsearch"
-
-- name: Modify Elasticsearch configuration file
-  template:
-    src: elasticsearch.yml.j2  # Path to your Elasticsearch configuration template
-    dest: /opt/elasticsearch/etc/elasticsearch/elasticsearch.yml
-    owner: "root"
-    group: "root"
-    mode: 0644
-  notify: restart elasticsearch
+- name: Add Elastic APT repository for Elasticsearch 
+  apt_repository:
+    repo: "{{ elasticsearch_repository }}"
+    state: present
 
 - name: Install Elasticsearch
   apt:
-    deb: "/opt/elasticsearch-8.13.1-amd64.deb"
+    name: elasticsearch={{ elasticsearch_version }}
+    state: present
+
+- name: Reload systemd daemon
+  shell: systemctl daemon-reload
+
+- name: Enable and start Elasticsearch service
+  systemd:
+    name: elasticsearch
+    enabled: yes
+    state: started
+
+- name: Copy Elasticsearch configuration template
+  template:
+    src: elasticsearch.yml.j2
+    dest: "{{ elasticsearch_config_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Elasticsearch
+
+- name: Reload systemd to apply changes
+  service:
+    name: elasticsearch
+    state: started
+  become: true
+
 ```
 
 
@@ -242,6 +258,44 @@ http.port: 9200
 # Allow wildcard deletion of indices:
 #
 #action.destructive_requires_name: false
+
+#----------------------- BEGIN SECURITY AUTO CONFIGURATION -----------------------
+#
+# The following settings, TLS certificates, and keys have been automatically      
+# generated to configure Elasticsearch security features on 11-04-2024 07:29:36
+#
+# --------------------------------------------------------------------------------
+
+# Enable security features
+xpack.security.enabled: false
+
+xpack.security.enrollment.enabled:  false
+
+# Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents
+xpack.security.http.ssl:
+  enabled: true
+  keystore.path: certs/http.p12
+
+# Enable encryption and mutual authentication between cluster nodes
+xpack.security.transport.ssl:
+  enabled: true
+  verification_mode: certificate
+  keystore.path: certs/transport.p12
+  truststore.path: certs/transport.p12
+# Create a new cluster with the current node only
+# Additional nodes can still join the cluster later
+cluster.initial_master_nodes: ["ip-3.84.50.141"]
+
+# Allow HTTP API connections from anywhere
+# Connections are encrypted and require user authentication
+http.host: 0.0.0.0
+
+# Allow other nodes to join the cluster from anywhere
+# Connections are encrypted and mutually authenticated
+#transport.host: 0.0.0.0
+
+#----------------------- END SECURITY AUTO CONFIGURATION -------------------------
+
 
 ```
 
