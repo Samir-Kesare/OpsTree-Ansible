@@ -286,6 +286,7 @@ This Ansible playbook includes all the required tasks files.
 
 ```
 </details>
+
 ***
 
 ### vars file (main.yml)
@@ -310,6 +311,7 @@ dashboard_name: "Redis-API"
 dashboard_uid: "007"
 ````
 </details>
+
 ***
 
 ## Output
