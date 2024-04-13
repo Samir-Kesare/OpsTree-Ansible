@@ -1,7 +1,7 @@
 ---
-# handlers file for elasticsearch_installation.yml
-- name: restart elasticsearch
+# handlers file for kibana
+
+- name: Restart Elasticsearch
   systemd:
     name: elasticsearch
-    state: restarted
     daemon_reload: yes
