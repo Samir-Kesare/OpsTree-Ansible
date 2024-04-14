@@ -25,12 +25,13 @@
 
 # Introduction
 
+This Ansible role automates the deployment process, ensuring a seamless setup of Fluentd on target servers. Upon execution, the role not only installs Fluentd but also configures it to forward logs to Elasticsearch by default. This default behavior provides immediate functionality out-of-the-box, simplifying the log aggregation process.
 
 ***
 
 # Flow Diagram
 
-<img width="700" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/5afb977f-253c-4287-91f0-04fb1f65e8f1">
+<img width="1276" alt="Screenshot 2024-04-14 at 3 24 20 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/e6a34d41-535e-4acb-a1f1-360a129ab23d">
 
 ***
 
@@ -60,14 +61,25 @@
   
 ```shell
 [defaults]
-roles_path=Prometheus_role
-retry_files_enabled=no
-inventory=aws_ec2.yml
+
+# some basic default values...
+
+
+# Use AWS EC2 dynamic inventory for managing hosts
+inventory      = aws_ec2.yml
+
+# Disable SSH host key checking for convenience.
 host_key_checking = False
+
+# Specify the path to the private key file for SSH connections.
+private_key_file = /path/to/private_key.pem
+
+#Sets the remote user for SSH connections to 'ubuntu'
 remote_user = ubuntu
-private_key_file = prometheus_key.pem
+
 [inventory]
-enable_plugins = aws_ec2
+# enable inventory plugins, default: 'host_list', 'script', 'auto', 'yaml', 'ini', 'toml'
+enable_plugins = aws_ec2, host_list, virtualbox, yaml, constructed, script, auto, ini, toml
 
 ```
 </details>
@@ -85,37 +97,45 @@ enable_plugins = aws_ec2
 plugin: aws_ec2
 regions:
   - us-east-1
-hostnames:
-  - ip-address
+
+groups: 
+  redis: "'redis' in tags.Type"
+  postgres: "'postgres' in tags.Type"
+  scylla: "'scylla' in tags.Type"
+  efk: "'efk' in tags.Type"
+  prometheus: "'prometheus' in tags.Type"
+  frontend: "'frontend-node-exporter' in tags.Type"
+  employee: "'employee' in tags.Type"
+  fluent: "'fluent' in tags.Type"
+
 filters:
-  tag:Name:
-    - Prometheus-Server
+    instance-state-code: 16
 
 ```
 </details>
 
 ***
 
-### playbook.yml file
+### fluentd.yml file
 
 <details>
-<summary> Click here to see playbook.yml file</summary>
+<summary> Click here to see fluentd.yml file</summary>
 <br>
   
 ```shell
 ---
-- hosts: aws_ec2
+- hosts: fluent
   become: yes
   gather_facts: yes
   roles:
-    - Prometheus_role
+    - fluentd-collector
 
 ```
 </details>
 
 ***
 
-## Prometheus Role
+## Fluentd Role
 
 ### defaults file (main.yml)
 
@@ -127,7 +147,13 @@ The defaults/main.yml file helps maintain consistency and simplifies role config
   
 ```shell
 ---
-version: "2.47.1"
+# defaults file for fluentd-role
+# defaults file for ansible-role-fluentd
+host: localhost
+service_port: 9200
+logstash_format: true
+flush_interval: 10s
+type : elasticsearch
 
 ```
 </details>
@@ -136,16 +162,19 @@ version: "2.47.1"
 
 ### handlers file (main.yml)
 
-This Ansible task named "Reload systemd" executes the command systemctl daemon-reload to reload the systemd configuration. It includes a listen directive with the value systemd_reload, indicating that other tasks can notify this task to trigger a reload of systemd. 
+This Ansible task named "Restart Fluentd service" executes the command systemctl restart fluentd to restart the fluentd service and load its updated configuration. 
 
 <details>
 <summary> Click here to see main.yml file</summary>
 <br>
   
 ```shell
-- name: Reload systemd
-  command: systemctl daemon-reload
-  listen: systemd_reload
+---
+# handlers file for fluentd-role
+- name: Restart Fluentd service
+  ansible.builtin.service:
+    name: fluentd
+    state: restarted
 
 ```
 </details>
@@ -154,65 +183,33 @@ This Ansible task named "Reload systemd" executes the command systemctl daemon-r
 
 ### meta file (main.yml)
 
-This is a metadata file (meta/main.yml) for an Ansible role, providing essential information about the role such as author, description, company, license, and supported platforms.
+This is a metadata file (meta/main.yml) for an Ansible role, providing essential information about the role such as author, description and supported platforms.
 
 <details>
 <summary> Click here to see main.yml file</summary>
 <br>
   
 ```shell
+
 galaxy_info:
-  author: Shreya
-  description: Snaatak-P7
-  company: Mygurukulam- Powered by Opstree
+  author: Vidhi Yadav
+  description: This role facilitates the installation and configuration of Fluentd as a robust log aggregator. It seamlessly integrates with Elasticsearch to store and manage log data efficiently. While Elasticsearch is the default destination, this role offers flexibility, allowing users to override or customize the destination as needed.
 
-  # If the issue tracker for your role is not on github, uncomment the
-  # next line and provide a value
-  # issue_tracker_url: http://example.com/issue/tracker
-
-  # Choose a valid license ID from https://spdx.org - some suggested licenses:
-  # - BSD-3-Clause (default)
-  # - MIT
-  # - GPL-2.0-or-later
-  # - GPL-3.0-only
-  # - Apache-2.0
-  # - CC-BY-4.0
   license: license (GPL-2.0-or-later, MIT, etc)
 
   min_ansible_version: 2.1
 
-  # If this a Container Enabled role, provide the minimum Ansible Container version.
-  # min_ansible_container_version:
+  platforms:
+  - name: Ubuntu
+    distribution:
+    - jammy
+    - focal
+  - name: Debian
+    distribution:
+    - bullseye
+    - bookworm
 
-  #
-  # Provide a list of supported platforms, and for each platform a list of versions.
-  # If you don't wish to enumerate all versions for a particular platform, use 'all'.
-  # To view available platforms and versions (or releases), visit:
-  # https://galaxy.ansible.com/api/v1/platforms/
-  #
-  # platforms:
-  # - name: Fedora
-  #   versions:
-  #   - all
-  #   - 25
-  # - name: SomePlatform
-  #   versions:
-  #   - all
-  #   - 1.0
-  #   - 7
-  #   - 99.99
 
-  galaxy_tags: []
-    # List tags for your role here, one per line. A tag is a keyword that describes
-    # and categorizes the role. Users find roles by searching for tags. Be sure to
-    # remove the '[]' above, if you add tags to this list.
-    #
-    # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
-    #       Maximum 20 tags per role.
-
-dependencies: []
-  # List your role dependencies here, one per line. Be sure to remove the '[]' above,
-  # if you add dependencies to this list.
 
 ```
 </details>
@@ -221,180 +218,48 @@ dependencies: []
 
 ### tasks file (main.yml)
 
-This playbook automates the setup process, ensuring a smooth installation and configuration of Prometheus on the target system.
+This playbook automates the setup process, ensuring a smooth installation and configuration of fluentd on the target system.
 
 <details>
 <summary> Click here to see main.yml file</summary>
 <br>
   
 ```shell
-- name: Ensure the required packages are installed
-  become: yes
-  package:
-    name:
-      - wget
-      - tar
-  ignore_errors: yes
-
-- name: Add the 'prometheus' user
-  become: yes
-  user:
-    name: "{{user}}"
-    shell: /bin/bash
-    create_home: yes
-    state: present
-
-- name: Create a directory for Prometheus installation
-  become: yes
-  file:
-    path: /home/prometheus
-    owner: "{{user}}"
-    group: "{{group}}"
-    state: directory
-
-- name: Download Prometheus archive
-  become: yes
-  get_url:
-    url: "{{url}}"
-    dest: "{{dir}}"
-
-- name: Extract Prometheus archive
-  become: yes
-  ansible.builtin.unarchive:
-    src: "{{dir}}"
-    dest: /home/prometheus
-    remote_src: yes
-    creates: "{{create_dir}}"
-
-- name: create an empty file for prometheus.service
-  ansible.builtin.file:
-    path: "{{path}}"
-    state: touch
-    owner: "{{user}}"
-    group: "{{group}}"
-    mode: 0644
-
-- name: Replace the content of "{{content_dest}}"
-  become: yes  
-  template:
-    src: prometheus_config.j2
-    dest: "{{content_dest}}"
-    owner: "{{user}}"
-    group: "{{group}}"
-    mode: 0644
-
-- name: Replace the content of "{{path}}"
-  template:
-    src: prometheus_service.j2
-    dest: "{{path}}"
-    owner: root
-    group: root
-    mode: 0644
-  become: true
-  notify: systemd_reload
-- meta: flush_handlers
-
-- name: Reload systemd to apply changes
-  service:
-    name: "{{user}}.service"
-    state: restarted
-  become: true
-
-```
-</details>
-
-***
-
-### templates file (prometheus_config.j2)
-
-This configuration file is for setting up and managing the Prometheus server, defines the behavior of the Prometheus service, including how it should be started, restarted.
-
-<details>
-<summary> Click here to see prometheus_config.j2 file</summary>
-<br>
-  
-```shell
-# my global config
-global:
-  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
-  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
-  # scrape_timeout is set to the global default (10s).
-
-# Alertmanager configuration
-alerting:
-  alertmanagers:
-    - static_configs:
-        - targets:
-          # - alertmanager:9093
-
-# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
-rule_files:
-  # - "first_rules.yml"
-  # - "second_rules.yml"
-
-# A scrape configuration containing exactly one endpoint to scrape:
-# Here it's Prometheus itself.
-scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: "prometheus"
-
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-
-    static_configs:
-      - targets: ["localhost:9090"]
-
-  - job_name: "ec2"
-    ec2_sd_configs:
-      - region: "us-east-1"    
-
-```
-</details>
-
-***
-
-### templates file (prometheus_service.j2)
-
-<details>
-<summary> Click here to see prometheus_service.j2 file</summary>
-<br>
-  
-```shell
-[Unit]
-Description=Prometheus Server
-Documentation=https://prometheus.io/docs/introduction/overview/
-After=network-online.target
-
-[Service]
-user=root
-#User=prometheus
-#Group=prometheus
-Restart=on-failure 
-ExecStart={{ exec_command }}
-
-[Install]
-WantedBy=multi-user.target
-
-```
-</details>
-
-***
-
-### tests file (test.yml)
-
-This Ansible playbook named "Install prometheus" targets the localhost machine and utilizes the "Prometheus_role" role to install Prometheus.
-
-<details>
-<summary> Click here to see test.yml file</summary>
-<br>
-  
-```shell
 ---
-- name: Install prometheus
-  hosts: localhost
-  become: yes
-  roles:
-    - Prometheus_role
+- name: Install Fluentd
+  ansible.builtin.shell: "curl -fsSL {{ fluentd_repo_urls[ansible_distribution ~ '_' ~ ansible_distribution_release] }} | sh"
+
+- name: Check status of Fluentd service
+  ansible.builtin.service:
+    name: fluentd
+    state: "started"
+  register: fluentd_service_status
+
+- name: Display Fluentd service status
+  ansible.builtin.debug:
+    msg: "Fluentd service status: {{ fluentd_service_status }}"
+
+- name: Check if <match **> exists in the file
+  ansible.builtin.shell:
+    cmd: "grep '@type {{ type }}' /etc/fluent/fluentd.conf"
+  register: match_exists
+  changed_when: false
+  failed_when: false
+
+- name: Add Fluentd configuration to the end of the file
+  ansible.builtin.lineinfile:
+    path: /etc/fluent/fluentd.conf
+    insertafter: EOF
+    line: |
+      <match **>
+        @type {{ type }}
+        host {{ host }}
+        port {{ service_port }}
+        logstash_format {{ logstash_format | lower}}
+        flush_interval {{ flush_interval }}
+      </match>
+  when: match_exists.rc != 0
+  notify: Restart Fluentd service
 
 ```
 </details>
@@ -403,7 +268,7 @@ This Ansible playbook named "Install prometheus" targets the localhost machine a
 
 ### vars file (main.yml)
 
-This configuration defines a user and group named "prometheus" and specifies an executable command to run Prometheus. It also includes details such as the version, download URL, directory paths, and service file path. Additionally, it creates a systemd service for Prometheus and specifies the destination for the Prometheus configuration file. 
+This vars file contains a set of variables used by the Ansible role to define the URLs for downloading and installing Fluentd packages on different Linux distributions. 
 
 <details>
 <summary> Click here to see main.yml file</summary>
@@ -411,15 +276,13 @@ This configuration defines a user and group named "prometheus" and specifies an 
   
 ```shell
 
-user: "prometheus"
-group: "prometheus"
-exec_command: "/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus --config.file=/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml"
-version: "2.47.1"
-url: "https://github.com/prometheus/prometheus/releases/download/v2.47.1/prometheus-2.47.1.linux-amd64.tar.gz"
-dir: "/home/prometheus/prometheus-2.47.1.linux-amd64.tar.gz"
-create_dir: "/home/prometheus/prometheus-2.47.1.linux-amd64"
-path: "/etc/systemd/system/prometheus.service"
-content_dest: "/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml"
+---
+# vars file for fluentd-collector
+fluentd_repo_urls:
+  Ubuntu_jammy: "https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-fluent-package5-lts.sh"
+  Ubuntu_focal: "https://toolbelt.treasuredata.com/sh/install-ubuntu-focal-fluent-package5-lts.sh"
+  Debian_bookworm: "https://toolbelt.treasuredata.com/sh/install-debian-bookworm-fluent-package5-lts.sh"
+  Debian_bullseye: "https://toolbelt.treasuredata.com/sh/install-debian-bullseye-fluent-package5-lts.sh"
 
 ```
 </details>
@@ -428,21 +291,24 @@ content_dest: "/home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml"
 
 # Output
 
-### Prometheus Role Execution
+### Flunetd Role Execution
 
-<img width="900" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/833e5131-1a51-430c-b2f3-2fd997915493">
+<img width="1601" alt="Screenshot 2024-04-14 at 2 43 31 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/f59c911e-e3e7-45a6-8b3b-b9fc4ed9b6f0">
 
 ***
 
-### Prometheus Server 
+### Target Server 
 
-<img width="900" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/788ccce1-049b-47ba-8d04-b573066cfd06">
+<img width="1124" alt="Screenshot 2024-04-14 at 3 38 29 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/7845cd05-4e68-4cde-ba85-1a9755fa68b6">
+
 
 ***
 
 # Conclusion
 
-This guide illustrates the process of deploying **prometheus** through Ansible. By adhering to these instructions, you can effectively provision and set up `prometheus` within your AWS infrastructure.
+This Ansible role for Fluentd collector simplifies the process of deploying and configuring Fluentd on target servers. By utilizing the defined variables in the vars file, the role dynamically selects the appropriate Fluentd package URLs based on the target server's Linux distribution and version, ensuring a seamless installation process.
+
+Once installed, Fluentd acts as a robust log aggregator, collecting logs from various sources and forwarding them to Elasticsearch for indexing and analysis. The role's configuration options allow for flexibility, enabling users to customize or override default settings according to their specific requirements.
 
 ***
 
@@ -450,7 +316,7 @@ This guide illustrates the process of deploying **prometheus** through Ansible. 
 
 | **Name** | **Email Address** |
 | -------- | ----------------- |
-| **Shreya Jaiswal** | shreya.jaiswal.snaatak@mygurukulam.co |
+| **Vidhi Yadav** | vidhi.yadhav.snaatak@mygurukulam.co |
 
 ***
 
@@ -458,7 +324,6 @@ This guide illustrates the process of deploying **prometheus** through Ansible. 
 
 | **Source** | **Description** |
 | ---------- | --------------- |
-| [Link](https://docs.ansible.com/ansible/latest/index.html) | Ansible Doc Link. |
-| [Link](https://faun.pub/setting-up-prometheus-server-with-ansible-ac1f14548bce) | Prometheus Setup. |
-| [Link](https://www.youtube.com/watch?v=junPdh2yvbU&t=454s) | Reference Link For Ansible Dynamic Inventory. |
+| [Link](https://docs.fluentd.org/installation/install-by-deb) | Installation |
+| [Link](https://docs.fluentd.org/configuration) | Configuration |
 
