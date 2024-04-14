@@ -1,10 +1,10 @@
-# Ansible Role for Attendance-Grafana-Dashboard
+# Ansible Role for Frontend-Grafana-Dashboard
 ![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/499089ea-786d-4975-b37a-7b851fb16941)
 
 ***
 |   Author        |  Created on   |  Version   | Last updated by  | Last edited on |
 | --------------- | --------------| -----------|----------------- | -------------- |
-| **[Harshit Singh](https://github.com/Panu-S-Harshit-Ninja-07)**    | 10 April 2024 |  Version 1 | Harshit Singh     | 10 April 2024  |
+| **Aakash Tripathi**    | 10 April 2024 |  Version 1 | Aakash Tripathi    | 10 April 2024  |
 ***
 
 # Table of contents
@@ -21,7 +21,7 @@
 
 # Introduction
 
-This role is designed to automate the procees of adding Attendance Grafana Dashboard on target PGA server. This document aims to simplify the process and explain the role created and used for setting up of Attendance Grafana Dashboard.
+This role is designed to automate the procees of adding  Frontend Grafana Dashboard on target PGA server. This document aims to simplify the process and explain the role created and used for setting up of Frontend Grafana Dashboard.
 
 ***
 
@@ -45,7 +45,8 @@ This role is designed to automate the procees of adding Attendance Grafana Dashb
 ***
 
 # Directory Structure
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/c46be773-3869-4ad5-9cfa-b4d840b58bb3)
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056344/a459df5e-208b-4245-bee4-194ef548e9bd)
+
 
 ***
 
@@ -129,14 +130,14 @@ filters:
   become: yes
   gather_facts: yes
   roles:
-    - attendanceGfDashboard
+    - frontendGrafanaDashboard
 
 ```
 </details>
 
 ***
 
-## Attendance-Grafana-Dashboard Role
+## Frontend-Grafana-Dashboard Role
 
 ### addDashboard file (addDashboard.yml)
 This Ansible playbook consists of tasks aimed at copying json file , adding dashboard in Grafana then deleting that json file.
@@ -146,14 +147,14 @@ This Ansible playbook consists of tasks aimed at copying json file , adding dash
   
 ```shell
 ---
-# tasks file for attendanceGfDashboard
+# tasks file for FrontendGfDashboard
 
 - name: Import json file template
   ansible.builtin.template:
     src: "{{ json_file_template_src }}"
     dest: "{{ json_file_dest }}"
 
-- name: Import Attendance Grafana dashboard 
+- name: Import Frontend Grafana dashboard 
   community.grafana.grafana_dashboard:
     grafana_url: "{{ grafana_url }}"
     grafana_api_key: "{{ grafana_api_key }}"
@@ -180,8 +181,8 @@ This Ansible playbook includes all the required tasks files.
   
 ```shell
 ---
-# tasks file for attendanceGfDashboard
-- name: Include tasks for Attendance 
+# tasks file for FrontendGfDashboard
+- name: Include tasks for Frontend 
   ansible.builtin.include_tasks: addDashboard.yml
 
 ```
@@ -189,64 +190,15 @@ This Ansible playbook includes all the required tasks files.
 
 ***
 
-### templates file (attendanceDashboard.json.j2)
+### templates file (FrontendDashboard.json.j2)
 
 
 <details>
-<summary> Click here to see attendanceDashboard.json.j2 file</summary>
+<summary> Click here to see FrontendDashboard.json.j2 file</summary>
 <br>
   
 ```shell
 {
-  "__inputs": [
-    {
-      "name": "P7-PROMETHEUS",
-      "label": "p7-prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "bargauge",
-      "name": "Bar gauge",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "gauge",
-      "name": "Gauge",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "10.4.1"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -274,7 +226,7 @@ This Ansible playbook includes all the required tasks files.
   "fiscalYearStartMonth": 0,
   "gnetId": 1860,
   "graphTooltip": 1,
-  "id": null,
+  "id": 22,
   "links": [
     {
       "icon": "external link",
@@ -297,604 +249,6 @@ This Ansible playbook includes all the required tasks files.
   "panels": [
     {
       "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 330,
-      "panels": [],
-      "title": "Attendance API",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#bb77dcfa",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 0,
-        "y": 1
-      },
-      "id": 325,
-      "options": {
-        "displayMode": "gradient",
-        "maxVizHeight": 300,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "valueMode": "color"
-      },
-      "pluginVersion": "10.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
-          },
-          "editorMode": "code",
-          "expr": "sum by (method, path) (flask_http_request_total)\n",
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "TOTAL REQUEST",
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "hue",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 4,
-        "y": 1
-      },
-      "id": 329,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
-          },
-          "editorMode": "code",
-          "expr": "rate(flask_http_request_duration_seconds_sum{method=\"GET\", path=\"/api/v1/attendance/health\", status=\"200\"}[5m]) / rate(flask_http_request_duration_seconds_count{method=\"GET\", path=\"/api/v1/attendance/health\", status=\"200\"}[5m]) \n",
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "API Health",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 15,
-            "gradientMode": "opacity",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "blue",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "sum(rate(flask_http_request_duration_seconds_sum{method=\"GET\", status=\"200\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) / sum(rate(flask_http_request_duration_seconds_count{method=\"GET\", status=\"200\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) \n"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 9,
-        "y": 1
-      },
-      "id": 324,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
-          },
-          "editorMode": "code",
-          "expr": "sum(rate(flask_http_request_duration_seconds_sum{method=\"GET\", status=\"200\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) / sum(rate(flask_http_request_duration_seconds_count{method=\"GET\", status=\"200\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) \n",
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "SUCCESS RATE",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "sum(rate(flask_http_request_duration_seconds_sum{method=\"GET\", status=\"404\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) / sum(rate(flask_http_request_duration_seconds_count{method=\"GET\", status=\"404\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) \n"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "sum(rate(flask_http_request_duration_seconds_sum{method=\"GET\", status=\"404\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) / sum(rate(flask_http_request_duration_seconds_count{method=\"GET\", status=\"404\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) \n"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 15,
-        "y": 1
-      },
-      "id": 328,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
-          },
-          "editorMode": "code",
-          "expr": "sum(rate(flask_http_request_duration_seconds_sum{method=\"GET\", status=\"404\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) / sum(rate(flask_http_request_duration_seconds_count{method=\"GET\", status=\"404\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) \n",
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "ERROR RATE",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "yellow",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 3,
-        "x": 21,
-        "y": 1
-      },
-      "id": 326,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
-          },
-          "editorMode": "code",
-          "expr": "sum(flask_http_request_exceptions_total)",
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Number of Exceptions",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-orange",
-                "value": null
-              },
-              {
-                "color": "dark-red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "sum(rate(flask_http_request_duration_seconds_sum{method=\"GET\", status!=\"200\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) / sum(rate(flask_http_request_duration_seconds_count{method=\"GET\", status!=\"200\", instance=\"dev-alb-590116793.us-east-1.elb.amazonaws.com:80\"}[5m])) \n"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "404"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 0,
-        "y": 6
-      },
-      "id": 327,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
-          },
-          "editorMode": "code",
-          "expr": "sum by (status) (flask_http_request_total{status=\"404\"})\n",
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "404 ERRORS",
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
       "datasource": {
         "type": "prometheus",
         "uid": "000000001"
@@ -903,7 +257,7 @@ This Ansible playbook includes all the required tasks files.
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 0
       },
       "id": 261,
       "panels": [],
@@ -922,7 +276,7 @@ This Ansible playbook includes all the required tasks files.
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
+        "uid": "${datasource}"
       },
       "description": "Resource pressure via PSI",
       "fieldConfig": {
@@ -960,7 +314,7 @@ This Ansible playbook includes all the required tasks files.
         "h": 4,
         "w": 3,
         "x": 0,
-        "y": 12
+        "y": 1
       },
       "id": 323,
       "options": {
@@ -987,7 +341,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1003,7 +357,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1020,7 +374,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1041,7 +395,7 @@ This Ansible playbook includes all the required tasks files.
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
+        "uid": "${datasource}"
       },
       "description": "Busy state of all CPU cores together",
       "fieldConfig": {
@@ -1088,7 +442,7 @@ This Ansible playbook includes all the required tasks files.
         "h": 4,
         "w": 3,
         "x": 3,
-        "y": 12
+        "y": 1
       },
       "id": 20,
       "options": {
@@ -1111,7 +465,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1131,7 +485,7 @@ This Ansible playbook includes all the required tasks files.
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
+        "uid": "${datasource}"
       },
       "description": "System load  over all CPU cores together",
       "fieldConfig": {
@@ -1178,7 +532,7 @@ This Ansible playbook includes all the required tasks files.
         "h": 4,
         "w": 3,
         "x": 6,
-        "y": 12
+        "y": 1
       },
       "id": 155,
       "options": {
@@ -1201,7 +555,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1221,7 +575,7 @@ This Ansible playbook includes all the required tasks files.
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
+        "uid": "${datasource}"
       },
       "description": "Non available RAM memory",
       "fieldConfig": {
@@ -1258,7 +612,7 @@ This Ansible playbook includes all the required tasks files.
         "h": 4,
         "w": 3,
         "x": 9,
-        "y": 12
+        "y": 1
       },
       "hideTimeOverride": false,
       "id": 16,
@@ -1282,7 +636,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1298,7 +652,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1318,7 +672,266 @@ This Ansible playbook includes all the required tasks files.
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
+        "uid": "${datasource}"
+      },
+      "description": "Used Swap",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 10
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 25
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 12,
+        "y": 1
+      },
+      "id": 21,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "((node_memory_SwapTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_SwapFree_bytes{instance=\"$node\",job=\"$job\"}) / (node_memory_SwapTotal_bytes{instance=\"$node\",job=\"$job\"})) * 100",
+          "instant": true,
+          "intervalFactor": 1,
+          "range": false,
+          "refId": "A",
+          "step": 240
+        }
+      ],
+      "title": "SWAP Used",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Used Root FS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 80
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 1
+      },
+      "id": 154,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "100 - ((node_filesystem_avail_bytes{instance=\"$node\",job=\"$job\",mountpoint=\"/\",fstype!=\"rootfs\"} * 100) / node_filesystem_size_bytes{instance=\"$node\",job=\"$job\",mountpoint=\"/\",fstype!=\"rootfs\"})",
+          "format": "time_series",
+          "instant": true,
+          "intervalFactor": 1,
+          "range": false,
+          "refId": "A",
+          "step": 240
+        }
+      ],
+      "title": "Root FS Used",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Total number of CPU cores",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 18,
+        "y": 1
+      },
+      "id": 14,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu))",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Cores",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
       },
       "description": "System uptime",
       "fieldConfig": {
@@ -1356,10 +969,10 @@ This Ansible playbook includes all the required tasks files.
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 12,
-        "y": 12
+        "h": 2,
+        "w": 4,
+        "x": 20,
+        "y": 1
       },
       "hideTimeOverride": true,
       "id": 15,
@@ -1385,7 +998,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1403,89 +1016,7 @@ This Ansible playbook includes all the required tasks files.
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
-      },
-      "description": "Total number of CPU cores",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 15,
-        "y": 12
-      },
-      "id": 14,
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "none",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.4.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu))",
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "A"
-        }
-      ],
-      "title": "CPU Cores",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
+        "uid": "${datasource}"
       },
       "description": "Total RootFS",
       "fieldConfig": {
@@ -1527,10 +1058,10 @@ This Ansible playbook includes all the required tasks files.
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 3,
+        "h": 2,
+        "w": 2,
         "x": 18,
-        "y": 12
+        "y": 3
       },
       "id": 23,
       "maxDataPoints": 100,
@@ -1555,7 +1086,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1575,7 +1106,7 @@ This Ansible playbook includes all the required tasks files.
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
+        "uid": "${datasource}"
       },
       "description": "Total RAM",
       "fieldConfig": {
@@ -1613,10 +1144,10 @@ This Ansible playbook includes all the required tasks files.
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 21,
-        "y": 12
+        "h": 2,
+        "w": 2,
+        "x": 20,
+        "y": 3
       },
       "id": 75,
       "maxDataPoints": 100,
@@ -1641,7 +1172,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1657,6 +1188,90 @@ This Ansible playbook includes all the required tasks files.
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Total SWAP",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 22,
+        "y": 3
+      },
+      "id": 18,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "node_memory_SwapTotal_bytes{instance=\"$node\",job=\"$job\"}",
+          "instant": true,
+          "intervalFactor": 1,
+          "range": false,
+          "refId": "A",
+          "step": 240
+        }
+      ],
+      "title": "SWAP Total",
+      "type": "stat"
+    },
+    {
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
@@ -1666,7 +1281,7 @@ This Ansible playbook includes all the required tasks files.
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 5
       },
       "id": 263,
       "panels": [],
@@ -1685,7 +1300,7 @@ This Ansible playbook includes all the required tasks files.
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
+        "uid": "${datasource}"
       },
       "description": "Basic CPU info",
       "fieldConfig": {
@@ -1855,7 +1470,7 @@ This Ansible playbook includes all the required tasks files.
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 17
+        "y": 6
       },
       "id": 77,
       "options": {
@@ -1876,7 +1491,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1893,7 +1508,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"user\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -1908,7 +1523,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"iowait\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -1922,7 +1537,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=~\".*irq\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -1936,7 +1551,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\",  mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq'}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -1950,7 +1565,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"idle\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -1968,7 +1583,7 @@ This Ansible playbook includes all the required tasks files.
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
+        "uid": "${datasource}"
       },
       "description": "Basic memory usage",
       "fieldConfig": {
@@ -2400,7 +2015,7 @@ This Ansible playbook includes all the required tasks files.
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 17
+        "y": 6
       },
       "id": 78,
       "options": {
@@ -2421,7 +2036,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "expr": "node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"}",
           "format": "time_series",
@@ -2434,7 +2049,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "expr": "node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_MemFree_bytes{instance=\"$node\",job=\"$job\"} - (node_memory_Cached_bytes{instance=\"$node\",job=\"$job\"} + node_memory_Buffers_bytes{instance=\"$node\",job=\"$job\"} + node_memory_SReclaimable_bytes{instance=\"$node\",job=\"$job\"})",
           "format": "time_series",
@@ -2447,7 +2062,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "expr": "node_memory_Cached_bytes{instance=\"$node\",job=\"$job\"} + node_memory_Buffers_bytes{instance=\"$node\",job=\"$job\"} + node_memory_SReclaimable_bytes{instance=\"$node\",job=\"$job\"}",
           "format": "time_series",
@@ -2459,7 +2074,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "expr": "node_memory_MemFree_bytes{instance=\"$node\",job=\"$job\"}",
           "format": "time_series",
@@ -2471,7 +2086,7 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "expr": "(node_memory_SwapTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_SwapFree_bytes{instance=\"$node\",job=\"$job\"})",
           "format": "time_series",
@@ -2487,7 +2102,7 @@ This Ansible playbook includes all the required tasks files.
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
+        "uid": "${datasource}"
       },
       "description": "Basic network info per interface",
       "fieldConfig": {
@@ -2908,7 +2523,7 @@ This Ansible playbook includes all the required tasks files.
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 13
       },
       "id": 74,
       "options": {
@@ -2928,24 +2543,22 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "expr": "irate(node_network_receive_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])*8",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "recv {% raw %}{{device}}{% endraw %}",
           "refId": "A",
           "step": 240
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "expr": "irate(node_network_transmit_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])*8",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "trans {% raw %}{{device}}{% endraw %}",
           "refId": "B",
           "step": 240
         }
@@ -2956,7 +2569,7 @@ This Ansible playbook includes all the required tasks files.
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "{{ prometheus_DS_uid }}"
+        "uid": "${datasource}"
       },
       "description": "Disk space used of all filesystems mounted",
       "fieldConfig": {
@@ -3021,7 +2634,7 @@ This Ansible playbook includes all the required tasks files.
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 13
       },
       "id": 152,
       "options": {
@@ -3041,21 +2654,292 @@ This Ansible playbook includes all the required tasks files.
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "{{ prometheus_DS_uid }}"
+            "uid": "${datasource}"
           },
           "expr": "100 - ((node_filesystem_avail_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'} * 100) / node_filesystem_size_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'})",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{% raw %}{{mountpoint}}{% endraw %}",
           "refId": "A",
           "step": 240
         }
       ],
       "title": "Disk Space Used Basic",
       "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 279,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Node Exporter",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "seconds",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 21
+      },
+      "id": 40,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.2.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "expr": "node_scrape_collector_duration_seconds{instance=\"$node\",job=\"$job\"}",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "refId": "A",
+          "step": 240
+        }
+      ],
+      "title": "Node Exporter Scrape Time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "counter",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*error.*/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#F2495C",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 21
+      },
+      "id": 157,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.2.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "expr": "node_scrape_collector_success{instance=\"$node\",job=\"$job\"}",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "refId": "A",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "expr": "node_textfile_scrape_error{instance=\"$node\",job=\"$job\"}",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "refId": "B",
+          "step": 240
+        }
+      ],
+      "title": "Node Exporter Scrape",
+      "type": "timeseries"
     }
   ],
-  "refresh": "10s",
+  "refresh": "1m",
   "revision": 1,
   "schemaVersion": 39,
   "tags": [
@@ -3065,9 +2949,9 @@ This Ansible playbook includes all the required tasks files.
     "list": [
       {
         "current": {
-          "selected": true,
-          "text": "p7-prometheus",
-          "value": "{{ prometheus_DS_uid }}"
+          "selected": false,
+          "text": "default",
+          "value": "default"
         },
         "hide": 0,
         "includeAll": false,
@@ -3083,10 +2967,14 @@ This Ansible playbook includes all the required tasks files.
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "node",
+          "value": "node"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "{{ prometheus_DS_uid }}"
+          "uid": "${datasource}"
         },
         "definition": "",
         "hide": 0,
@@ -3109,10 +2997,14 @@ This Ansible playbook includes all the required tasks files.
         "useTags": false
       },
       {
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "20.0.0.12:9100",
+          "value": "20.0.0.12:9100"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "{{ prometheus_DS_uid }}"
+          "uid": "${datasource}"
         },
         "definition": "label_values(node_uname_info{job=\"$job\"}, instance)",
         "hide": 0,
@@ -3158,7 +3050,7 @@ This Ansible playbook includes all the required tasks files.
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -3187,9 +3079,9 @@ This Ansible playbook includes all the required tasks files.
     ]
   },
   "timezone": "browser",
-  "title": "{{ dashboard_name }}",
-  "uid": "{{ dashboard_uid }}",
-  "version": 8,
+  "title": "Frontend",
+  "uid": "rYdddlPWj",
+  "version": 1,
   "weekStart": ""
 }
 ```
@@ -3199,7 +3091,7 @@ This Ansible playbook includes all the required tasks files.
 
 ### tests file (test.yml)
 
-This Ansible playbook named "test.yml" targets the localhost machine and utilizes the "Attendance Grafana Dashboard" role to add dashboard  in PGA Server.
+This Ansible playbook named "test.yml" targets the localhost machine and utilizes the "Frontend Grafana Dashboard" role to add dashboard  in PGA Server.
 
 <details>
 <summary> Click here to see test.yml file</summary>
@@ -3211,7 +3103,7 @@ This Ansible playbook named "test.yml" targets the localhost machine and utilize
   become: yes
   gather_facts: yes
   roles:
-    - attendanceGfDashboard
+    - FrontendGrafanaDashboard
 
 ```
 </details>
@@ -3220,7 +3112,7 @@ This Ansible playbook named "test.yml" targets the localhost machine and utilize
 
 ### vars file (main.yml)
 
-This YAML configuration sets parameters for the Dashboard and Attendance monitoring. It specifies the Data source UID , Dashboard title , Dashboard UID , and .json file  path .
+This YAML configuration sets parameters for the Dashboard and Frontend monitoring. It specifies the Data source UID , Dashboard title , Dashboard UID , and .json file  path .
 
 <details>
 <summary> Click here to see main.yml file</summary>
@@ -3228,17 +3120,13 @@ This YAML configuration sets parameters for the Dashboard and Attendance monitor
   
 ```shell
 ---
-# vars file for attendanceGfDashboard
-editor_name : "Harshit"
+# vars file for FrontendGfDashboard
+editor_name : "Aakash Tripathi"
 grafana_api_key: "glsa_oIJNxnxI1QAl6alNgCPtF8SgkEXURjpc_8c78e79d"
-grafana_url: http://18.207.163.171:3000
-json_file_template_src: "attendanceDashboard.json.j2"
-json_file_dest: "/home/ubuntu/attendanceDashboard.json"
+grafana_url: http://localhost:3000
+json_file_template_src: "FrontendDashboard.json.j2"
+json_file_dest: "/home/ubuntu/FrontendDashboard.json"
 
-#  template
-prometheus_DS_uid : "fdi6x7lbmqxvkf"
-dashboard_name: "Attendance-API"
-dashboard_uid: "007"
 ```
 </details>
 
@@ -3247,30 +3135,33 @@ dashboard_uid: "007"
 # Output
 
 ### Role Execution
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/f4d00e2e-3a2a-4f8f-a349-ddd7d4dbce6b)
+![Screenshot 2024-04-14 174838](https://github.com/CodeOps-Hub/Ansible/assets/156056344/9f161027-3a4b-4162-9f38-3516cf804f10)
+
 
 ***
 
 ### PGA Server 
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/e11fb29c-07a7-4b43-b6c4-52284e3d8dba)
+![Screenshot 2024-04-14 174820](https://github.com/CodeOps-Hub/Ansible/assets/156056344/a2850bfb-1a7f-4467-a513-2cb8cde23456)
+
 
 ***
 
 ### PGA Server Dashboard View
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/ff82291b-c899-4e7b-8955-f6038a1e479a)
+![Screenshot 2024-04-14 174730](https://github.com/CodeOps-Hub/Ansible/assets/156056344/e04bcaaa-400b-4f63-a694-6e2b309b0acf)
+
 
 ***
 
 # Conclusion
 
-This guide illustrates the process of adding **Attendance Grafana Dashboard** through Ansible. By adhering to these instructions, you can effectively visualize and monitor your `Attendance API Server` within your AWS infrastructure.
+This guide illustrates the process of adding **Frontend Grafana Dashboard** through Ansible. By adhering to these instructions, you can effectively visualize and monitor your `Frontend API Server` within your AWS infrastructure.
 
 ***
 ## Contact Information
 
 |     Name         | Email  |
 | -----------------| ------------------------------------ |
-| Harshit Singh    | harshit.singh.snaatak@mygurukulam.co |
+| Aakash Tripayhi    | aakash.tripathi.snaatak@mygurukulam.co |
 ***
 
 ## References
