@@ -1,0 +1,6 @@
+---
+- hosts: fluent
+  become: yes
+  gather_facts: yes
+  roles:
+    - fluentd-collector
