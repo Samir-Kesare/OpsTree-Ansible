@@ -2,7 +2,7 @@
 # vars file for grafana_redis_dashboard
 editor_name : "Khushi"
 grafana_api_key: "glsa_XsqkwpCDXIuE5yohe7iphViJKncgEMeC_db725417"
-grafana_url: http://3.110.132.100:3000
+grafana_url: http://13.201.41.196:3000
 json_file_template_src: "grafana_dashboard.json.j2"
 json_file_dest: "/home/ubuntu/grafana_dashboard.json.j2"
 
