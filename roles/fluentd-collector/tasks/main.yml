@@ -12,7 +12,7 @@
   ansible.builtin.debug:
     msg: "Fluentd service status: {{ fluentd_service_status }}"
 
-- name: Check if <match **> exists in the file
+- name: Check if pattern exists in the file
   ansible.builtin.shell:
     cmd: "grep '@type {{ type }}' /etc/fluent/fluentd.conf"
   register: match_exists
