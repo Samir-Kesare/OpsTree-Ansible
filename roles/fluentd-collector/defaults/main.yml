@@ -1,6 +1,5 @@
 ---
-# defaults file for fluentd-role
-# defaults file for ansible-role-fluentd
+# defaults file for fluentd-collector
 host: localhost
 port: 9200
 logstash_format: true
