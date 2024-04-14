@@ -1,5 +1,5 @@
 
-# Alert Rules Ansible Role For Frontend Application 
+# Alert Rules Ansible Role For Postgres
 
 ![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/a388b332-90fb-4745-8533-604dbf0d5c34)
 
@@ -133,7 +133,7 @@ The defaults/main.yml file helps maintain consistency and simplifies role config
 ```shell  
 ---
 path: /home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml
-frontend_alert_rules_path: /home/prometheus/prometheus-2.47.1.linux-amd64/alert_rules.yml
+Postgres_alert_rules_path: /home/prometheus/prometheus-2.47.1.linux-amd64/alert_rules.yml
 
 ```
 </details>
@@ -169,43 +169,67 @@ This Ansible task named "Reload Prometheus" executes the command systemctl prome
 ```shell  
 ---
 groups:
-  - name: frontend_api_alerts
+  - name: database_alerts
     rules:
-      - alert: HighCPULoad
-        expr: system_cpu_usage > 90
+      - alert: HighConnectionPooling
+        expr: process_open_fds / process_max_fds * 100 > 90
         for: 5m
         labels:
           severity: warning
         annotations:
-          summary: High CPU Load
-          description: 'The CPU load on the server is high.'
-      
-      - alert: MemoryUsageHigh
-        expr: jvm_memory_used_bytes / jvm_memory_max_bytes * 100 > 80
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: High Memory Usage
-          description: 'The memory usage on the server is high.'
+          summary: "High Connection Pooling Detected"
+          description: "Number of active database connections is above 90% of the maximum for 5 minutes or more. Potential connection leaks or exhaustion."
           
-      - alert: DiskSpaceLow
-        expr: disk_free_bytes / disk_total_bytes * 100 < 10
+      - alert: SlowQueryExecution
+        expr: histogram_quantile(0.95, rate(database_query_duration_seconds_bucket[5m])) > 1
         for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Slow Query Execution Detected"
+          description: "Average execution time of database queries is above 1 second for 5 minutes or more. Potential performance degradation or inefficient queries."
+          
+      - alert: DatabaseReplicationLag
+        expr: database_replication_lag_seconds > 60
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Database Replication Lag Detected"
+          description: "Replication lag is above 60 seconds for 5 minutes or more. Potential replication issues or network latency."
+          
+      - alert: DatabaseBackupStatus
+        expr: database_backup_last_successful_timestamp_seconds < (time() - 86400)
         labels:
           severity: critical
         annotations:
-          summary: Low Disk Space
-          description: 'The available disk space on the server is critically low.'
+          summary: "Database Backup Status Issue Detected"
+          description: "Database backup was not performed in the last 24 hours. Data integrity and disaster recovery preparedness may be compromised."
           
-      - alert: HighRequestLatency
-        expr: rate(http_server_requests_seconds_sum{job="frontend_api"}[5m]) > 1
+      - alert: DatabaseServiceAvailability
+        expr: up == 0
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database Service Unavailable"
+          description: "Database service is unreachable or experiencing downtime. High availability and reliability are compromised."
+          
+      - alert: SecurityAccessViolations
+        expr: security_access_violations_total > 0
+        labels:
+          severity: critical
+        annotations:
+          summary: "Security Access Violations Detected"
+          description: "Unauthorized access attempts, privilege escalations, or other security violations detected. Database security may be compromised."
+          
+      - alert: DatabaseDeadlocks
+        expr: database_deadlocks_total > 10
         for: 5m
         labels:
           severity: warning
         annotations:
-          summary: High Request Latency
-          description: 'The average request latency is higher than normal.'
+          summary: "Database Deadlocks Detected"
+          description: "Database deadlocks occurred more than 10 times in the last 5 minutes. Potential application or database design issues."
 
 ```
 </details>
@@ -224,7 +248,7 @@ This playbook automates the setup process, ensuring a smooth installation and co
 - name: Copy alert rules file to Prometheus server
   copy:
     src: alert_rules.yml
-    dest: "{{ frontend_alert_rules_path }}"
+    dest: "{{ Postgres_alert_rules_path }}"
   notify: Reload Prometheus
 
 - name: Ensure Prometheus alerts rules are included in Prometheus config
@@ -254,7 +278,7 @@ This Ansible playbook named "Install prometheus" targets the localhost machine a
   hosts: localhost
   become: yes
   roles:
-    - frontend-alert-rule-role
+    - alerting_rules_Postgres
 
 ```
 </details>
@@ -270,25 +294,25 @@ This Ansible playbook named "Install prometheus" targets the localhost machine a
 
 ***
 
-## Status of frontend application Server in Prometheus server
+## Status of Prometheus server
 
 ![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/19433338-adac-4edd-b998-4899305ad848)
 
 ***
 
-## Monitoring configured `Alert Rules` in Prometheus server
+## Alert Rules configured in Prometheus server
 
-![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/83fe47bf-f7e5-4c20-af4e-b4f2c7f1f140)
+![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/e20e78c8-573f-4cd5-9656-4522bfe53ee4)
 
 ***
 
-![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/7782e718-87f5-4d99-8fce-6b4250cc304c)
+![image](https://github.com/CodeOps-Hub/Ansible/assets/79625874/163baadd-0cf3-4c77-97b7-4f98cb76c577)
 
 ***
 
 # Conclusion
 
-In conclusion, the "Alert Rule Role for frontend application" is essential for keeping the frontend application running smoothly. It helps us watch important metrics and quickly fix any problems. By using custom alert rules with Prometheus, we can catch issues early and prevent them from causing big disruptions. With this role, we can be sure that the frontend application stays reliable and users have a great experience.
+In conclusion, the "Alert Rule Role for Postgres" is essential for keeping the Database running smoothly. It helps us watch important metrics and quickly fix any problems. By using custom alert rules with Prometheus, we can catch issues early and prevent them from causing big disruptions. With this role, we can be sure that the database stays reliable and users have a great experience.
 
 ***
 
