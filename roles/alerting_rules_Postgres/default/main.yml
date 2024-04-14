@@ -1,8 +1,4 @@
 ---
 # defaults file for postgres_alerting_rules
-
-# Path to store Scylla alerting rules
-postgres_alerting_rules_path: "/etc/prometheus/postgres_alerting_rules.yml"
-
-# Path to the Prometheus configuration directory
-prometheus_config_dir: "/etc/prometheus"
+path: /home/prometheus/prometheus-2.47.1.linux-amd64/prometheus.yml
+frontend_alert_rules_path: /home/prometheus/prometheus-2.47.1.linux-amd64/postgres_alerting_rules.yml
