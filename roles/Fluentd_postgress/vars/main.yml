@@ -1,0 +1,26 @@
+---
+# vars file for fluentd_postgressdb
+fluentd_repository_key_url: "https://toolbelt.treasuredata.com/sh/install-ubuntu-bionic-td-agent3.sh"
+fluentd_package_name: "td-agent"
+fluentd_service_name: "td-agent"
+fluentd_repo_urls:
+  Ubuntu_jammy: "https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-fluent-package5-lts.sh"
+  Ubuntu_focal: "https://toolbelt.treasuredata.com/sh/install-ubuntu-focal-fluent-package5-lts.sh"
+  Debian_bookworm: "https://toolbelt.treasuredata.com/sh/install-debian-bookworm-fluent-package5-lts.sh"
+  Debian_bullseye: "https://toolbelt.treasuredata.com/sh/install-debian-bullseye-fluent-package5-lts.sh"
+elasticsearch_host: "13.201.41.196"
+fluentd_plugins:
+  - name: "fluent-plugin-postgres"
+fluentd_conf_template_src: "td-agent-postgresql.conf.j2"
+fluentd_conf_dest: "/etc/td-agent/td-agent.conf"
+fluentd_conf_owner: "td-agent"
+fluentd_conf_group: "td-agent"
+fluentd_conf_mode: "0640"
+fluentd_log_directory: "/var/log/td-agent"
+fluentd_dependencies:
+  - "apt-transport-https"
+  - "libcurl4-gnutls-dev"
+  - "build-essential"
+  - "ruby"
+  - "rubygems"
+  - "ruby-dev"
