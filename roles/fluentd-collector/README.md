@@ -49,7 +49,8 @@ This Ansible role automates the deployment process, ensuring a seamless setup of
 
 # Directory Structure
 
-<img width="400" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/d5803b13-5868-4ef6-8535-cf7fffa09390">
+<img width="258" alt="Screenshot 2024-04-14 at 3 31 44 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/fd22b97d-5360-4173-84dd-09b3f46d65ca">
+
 
 ## Dynamic Inventory Setup
 
