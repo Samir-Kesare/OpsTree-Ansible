@@ -1,0 +1,14 @@
+---
+# handlers file for fluentd_postgressdb
+- name: restart td-agent service
+  become: yes
+  systemd:
+    name: td-agent
+    state: restarted
+    daemon_reload: yes
+
+# handlers file for fluentd-role
+- name: Restart Fluentd service
+  ansible.builtin.service:
+    name: fluentd
+    state: restarted
