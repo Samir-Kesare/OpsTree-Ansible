@@ -1,0 +1,72 @@
+---
+# tasks file for fluentd_postgressdb
+    - name: Install Fluentd
+      ansible.builtin.shell: "curl -fsSL {{ fluentd_repo_urls[ansible_distribution ~ '_' ~ ansible_distribution_release] }} | sh"
+
+    - name: Check status of Fluentd service
+      ansible.builtin.service:
+        name: fluentd
+        state: "started"
+      register: fluentd_service_status
+
+    - name: Display Fluentd service status
+      ansible.builtin.debug:
+        msg: "Fluentd service status: {{ fluentd_service_status }}"
+
+    - name: Install PostgreSQL client library
+      ansible.builtin.package:
+        name: libpq-dev  # Install the PostgreSQL client library package
+        state: present
+
+    - name: Install Fluentd PostgreSQL plugin
+      ansible.builtin.shell: |
+        gem install fluent-plugin-postgres
+      args:
+        creates: "/var/lib/gems/2.7.0/gems/fluent-plugin-postgres"  # Adjust the path based on your Ruby version
+
+    - name: Check if <source> section for PostgreSQL exists in the file
+      ansible.builtin.shell:
+        cmd: "grep '<source>' /etc/fluent/fluentd.conf"
+      register: source_exists
+      changed_when: false
+      failed_when: false
+    
+    - name: Add Fluentd PostgreSQL configuration to the end of the file
+      ansible.builtin.lineinfile:
+        path: /etc/fluent/fluentd.conf
+        insertafter: EOF
+        line: |
+          <source>
+            @type pgsql
+            host {{ postgres_host }}
+            port {{ postgres_port }}
+            user {{ postgres_user }}
+            password {{ postgres_password }}
+            database {{ postgres_database }}
+            query SELECT * FROM {{ postgres_table }} WHERE updated_at > '#{Time.at(Engine.now - 10).strftime('%Y-%m-%d %H:%M:%S')}'
+            tag {{ postgres_tag }}
+          </source>
+      when: source_exists.rc != 0
+      notify: Restart Fluentd service
+
+    - name: Check if <match> section for Elasticsearch exists in the file
+      ansible.builtin.shell:
+        cmd: "grep '<match>' /etc/fluent/fluentd.conf"
+      register: match_exists
+      changed_when: false
+      failed_when: false
+
+    - name: Add Fluentd Elasticsearch configuration to the end of the file
+      become: yes
+      lineinfile:
+         path: /etc/fluent/fluentd.conf
+         insertafter: EOF
+         line: |
+           <match postgresql>
+             @type elasticsearch
+             host {{ elasticsearch_host }}
+             port 9200
+             logstash_format true
+             logstash_prefix postgresql
+             enable_ilm true
+           </match>
