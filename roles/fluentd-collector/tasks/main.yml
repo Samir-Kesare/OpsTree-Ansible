@@ -26,10 +26,10 @@
     line: |
       <match **>
         @type {{ type }}
-        host {{ elasticsearch_host }}
-        port {{ elasticsearch_port }}
-        logstash_format {{ elasticsearch_logstash_format | lower}}
-        flush_interval {{ elasticsearch_flush_interval }}
+        host {{ host }}
+        port {{ port }}
+        logstash_format {{ logstash_format | lower}}
+        flush_interval {{ flush_interval }}
       </match>
   when: match_exists.rc != 0
   notify: Restart Fluentd service
