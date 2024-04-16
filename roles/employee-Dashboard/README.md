@@ -4,7 +4,7 @@
 ***
 |   Author        |  Created on   |  Version   | Last updated by  | Last edited on |
 | --------------- | --------------| -----------|----------------- | -------------- |
-| **[Vidhi Yadav](https://github.com/Panu-S-Harshit-Ninja-07)**    | 16 April 2024 |  Version 1 | Vidhi Yadav     | 16 April 2024  |
+| **Vidhi Yadav**    | 16 April 2024 |  Version 1 | Vidhi Yadav     | 16 April 2024  |
 ***
 
 # Table of contents
