@@ -1,0 +1,6 @@
+---
+# handlers file for kibana
+- name: Restart Kibana
+  systemd:
+    name: kibana
+    state: restarted

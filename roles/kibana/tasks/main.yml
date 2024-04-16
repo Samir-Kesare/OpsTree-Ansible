@@ -1,0 +1,39 @@
+---
+
+    - name: Install prerequisites
+      apt:
+        name: "{{ prerequisites }}"
+        state: present
+
+    - name: Add Elastic GPG key
+      apt_key:
+        url: "{{ key_url }}"
+        state: present
+
+    - name: Add Elastic APT repository for Kibana 
+      apt_repository:
+        repo: "{{ kibana_repository }}"
+        state: present
+
+    - name: Install Kibana
+      apt:
+        name: kibana={{ kibana_version }}
+        state: present
+
+    - name: Reload systemd daemon
+      shell: systemctl daemon-reload
+
+    - name: Enable and start Kibana service
+      systemd:
+        name: kibana
+        enabled: yes
+        state: started
+
+    - name: Copy Kibana configuration template
+      template:
+        src: kibana.yml.j2
+        dest: "{{ kibana_config_path }}"
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Restart Kibana
