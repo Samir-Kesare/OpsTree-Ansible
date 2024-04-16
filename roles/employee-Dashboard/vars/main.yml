@@ -5,7 +5,3 @@ grafana_url: http://100.26.165.160:3000
 json_file_template_src: "Employee-API.json.j2"
 json_file_dest: "/home/ubuntu/Employee-API.json"
 
-#  template
-prometheus_DS_uid : "fdiu2d8ghfvuoa"
-dashboard_name: "Employee API"
-dashboard_uid: "rYdddlPWk"
