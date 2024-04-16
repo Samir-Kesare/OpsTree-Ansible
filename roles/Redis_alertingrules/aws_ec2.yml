@@ -1,9 +1,0 @@
----
-plugin: aws_ec2
-regions:
-  - ap-south-1
-hostnames:
-  - ip-address
-include_filters:
- - tag:Name:
-     - 'Redis_DB'

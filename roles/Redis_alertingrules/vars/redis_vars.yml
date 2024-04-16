@@ -1,6 +1,0 @@
-# vars/redis_vars.yml
-
-redis_memory_used_bytes: 500000000 # Example value for memory used in bytes
-redis_memory_max_bytes: 1000000000 # Example value for maximum memory in bytes
-redis_connected_clients: 800 # Example value for connected clients
-redis_replication_delay_seconds: 30 # Example value for replication delay in seconds

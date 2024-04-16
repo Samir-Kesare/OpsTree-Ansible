@@ -1,6 +1,0 @@
----
-# handlers file for alertingrules
-- name: systemd_reload
-  systemd:
-    name: "{{ user }}.service"
-    daemon_reload: yes
