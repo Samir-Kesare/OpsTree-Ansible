@@ -9997,8 +9997,8 @@ json_file_dest: "/home/ubuntu/Employee-API.json"
 ***
 
 ### PGA Server 
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/e11fb29c-07a7-4b43-b6c4-52284e3d8dba)
 
+<img width="1331" alt="Screenshot 2024-04-16 at 4 36 30 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/c9bd8d1d-94dc-4052-b272-7ff074fd694f">
 ***
 
 ### PGA Server Dashboard View
