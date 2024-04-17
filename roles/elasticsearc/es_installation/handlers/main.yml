@@ -5,3 +5,4 @@
   systemd:
     name: elasticsearch
     daemon_reload: yes
+  ignore_errors: True  
