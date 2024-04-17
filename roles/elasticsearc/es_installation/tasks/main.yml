@@ -28,7 +28,8 @@
     name: elasticsearch
     enabled: yes
     state: started
-
+  ignore_errors: True
+  
 - name: Copy Elasticsearch configuration template
   template:
     src: elasticsearch.yml.j2
@@ -43,3 +44,4 @@
     name: elasticsearch
     state: started
   become: true
+  
