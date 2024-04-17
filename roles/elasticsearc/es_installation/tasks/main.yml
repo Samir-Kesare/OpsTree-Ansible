@@ -44,4 +44,4 @@
     name: elasticsearch
     state: started
   become: true
-  
+  ignore_errors: True
