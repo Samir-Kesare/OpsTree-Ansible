@@ -18,6 +18,7 @@
   apt:
     name: elasticsearch={{ elasticsearch_version }}
     state: present
+  ignore_error: yes
 
 - name: Reload systemd daemon
   shell: systemctl daemon-reload
