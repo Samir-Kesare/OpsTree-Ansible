@@ -1,0 +1,6 @@
+---
+- name: Setup Grafana dashboard on Redis server
+  hosts: all
+  become: yes
+  roles:
+    - GrafanaDashboardRedis

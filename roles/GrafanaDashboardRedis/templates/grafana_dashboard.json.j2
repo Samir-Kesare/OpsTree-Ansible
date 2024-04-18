@@ -1,0 +1,126 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Redis Dashboard",
+    "panels": [
+      {
+        "id": 1,
+        "type": "graph",
+        "title": "Memory Usage",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "Redis",
+            "query": "SELECT used_memory FROM redis_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "bytes",
+            "label": "Memory Usage"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 12,
+          "h": 6
+        }
+      },
+      {
+        "id": 2,
+        "type": "graph",
+        "title": "Connections",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "Redis",
+            "query": "SELECT connected_clients FROM redis_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Connections"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 0,
+          "y": 6,
+          "w": 12,
+          "h": 6
+        }
+      },
+      {
+        "id": 3,
+        "type": "graph",
+        "title": "Commands Processed",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "Redis",
+            "query": "SELECT total_commands_processed FROM redis_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Commands Processed"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 12,
+          "y": 0,
+          "w": 12,
+          "h": 6
+        }
+      },
+      {
+        "id": 4,
+        "type": "graph",
+        "title": "Evicted Keys",
+        "targets": [
+          {
+            "type": "timeseries",
+            "datasource": "Redis",
+            "query": "SELECT evicted_keys FROM redis_metrics"
+          }
+        ],
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Evicted Keys"
+          },
+          {
+            "format": "short",
+            "label": "Count"
+          }
+        ],
+        "gridPos": {
+          "x": 12,
+          "y": 6,
+          "w": 12,
+          "h": 6
+        }
+      }
+    ],
+    "refresh": "10s",
+    "schemaVersion": 22,
+    "timezone": "browser",
+    "version": 1
+  },
+  "folderId": null,
+  "overwrite": false
+}
