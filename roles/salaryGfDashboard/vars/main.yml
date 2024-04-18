@@ -1,0 +1,7 @@
+---
+# vars file for attendanceGfDashboard
+editor_name : "Vishal"
+grafana_api_key: "glsa_oIJNxnxI1QAl6alNgCPtF8SgkEXURjpc_8c78e79d"
+grafana_url: http://54.196.112.237:3000
+json_file_template_src: "salaryDashboard.json.j2"
+json_file_dest: "/home/ubuntu/salaryDashboard.json"

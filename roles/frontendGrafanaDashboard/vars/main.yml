@@ -1,0 +1,8 @@
+---
+# vars file for frontendGrafanaDashboard
+editor_name : "Aakash Tripathi"
+grafana_api_key: "glsa_oIJNxnxI1QAl6alNgCPtF8SgkEXURjpc_8c78e79d"
+grafana_url: http://localhost:3000
+json_file_template_src: "frontendDashboard.json.j2"
+json_file_dest: "/home/ubuntu/frontendDashboard.json"
+device: "{{ ansible_host }}"

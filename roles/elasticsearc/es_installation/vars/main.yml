@@ -1,0 +1,13 @@
+---
+# vars file for elasticsearch_installation.yml
+
+prerequisites:
+ - apt-transport-https
+ - software-properties-common
+key_url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+elasticsearch_repository: "deb https://artifacts.elastic.co/packages/8.x/apt stable main" 
+elasticsearch_config_path: "/etc/elasticsearch/elasticsearch.yml"
+elasticsearch_version: "8.13.1"
+elasticsearch_host: "0.0.0.0"
+elasticsearch_port: "9200"
+

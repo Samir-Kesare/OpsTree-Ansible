@@ -1,0 +1,47 @@
+---
+- name: Install prerequisites
+  apt:
+    name: "{{ prerequisites }}"
+    state: present
+
+- name: Add Elastic GPG key
+  apt_key:
+    url: "{{ key_url }}"
+    state: present
+
+- name: Add Elastic APT repository for Elasticsearch 
+  apt_repository:
+    repo: "{{ elasticsearch_repository }}"
+    state: present
+
+- name: Install Elasticsearch
+  apt:
+    name: elasticsearch={{ elasticsearch_version }}
+    state: present
+  ignore_errors: True
+
+- name: Reload systemd daemon
+  shell: systemctl daemon-reload
+
+- name: Enable and start Elasticsearch service
+  systemd:
+    name: elasticsearch
+    enabled: yes
+    state: started
+  ignore_errors: True
+  
+- name: Copy Elasticsearch configuration template
+  template:
+    src: elasticsearch.yml.j2
+    dest: "{{ elasticsearch_config_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Elasticsearch
+
+- name: Reload systemd to apply changes
+  service:
+    name: elasticsearch
+    state: started
+  become: true
+  ignore_errors: True

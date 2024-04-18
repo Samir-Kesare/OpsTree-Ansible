@@ -1,0 +1,12 @@
+---
+# defaults file for kibana
+prerequisites:
+ - apt-transport-https
+ - software-properties-common
+key_url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+kibana_repository: "deb https://artifacts.elastic.co/packages/8.x/apt stable main"
+kibana_config_path: "/etc/kibana/kibana.yml"
+kibana_version: "8.13.1"
+kibana_host: "0.0.0.0"
+kibana_port: "5601"
+

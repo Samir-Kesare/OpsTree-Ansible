@@ -11,6 +11,7 @@ groups:
   prometheus: "'prometheus' in tags.Type"
   frontend: "'frontend-node-exporter' in tags.Type"
   employee: "'employee' in tags.Type"
+  pga: "'pga' in tags.Type"
 
 filters:
     instance-state-code: 16

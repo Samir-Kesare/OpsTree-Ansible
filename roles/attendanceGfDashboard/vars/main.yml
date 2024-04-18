@@ -1,0 +1,12 @@
+---
+# vars file for attendanceGfDashboard
+editor_name : "Harshit"
+grafana_api_key: "glsa_oIJNxnxI1QAl6alNgCPtF8SgkEXURjpc_8c78e79d"
+grafana_url: http://18.207.163.171:3000
+json_file_template_src: "attendanceDashboard.json.j2"
+json_file_dest: "/home/ubuntu/attendanceDashboard.json"
+
+#  template
+prometheus_DS_uid : "fdi6x7lbmqxvkf"
+dashboard_name: "Attendance-API"
+dashboard_uid: "007"
