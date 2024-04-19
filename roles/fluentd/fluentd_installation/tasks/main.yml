@@ -1,41 +1,27 @@
----
-# tasks file for fluentd
-
+ ---
 - name: Install Fluentd
-  become: yes
-  apt:
-    name: "{{ item.name }}"
-    state: present
-  loop: "{{ fluentd_dependencies }}"
+  shell: "curl -fsSL https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-fluent-package5-lts.sh | sh"
 
-- name: Add Treasure Data repository key
-  become: yes
-  shell: "{{ fluentd_repository_key_url }} | sh"
+- name: Reload systemd daemon
+  shell: systemctl daemon-reload
 
-- name: Install td-agent
-  become: yes
-  apt:
-    name: "{{ fluentd_package_name }}"
-    state: present
+- name: Enable and start Fluentd service
+  systemd:
+    name: fluentd
+    enabled: yes
+    state: started
 
-- name: Install fluent-plugin-elasticsearch
-  become: yes
-  gem:
-    name: "{{ item.name }}"
-  loop: "{{ fluentd_plugins }}"
-
-- name: Copy Fluentd configuration file
-  become: yes
+- name: Add Fluentd configuration to the end of the file
   template:
-    src: "{{ fluentd_conf_template_src }}"
-    dest: "{{ fluentd_conf_dest }}"
-    owner: "{{ fluentd_conf_owner }}"
-    group: "{{ fluentd_conf_group }}"
-    mode: "{{ fluentd_conf_mode }}"
-  notify: restart td-agent service
+    src:  fluentd.yml.j2
+    dest: /etc/fluent/fluentd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Fluentd service
 
-- name: Ensure log directory exists
-  become: yes
-  file:
-    path: "{{ fluentd_log_directory }}"
-    state: directory
+- name: Ensure Fluentd service is running
+  service:
+    name: fluentd
+    state: started
+  become: true
