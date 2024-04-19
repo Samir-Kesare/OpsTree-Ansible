@@ -121,7 +121,6 @@ filters:
 ```yaml
 ---
 # tasks file for fluentd
- ---
 - name: Install Fluentd
   shell: "curl -fsSL https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-fluent-package5-lts.sh | sh"
 
