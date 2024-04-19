@@ -156,7 +156,7 @@ filters:
 We need to create jinja2 template :
 * To configure Fluentd
 
-1. `td-agent.conf.j2` template includes parameteters to configure Elasticsearch
+1. `fluentd.yml.j2` template includes parameteters to configure Elasticsearch
 
 ```yaml
 
