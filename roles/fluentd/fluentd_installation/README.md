@@ -121,71 +121,34 @@ filters:
 ```yaml
 ---
 # tasks file for fluentd
+ ---
 - name: Install Fluentd
-  become: yes
-  apt:
-    name: apt-transport-https
-    state: present
+  shell: "curl -fsSL https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-fluent-package5-lts.sh | sh"
 
-- name: Add Treasure Data repository key
-  become: yes
-  shell: curl -L https://toolbelt.treasuredata.com/sh/install-ubuntu-bionic-td-agent3.sh | sh
+- name: Reload systemd daemon
+  shell: systemctl daemon-reload
 
-- name: Install td-agent
-  become: yes
-  apt:
-    name: td-agent
-    state: present
+- name: Enable and start Fluentd service
+  systemd:
+    name: fluentd
+    enabled: yes
+    state: started
 
-- name: Install libcurl4-gnutls-dev
-  become: yes
-  apt:
-    name: libcurl4-gnutls-dev
-    state: present
-
-- name: Install build-essential
-  become: yes
-  apt:
-    name: build-essential
-    state: present
-
-- name: Install Ruby
-  become: yes
-  apt:
-    name: ruby
-    state: present
-
-- name: Install Rubygems
-  become: yes
-  apt:
-    name: rubygems
-    state: present
-
-- name: Install Ruby development headers
-  become: yes
-  apt:
-    name: ruby-dev
-    state: present
-- name: Install fluent-plugin-elasticsearch
-  become: yes
-  gem:
-    name: fluent-plugin-elasticsearch
-
-- name: Copy Fluentd configuration file
-  become: yes
+- name: Add Fluentd configuration to the end of the file
   template:
-    src: td-agent.conf.j2
-    dest: /etc/td-agent/td-agent.conf
-    owner: td-agent
-    group: td-agent
-    mode: '0640'
-  notify: restart td-agent service
+    src:  fluentd.yml.j2
+    dest: /etc/fluent/fluentd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Fluentd service
 
-- name: Ensure /var/log/td-agent directory exists
-  become: yes
-  file:
-    path: /var/log/td-agent
-    state: directory
+- name: Ensure Fluentd service is running
+  service:
+    name: fluentd
+    state: started
+  become: true
+
 ```
 
 
@@ -197,26 +160,19 @@ We need to create jinja2 template :
 
 ```yaml
 
-# td-agent.conf
 <source>
   @type tail
-  path /var/log/redis/redis-server.log
-  pos_file /var/log/td-agent/syslog.log.pos
-  tag prod-backend-system-logs
+  path /var/log/redis/*.log
+  pos_file /var/log/td-agent/redis-server.log.pos
+  tag redis.log
   <parse>
-  @type regexp
-  expression /(?<message>[\s\S]*)/
+    @type none
   </parse>
+  tag betterstack.redis-server.log
 </source>
 
-<match prod-backend-system-logs>
-  @type elasticsearch
-  host 3.87.248.148:9200
-  port 9200
-  logstash_format true
-  logstash_prefix prod-backend-system-logs
-  enable_ilm true
-  flush_interval 10s
+<match betterstack.**>
+  @type stdout
 </match>
 ```
 
@@ -239,15 +195,8 @@ ansible-playbook -i aws_ec2.yml playbook.yml
 ## Output
 **Host-level output**: Output for each host would indicate whether the playbook execution was successful or not.
 
-![Screenshot from 2024-04-08 12-53-24](https://github.com/CodeOps-Hub/Ansible/assets/156056746/1dd1c1fe-8c91-4529-95e9-90bbb1b6fa33)
+![Screenshot from 2024-04-16 19-49-14](https://github.com/CodeOps-Hub/Ansible/assets/156056746/acbe9bd7-e766-4637-bb3a-3badd3dc1b05)
 
-
-***
-
-## Post-Installation Setup
-* Access Elasticsearch on `https://URL:9200`
-  
-![Screenshot from 2024-04-08 13-00-44](https://github.com/CodeOps-Hub/Ansible/assets/156056746/43032d61-4b09-49af-9c07-5d78fe64e15d)
 
 
 ***
