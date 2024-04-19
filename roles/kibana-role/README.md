@@ -1,5 +1,7 @@
 # Ansible Role for Attendance Kibana Dashboard
 
+![image](https://github.com/CodeOps-Hub/Ansible/assets/156056349/f87d9c4a-4500-47e2-a452-e6c8192dabc1)
+
 ***
 |   Author        |  Created on   |  Version   | Last updated by  | Last edited on |
 | --------------- | --------------| -----------|----------------- | -------------- |
