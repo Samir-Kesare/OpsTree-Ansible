@@ -1,0 +1,6 @@
+---
+- name: Reload Prometheus
+  service:
+    name: prometheus.service
+    state: restarted
+  become: true
