@@ -1,5 +1,5 @@
 ---
-- hosts: kibana
+- hosts: efk
   become: yes
   gather_facts: yes
   roles:
