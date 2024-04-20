@@ -42,7 +42,7 @@ This document is created to streamline the automation of adding the Attendance K
 | **Python**        | Ensure that Python is installed on your system. Ansible relies on Python for its execution, and dynamic inventory scripts are typically written in Python. |
 | **PIP (Python Package Installer)** | Install pip if it's not already installed. pip is a package manager for Python that allows you to install and manage Python packages. |
 | **Boto3**   |  If your dynamic inventory script relies on AWS APIs to fetch inventory data, you'll need to install `boto3` using `pip`. |
-| **PGA Server** | Must have installed `prometheus, grafana and alert manager(optional)` with `security group` having necessary ports allowed on it. |
+| **EFK Server** | Must have installed `Elasticsearch, fluentd and Kibana` having necessary ports allowed on it. |
 
 ***
 
@@ -141,7 +141,7 @@ filters:
 ## Attendance Kibana Dashboard Role
 
 ### addDashboard file (addDashboard.yml)
-This Ansible playbook consists of tasks aimed at copying json file , adding dashboard in Grafana then deleting that json file.
+This Ansible playbook consists of tasks aimed at copying json file , adding dashboard in Kibana then deleting that json file.
 <details>
 <summary> Click here to see ubuntu.yml file</summary>
 <br>
