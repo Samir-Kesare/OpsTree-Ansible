@@ -47,7 +47,8 @@ This document is created to streamline the automation of adding the Attendance K
 ***
 
 # Directory Structure
-![image](https://github.com/CodeOps-Hub/Ansible/assets/156056444/c46be773-3869-4ad5-9cfa-b4d840b58bb3)
+
+<img width="598" alt="Screenshot 2024-04-20 at 5 35 43 AM" src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/f81200aa-949d-4ca0-a39a-a9ed29c48fdb">
 
 ***
 
