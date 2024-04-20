@@ -14,7 +14,7 @@
 
 - name: Replace Fluentd configuration file
   ansible.builtin.template:
-    src: path/to/fluentd.conf.j2
+    src: fluentd.conf.j2
     dest: /etc/fluentd/fluentd.conf
   notify: Restart Fluentd service
 
