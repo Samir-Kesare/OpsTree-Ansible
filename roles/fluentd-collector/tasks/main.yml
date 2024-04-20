@@ -12,24 +12,35 @@
   ansible.builtin.debug:
     msg: "Fluentd service status: {{ fluentd_service_status }}"
 
-- name: Check if pattern exists in the file
-  ansible.builtin.shell:
-    cmd: "grep '@type {{ type }}' /etc/fluent/fluentd.conf"
-  register: match_exists
-  changed_when: false
-  failed_when: false
-
-- name: Add Fluentd configuration to the end of the file
-  ansible.builtin.lineinfile:
-    path: /etc/fluent/fluentd.conf
-    insertafter: EOF
-    line: |
-      <match **>
-        @type {{ type }}
-        host {{ host }}
-        port {{ port }}
-        logstash_format {{ logstash_format | lower}}
-        flush_interval {{ flush_interval }}
-      </match>
-  when: match_exists.rc != 0
+- name: Replace Fluentd configuration file
+  ansible.builtin.template:
+    src: path/to/fluentd.conf.j2
+    dest: /etc/fluentd/fluentd.conf
   notify: Restart Fluentd service
+
+- name: Display Fluentd service status
+  ansible.builtin.debug:
+    msg: "Fluentd service status: {{ fluentd_service_status }}"
+
+
+# - name: Check if pattern exists in the file
+#   ansible.builtin.shell:
+#     cmd: "grep '@type {{ type }}' /etc/fluent/fluentd.conf"
+#   register: match_exists
+#   changed_when: false
+#   failed_when: false
+
+# - name: Add Fluentd configuration to the end of the file
+#   ansible.builtin.lineinfile:
+#     path: /etc/fluent/fluentd.conf
+#     insertafter: EOF
+#     line: |
+#       <match **>
+#         @type {{ type }}
+#         host {{ host }}
+#         port {{ port }}
+#         logstash_format {{ logstash_format | lower}}
+#         flush_interval {{ flush_interval }}
+#       </match>
+#   when: match_exists.rc != 0
+#   notify: Restart Fluentd service
