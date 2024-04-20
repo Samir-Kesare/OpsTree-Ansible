@@ -138,6 +138,24 @@ filters:
 
 ## Fluentd Role
 
+### defaults file (main.yml)
+
+<details>
+<summary> Click here to see main.yml file</summary>
+<br>
+  
+```shell
+---
+host: 172.31.40.158
+port: 924224
+path: /var/log/logfile.log
+tag: employee.log
+
+```
+</details>
+
+***
+
 ### handlers file (main.yml)
 
 This Ansible task named "Restart Fluentd service" executes the command systemctl restart fluentd to restart the fluentd service and load its updated configuration. 
@@ -268,17 +286,17 @@ This templates file contains the configuration for fluentd as a log aggregator t
   <parse>
     @type none
   </parse>
-  path /var/log/logfile.log
-  tag employee.log
+  path {{ path }}
+  tag {{ tag }}
   read_from_head true
  </source>
 
-<match employee.log>
+<match {{ tag }}>
   @type forward
   @id output_system_forward
   <server>
-    host 172.31.40.158
-    port 24224
+    host {{ host }}
+    port {{ port }}
   </server>
 </match>
 
