@@ -1,0 +1,27 @@
+ ---
+- name: Install Fluentd
+  shell: "curl -fsSL https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-fluent-package5-lts.sh | sh"
+
+- name: Reload systemd daemon
+  shell: systemctl daemon-reload
+
+- name: Enable and start Fluentd service
+  systemd:
+    name: fluentd
+    enabled: yes
+    state: started
+
+- name: Add Fluentd configuration to the end of the file
+  template:
+    src:  fluentd.yml.j2
+    dest: /etc/fluent/fluentd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Fluentd service
+
+- name: Ensure Fluentd service is running
+  service:
+    name: fluentd
+    state: started
+  become: true
