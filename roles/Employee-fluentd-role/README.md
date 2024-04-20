@@ -29,7 +29,7 @@ In the context of managing logging for an Employee API, an Ansible role for Flue
 
 # Flow Diagram
 
-<img width="564" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/e257b87f-f9f4-4ca7-bb60-67e1f0372401">
+<img width="800" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/e257b87f-f9f4-4ca7-bb60-67e1f0372401">
 
 ***
 
@@ -303,13 +303,13 @@ This templates file contains the configuration for fluentd as a log aggregator t
 
 ### Server Status 
 
-<img width="1124" alt="Screenshot 2024-04-14 at 3 38 29 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/e1bb88f8-d212-4761-a6bb-8735d1d0b92f">
+<img width="1238" alt="Screenshot 2024-04-14 at 3 38 29 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/e1bb88f8-d212-4761-a6bb-8735d1d0b92f">
 
 ***
 
 ### Logs 
 
-<img width="1124" alt="Screenshot 2024-04-14 at 3 38 29 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/d74edfe9-4062-4b83-a888-fbf440e5d62d">
+<img width="1238" alt="Screenshot 2024-04-14 at 3 38 29 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/d74edfe9-4062-4b83-a888-fbf440e5d62d">
 
 ***
 
