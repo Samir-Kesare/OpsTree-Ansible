@@ -3,4 +3,4 @@
   remote_user: ubuntu
   become: true
   roles:
-    - fluentd
+    - fluentd_installation
