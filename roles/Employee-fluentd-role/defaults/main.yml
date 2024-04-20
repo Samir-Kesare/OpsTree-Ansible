@@ -1,0 +1,6 @@
+---
+# defaults file for fluentd-collector
+host: 172.31.40.158
+port: 924224
+path: /var/log/logfile.log
+tag: employee.log
