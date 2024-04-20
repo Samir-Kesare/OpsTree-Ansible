@@ -4,16 +4,16 @@
   <parse>
     @type none
   </parse>
-  path /var/log/logfile.log
-  tag employee.log
+  path {{ path }}
+  tag {{ tag }}
   read_from_head true
  </source>
 
-<match employee.log>
+<match {{ tag }}>
   @type forward
   @id output_system_forward
   <server>
-    host 172.31.40.158
-    port 24224
+    host {{ host }}
+    port {{ port }}
   </server>
 </match>
