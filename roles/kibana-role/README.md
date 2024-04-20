@@ -238,7 +238,7 @@ dashboard_name: "Attendance API Dashboard"
 
 # Conclusion
 
-This guide outlines the steps to seamlessly integrate the "Attendance Kibana Dashboard" using Ansible. Following these instructions would help you to efficiently visualize and oversee your Attendance API data view of your logs.
+This guide outlines the steps to seamlessly integrate the **Attendance Kibana Dashboard** using Ansible. Following these instructions would help you to efficiently visualize and oversee your Attendance API data view of your logs.
 
 ***
 ## Contact Information
