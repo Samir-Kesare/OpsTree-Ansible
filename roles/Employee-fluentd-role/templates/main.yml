@@ -1,0 +1,19 @@
+<source>
+  @type tail
+  @id input_log
+  <parse>
+    @type none
+  </parse>
+  path /var/log/logfile.log
+  tag employee.log
+  read_from_head true
+ </source>
+
+<match employee.log>
+  @type forward
+  @id output_system_forward
+  <server>
+    host 172.31.40.158
+    port 24224
+  </server>
+</match>
