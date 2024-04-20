@@ -5,4 +5,4 @@ hostnames:
   - ip-address
 filters:
   tag:Name:
-    - fluentd
+    - jenkins
