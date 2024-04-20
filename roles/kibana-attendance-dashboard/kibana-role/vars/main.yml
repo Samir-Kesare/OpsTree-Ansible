@@ -1,0 +1,6 @@
+---
+# vars file for kibana-role
+json_file_template_src: "Kibana-attendance-API.ndjson.j2"
+json_file_dest: "/home/ubuntu/Kibana-attendance-API.ndjson"
+kibana_dashboard_import_url: "http://18.212.132.77:5601/api/saved_objects/_import?overwrite=true"
+dashboard_name: "Attendance API Dashboard"

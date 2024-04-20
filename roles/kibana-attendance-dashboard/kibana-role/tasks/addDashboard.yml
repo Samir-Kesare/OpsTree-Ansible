@@ -1,0 +1,9 @@
+---
+
+- name: Import json file template
+  ansible.builtin.template:
+    src: "{{ json_file_template_src }}"
+    dest: "{{ json_file_dest }}"
+
+- name: Import Kibana dashboard
+  shell: "curl -k -X POST {{ kibana_dashboard_import_url }} -H 'kbn-xsrf: true' --form file=@{{ json_file_dest }}"
