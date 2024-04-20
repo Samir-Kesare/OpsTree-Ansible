@@ -29,7 +29,7 @@ In the context of managing logging for an Employee API, an Ansible role for Flue
 
 # Flow Diagram
 
-<img width="1276" alt="Screenshot 2024-04-14 at 3 24 20 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/e6a34d41-535e-4acb-a1f1-360a129ab23d">
+<img width="564" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/e257b87f-f9f4-4ca7-bb60-67e1f0372401">
 
 ***
 
