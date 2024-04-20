@@ -240,28 +240,15 @@ This playbook automates the setup process, ensuring a smooth installation and co
   ansible.builtin.debug:
     msg: "Fluentd service status: {{ fluentd_service_status }}"
 
-- name: Check if <match **> exists in the file
-  ansible.builtin.shell:
-    cmd: "grep '@type {{ type }}' /etc/fluent/fluentd.conf"
-  register: match_exists
-  changed_when: false
-  failed_when: false
-
-- name: Add Fluentd configuration to the end of the file
-  ansible.builtin.lineinfile:
-    path: /etc/fluent/fluentd.conf
-    insertafter: EOF
-    line: |
-      <match **>
-        @type {{ type }}
-        host {{ host }}
-        port {{ service_port }}
-        logstash_format {{ logstash_format | lower}}
-        flush_interval {{ flush_interval }}
-      </match>
-  when: match_exists.rc != 0
+- name: Replace Fluentd configuration file
+  ansible.builtin.template:
+    src: fluentd.conf.j2
+    dest: /etc/fluent/fluentd.conf
   notify: Restart Fluentd service
 
+- name: Display Fluentd service status
+  ansible.builtin.debug:
+    msg: "Fluentd service status: {{ fluentd_service_status }}"
 ```
 </details>
 
@@ -288,13 +275,33 @@ fluentd_repo_urls:
 ```
 </details>
 
+
+### templates file (fluentd.conf.j2)
+
+This templates file contains the configuration for fluentd as a log aggregator that sends all the logs to elasticsearch.
+
+<details>
+<summary> Click here to see fluentd.conf.j2 file</summary>
+<br>
+  
+```shell
+<match **>
+  @type {{ type }}
+  host {{ host }}
+  port {{ port }}
+  logstash_format {{ logstash_format | lower }}
+  flush_interval {{ flush_interval }}
+</match>
+```
+</details>
+
 ***
 
 # Output
 
 ### Flunetd Role Execution
 
-<img width="1601" alt="Screenshot 2024-04-14 at 2 43 31 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/f59c911e-e3e7-45a6-8b3b-b9fc4ed9b6f0">
+<img width="1238" alt="Screenshot 2024-04-20 at 10 21 04 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/5ab4e60f-cf78-40f1-a88c-b2b03282f998">
 
 ***
 
