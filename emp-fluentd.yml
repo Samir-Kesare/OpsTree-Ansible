@@ -1,5 +1,5 @@
 ---
-- hosts: aws_ec2
+- hosts: employee
   become: yes
   gather_facts: yes
   roles:
