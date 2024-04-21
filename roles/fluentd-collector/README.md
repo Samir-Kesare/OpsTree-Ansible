@@ -148,13 +148,12 @@ The defaults/main.yml file helps maintain consistency and simplifies role config
   
 ```shell
 ---
-# defaults file for fluentd-role
-# defaults file for ansible-role-fluentd
-host: localhost
-service_port: 9200
-logstash_format: true
-flush_interval: 10s
-type : elasticsearch
+# vars file for fluentd-collector
+fluentd_repo_urls:
+  Ubuntu_jammy: "https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-fluent-package5-lts.sh"
+  Ubuntu_focal: "https://toolbelt.treasuredata.com/sh/install-ubuntu-focal-fluent-package5-lts.sh"
+  Debian_bookworm: "https://toolbelt.treasuredata.com/sh/install-debian-bookworm-fluent-package5-lts.sh"
+  Debian_bullseye: "https://toolbelt.treasuredata.com/sh/install-debian-bullseye-fluent-package5-lts.sh"
 
 ```
 </details>
@@ -263,14 +262,14 @@ This vars file contains a set of variables used by the Ansible role to define th
 <br>
   
 ```shell
-
 ---
-# vars file for fluentd-collector
-fluentd_repo_urls:
-  Ubuntu_jammy: "https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-fluent-package5-lts.sh"
-  Ubuntu_focal: "https://toolbelt.treasuredata.com/sh/install-ubuntu-focal-fluent-package5-lts.sh"
-  Debian_bookworm: "https://toolbelt.treasuredata.com/sh/install-debian-bookworm-fluent-package5-lts.sh"
-  Debian_bullseye: "https://toolbelt.treasuredata.com/sh/install-debian-bullseye-fluent-package5-lts.sh"
+# defaults file for fluentd-role
+# defaults file for ansible-role-fluentd
+host: localhost
+service_port: 9200
+logstash_format: true
+flush_interval: 10s
+type : elasticsearch
 
 ```
 </details>
