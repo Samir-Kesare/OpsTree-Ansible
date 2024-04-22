@@ -1,0 +1,7 @@
+---
+# vars file for fluentd-collector
+host: localhost
+port: 9200
+logstash_format: true
+flush_interval: 10s
+type : elasticsearch

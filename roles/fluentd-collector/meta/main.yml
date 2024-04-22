@@ -1,0 +1,18 @@
+galaxy_info:
+  author: Vidhi Yadav
+  description: This role facilitates the installation and configuration of Fluentd as a robust log aggregator. It seamlessly integrates with Elasticsearch to store and manage log data efficiently. While Elasticsearch is the default destination, this role offers flexibility, allowing users to override or customize the destination as needed.
+
+  license: license (GPL-2.0-or-later, MIT, etc)
+
+  min_ansible_version: 2.1
+
+  platforms:
+  - name: Ubuntu
+    distribution:
+    - jammy
+    - focal
+  - name: Debian
+    distribution:
+    - bullseye
+    - bookworm
+
