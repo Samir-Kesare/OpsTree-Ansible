@@ -1,0 +1,15 @@
+
+---
+- name: Copy alert rules file to Prometheus server
+  copy:
+    src: frontend_alert.rules.yml
+    dest: "{{ frontend_alert_rules_path }}"
+  notify: Reload Prometheus
+
+- name: Ensure Prometheus alerts rules are included in Prometheus config
+  lineinfile:
+    path: "{{ path }}"
+    line: '- alert_rules.yml'
+    insertafter: 'rule_files'
+    state: present
+  notify: Reload Prometheus
