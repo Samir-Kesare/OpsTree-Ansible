@@ -146,10 +146,11 @@ filters:
   
 ```shell
 ---
-host: 172.31.40.158
-port: 924224
-path: /var/log/logfile.log
-tag: employee.log
+fluentd_repo_urls:
+  Ubuntu_jammy: "https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-fluent-package5-lts.sh"
+  Ubuntu_focal: "https://toolbelt.treasuredata.com/sh/install-ubuntu-focal-fluent-package5-lts.sh"
+  Debian_bookworm: "https://toolbelt.treasuredata.com/sh/install-debian-bookworm-fluent-package5-lts.sh"
+  Debian_bullseye: "https://toolbelt.treasuredata.com/sh/install-debian-bullseye-fluent-package5-lts.sh"
 
 ```
 </details>
@@ -261,11 +262,11 @@ This vars file contains a set of variables used by the Ansible role to define th
 
 ---
 # vars file for fluentd-collector
-fluentd_repo_urls:
-  Ubuntu_jammy: "https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-fluent-package5-lts.sh"
-  Ubuntu_focal: "https://toolbelt.treasuredata.com/sh/install-ubuntu-focal-fluent-package5-lts.sh"
-  Debian_bookworm: "https://toolbelt.treasuredata.com/sh/install-debian-bookworm-fluent-package5-lts.sh"
-  Debian_bullseye: "https://toolbelt.treasuredata.com/sh/install-debian-bullseye-fluent-package5-lts.sh"
+---
+host: 172.31.40.158
+port: 924224
+path: /var/log/logfile.log
+tag: employee.log
 
 ```
 </details>
