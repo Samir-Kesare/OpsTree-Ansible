@@ -1,0 +1,7 @@
+---
+editor_name : "Vidhi"
+grafana_api_key: "glsa_oIJNxnxI1QAl6alNgCPtF8SgkEXURjpc_8c78e79d"
+grafana_url: 18.206.100.209:3000
+json_file_template_src: "Employee-API.json.j2"
+json_file_dest: "/home/ubuntu/Employee-API.json"
+
