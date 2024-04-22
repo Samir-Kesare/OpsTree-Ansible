@@ -1,0 +1,11 @@
+---
+    - name: Add node_exporter group
+      ansible.builtin.group:
+        name: node_exporter
+        state: present
+
+    - name: Add node_exporter user
+      ansible.builtin.user:
+        name: node_exporter
+        group: node_exporter
+        create_home: no
