@@ -1,1 +1,6 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - frontend-fluentd-role
 
