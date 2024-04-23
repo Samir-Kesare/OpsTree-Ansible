@@ -1,4 +1,4 @@
-# Ansible Role for Fluentd Setup of Employee API 
+# Ansible Role for Fluentd Setup of Frontend 
 
 <img src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/4ea2fd53-751c-4da8-a3ce-86813667bf91" alt="image1" width="400">  <img src="https://github.com/CodeOps-Hub/Ansible/assets/156056349/5a6ee770-1c53-4950-bb18-34e00f926c25" alt="image2" width="500">
 
