@@ -29,7 +29,7 @@ In the context of managing logging for Frontend, an Ansible role for Fluentd sim
 
 # Flow Diagram
 
-<img width="800" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/e257b87f-f9f4-4ca7-bb60-67e1f0372401">
+<img width="800" alt="image" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/c4ddbf60-6f46-41a4-b752-df4866d71483">
 
 ***
 
