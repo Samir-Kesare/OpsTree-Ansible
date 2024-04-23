@@ -42,7 +42,7 @@ In the context of managing logging for Frontend, an Ansible role for Fluentd sim
 | **Python**        | Ensure that Python is installed on your system. Ansible relies on Python for its execution, and dynamic inventory scripts are typically written in Python. |
 | **PIP (Python Package Installer)** | Install pip if it's not already installed. pip is a package manager for Python that allows you to install and manage Python packages. |
 | **Boto3**   |  If your dynamic inventory script relies on AWS APIs to fetch inventory data, you'll need to install `boto3` using `pip`. |
-| **Employee API** | Must have configured Employee API to collect logs. |
+| **Frontend** | Must have configured Frontend to collect logs. |
 
 ***
 
@@ -108,6 +108,7 @@ groups:
   frontend: "'frontend-node-exporter' in tags.Type"
   employee: "'employee' in tags.Type"
   fluent: "'fluent' in tags.Type"
+  frontend: "'frontend' in tags.Type"
 
 filters:
     instance-state-code: 16
@@ -117,7 +118,7 @@ filters:
 
 ***
 
-### emp-fluentd.yml file
+### frontend-fluentd.yml file
 
 <details>
 <summary> Click here to see fluentd.yml file</summary>
@@ -125,11 +126,11 @@ filters:
   
 ```shell
 ---
-- hosts: employee
+- hosts: frontend
   become: yes
   gather_facts: yes
   roles:
-    - Employee-fluentd-role
+    - frontend-fluentd-role
 
 ```
 </details>
@@ -259,14 +260,11 @@ This vars file contains a set of variables used by the Ansible role to define th
 <br>
   
 ```shell
-
 ---
-# vars file for fluentd-collector
----
-host: 172.31.40.158
-port: 924224
-path: /var/log/logfile.log
-tag: employee.log
+host: 192.168.0.11
+port: 24224
+path: /home/ubuntu/Frontend/frontend.log
+tag: frontend.log
 
 ```
 </details>
@@ -282,23 +280,23 @@ This templates file contains the configuration for fluentd as a log aggregator t
   
 ```shell
 <source>
-  @type tail
-  @id input_log
-  <parse>
-    @type none
-  </parse>
-  path {{ path }}
-  tag {{ tag }}
-  read_from_head true
- </source>
+@type tail
+@id input_log
+<parse>
+ @type none
+</parse>
+path {{ path }}
+tag {{ tag }}
+read_from_head true
+</source>    
 
-<match {{ tag }}>
-  @type forward
-  @id output_system_forward
-  <server>
-    host {{ host }}
-    port {{ port }}
-  </server>
+<match **>
+@type forward
+@id output_system_forward
+ <server>
+  host {{ host }}
+  port {{ port }}
+ </server>
 </match>
 
 ```
@@ -308,27 +306,15 @@ This templates file contains the configuration for fluentd as a log aggregator t
 
 # Output
 
-### Employee API Status
-
-<img width="1238" alt="Screenshot 2024-04-20 at 10 21 04 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/821722df-e60a-4566-922e-dc0c8074d9d6">
-
-***
-
 ### Flunetd Role Execution
 
-<img width="1238" alt="Screenshot 2024-04-20 at 10 21 04 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/a808cfbc-8233-4231-8311-227b2e442bb3">
-
-***
-
-### Server Status 
-
-<img width="1238" alt="Screenshot 2024-04-14 at 3 38 29 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/e1bb88f8-d212-4761-a6bb-8735d1d0b92f">
+<img width="1238" alt="Screenshot 2024-04-20 at 10 21 04 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/aee60628-d4cd-43a8-b559-b80c83fddf83">
 
 ***
 
 ### Logs 
 
-<img width="1238" alt="Screenshot 2024-04-14 at 3 38 29 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/d74edfe9-4062-4b83-a888-fbf440e5d62d">
+<img width="1238" alt="Screenshot 2024-04-14 at 3 38 29 PM" src="https://github.com/CodeOps-Hub/Ansible/assets/156057205/54d5c2be-15a0-411d-abac-8387f15fc730">
 
 ***
 
