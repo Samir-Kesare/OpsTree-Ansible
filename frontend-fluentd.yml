@@ -1,0 +1,6 @@
+---
+- hosts: frontend
+  become: yes
+  gather_facts: yes
+  roles:
+    - frontend-fluentd-role
