@@ -1,8 +1,6 @@
 ---
-- hosts: tag_Name_host
+- hosts: host
   remote_user: ubuntu
-  gather_facts: yes
-  become: yes
-  become_method: su
+  become: true
   roles:
     - alertmanager_setup
