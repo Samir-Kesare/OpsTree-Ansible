@@ -3,4 +3,4 @@
   remote_user: ubuntu
   become: true
   roles:
-    - alertmanager_setup
+    alertmanager_setup
