@@ -1,6 +1,6 @@
 ---
-hosts: tag_Name_host
+- hosts: localhost
   remote_user: ubuntu
   become: true
   roles:
-    alertmanager_setup
+    - alertmanager_setup
