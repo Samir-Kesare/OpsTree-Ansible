@@ -1,5 +1,5 @@
 ---
-- hosts: host
+- hosts: tag_Name_host
   remote_user: ubuntu
   become: true
   roles:
