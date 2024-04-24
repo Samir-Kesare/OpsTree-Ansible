@@ -1,16 +1,9 @@
 ---
 plugin: aws_ec2
 regions:
-  - us-east-1
-
-groups: 
-  redis: "'redis' in tags.Type"
-  postgres: "'postgres' in tags.Type"
-  scylla: "'scylla' in tags.Type"
-  efk: "'efk' in tags.Type"
-  prometheus: "'prometheus' in tags.Type"
-  frontend: "'frontend-node-exporter' in tags.Type"
-  employee: "'employee' in tags.Type"
-
+  - ap-northeast-1
 filters:
     instance-state-code: 16
+keyed_groups:
+  - key: tags
+    prefix: tag
