@@ -1,6 +1,6 @@
 ---
-- hosts: tag_Type_frontend-node-exporter
+- hosts: localhost
+  remote_user: ubuntu
   become: yes
-  gather_facts: yes
   roles:
-    - Frontend_node_exp
+    - alertmanager_setup
