@@ -1,5 +1,5 @@
 ---
-- hosts: tag_Name_host
+- hosts: tag_Name_Jenkins
   remote_user: ubuntu
   become: true
   roles:
