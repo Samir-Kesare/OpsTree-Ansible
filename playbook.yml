@@ -3,5 +3,6 @@
   remote_user: ubuntu
   gather_facts: yes
   become: yes
+  become_method: su
   roles:
     - alertmanager_setup
