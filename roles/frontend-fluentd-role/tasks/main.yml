@@ -1,0 +1,24 @@
+---
+- name: Install Fluentd
+  ansible.builtin.shell: "curl -fsSL {{ fluentd_repo_urls[ansible_distribution ~ '_' ~ ansible_distribution_release] }} | sh"
+
+- name: Check status of Fluentd service
+  ansible.builtin.service:
+    name: fluentd
+    state: "started"
+  register: fluentd_service_status
+
+- name: Display Fluentd service status
+  ansible.builtin.debug:
+    msg: "Fluentd service status: {{ fluentd_service_status }}"
+
+- name: Replace Fluentd configuration file
+  ansible.builtin.template:
+    src: fluentd.conf.j2
+    dest: /etc/fluent/fluentd.conf
+  notify: Restart Fluentd service
+
+- name: Display Fluentd service status
+  ansible.builtin.debug:
+    msg: "Fluentd service status: {{ fluentd_service_status }}"
+

@@ -1,0 +1,19 @@
+<source>
+@type tail
+@id input_log
+<parse>
+ @type none
+</parse>
+path {{ path }}
+tag {{ tag }}
+read_from_head true
+</source>    
+
+<match **>
+@type forward
+@id output_system_forward
+ <server>
+  host {{ host }}
+  port {{ port }}
+ </server>
+</match>
