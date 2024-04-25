@@ -1,0 +1,7 @@
+---
+- hosts: employee
+  become: yes
+  gather_facts: yes
+  roles:
+    - Employee-fluentd-role
+    
